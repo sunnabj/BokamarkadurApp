@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Bokamarkadur</string>
+    <string name="user_greeting">Hello World!</string>
+</resources>
