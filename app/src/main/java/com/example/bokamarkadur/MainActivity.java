@@ -6,10 +6,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bokamarkadur.POJO.BookList;
+import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.MultipleResource;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<MultipleResource> call, Response<MultipleResource> response) {
 
                 MultipleResource bookResList = response.body();
-                List<BookList.Book> bookList = bookResList.book;
 
-                for (BookList.Book book : bookList) {
+                for (Book book : bookResList.books.book) {
+                    responseText.append(book.title);
                     Toast.makeText(getApplicationContext(), "title : " + book.title + " author: " + book.author + " " + book.edition, Toast.LENGTH_LONG).show();
                 }
             }
