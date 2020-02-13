@@ -15,8 +15,8 @@ public class Book {
 //    public String condition;
 //    @SerializedName("price")
 //    public Integer price;
-//    @SerializedName("image")
-//    public String image;
+    @SerializedName("image")
+    public String image;
 //    @SerializedName("status")
 //    public String status;
 
@@ -26,7 +26,7 @@ public class Book {
         this.edition = edition;
 //        this.condition = condition;
 //        this.price = price;
-//        this.image = image;
+        this.image = image;
 //        this.status = status;
     }
 }
