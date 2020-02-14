@@ -8,23 +8,23 @@ public class Book {
 
     // Vantar að bæta við: subjects, user & messages.
     @SerializedName("id")
-    public long id;
+    private long id;
     @SerializedName("title")
-    public String title;
+    private String title;
     @SerializedName("author")
-    public String author;
+    private String author;
     @SerializedName("edition")
-    public Integer edition;
+    private Integer edition;
     @SerializedName("condition")
-    public String condition;
+    private String condition;
     @SerializedName("price")
-    public Integer price;
+    private Integer price;
     @SerializedName("image")
-    public String image;
+    private String image;
     @SerializedName("status")
-    public String status;
+    private String status;
     @SerializedName("date")
-    public Date date;
+    private Date date;
 
     // Fjarlægt héðan í bili: Subjects subjects, User user, List<Message> messages
     public Book(long id, String title, String author, Integer edition, String condition,

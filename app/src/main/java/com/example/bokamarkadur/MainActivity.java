@@ -1,17 +1,14 @@
 package com.example.bokamarkadur;
 
 import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.Book;
-import com.example.bokamarkadur.POJO.MultipleResource;
+import com.example.bokamarkadur.POJO.BookResponse;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,10 +17,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Listar fyrir öll gildi í Book.
-    ArrayList<String> ListviewImage = new ArrayList<String>();
-    ArrayList<String> ListviewTitle = new ArrayList<String>();
-    ArrayList<String> ListviewAuthor = new ArrayList<String>();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     APIInterface apiInterface;
 
@@ -56,50 +50,23 @@ public class MainActivity extends AppCompatActivity {
         /**
          GET kall sem skilar lista af öllum bókum.
          **/
-        Call<MultipleResource> call2 = apiInterface.doGetBookList();
-        call2.enqueue(new Callback<MultipleResource>() {
+        Call<BookResponse> getAllBooks = apiInterface.getBookList();
+        getAllBooks.enqueue(new Callback<BookResponse>() {
             @Override
-            public void onResponse(Call<MultipleResource> call, Response<MultipleResource> response) {
+            public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
 
-                MultipleResource bookResList = response.body();
+                List<Book> books = response.body().getBookList().getBooks();
+                Log.d(TAG, "Number of books received: " + books.size());
 
-                for (Book book : bookResList.books.book) {
-
-                    ListviewImage.add(book.image);
-                    ListviewTitle.add(book.title);
-                    ListviewAuthor.add(book.author);
-
-                }
 
                 // Má eyða - Birtir toast ef svar hefur borist.
                 Toast.makeText(getApplicationContext(), "Response received", Toast.LENGTH_LONG).show();
-
-                final List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
-
-                // Fyrir hverja bók, færum við viðeigandi gildi inn í ArrayList.
-                for (int i = 0; i < ListviewTitle.size(); i++) {
-                    HashMap<String, String> hm = new HashMap<String, String>();
-                    hm.put("ListImage", ListviewImage.get(i));
-                    hm.put("ListTitle", ListviewTitle.get(i));
-                    hm.put("ListAuthor", ListviewAuthor.get(i));
-                    aList.add(hm);
-                }
-
-                final String[] from = {
-                        "ListImage", "ListTitle", "ListAuthor"
-                };
-
-                final int[] to = {
-                        R.id.image, R.id.title, R.id.author
-                };
-
-                final SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_item, from, to);
-                ListView simpleListview = (ListView)findViewById(R.id.list);
-                simpleListview.setAdapter(simpleAdapter);
             }
 
             @Override
-            public void onFailure(Call<MultipleResource> call, Throwable t) {
+            public void onFailure(Call<BookResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
                 call.cancel();
             }
         });
