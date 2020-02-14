@@ -1,10 +1,8 @@
 package com.example.bokamarkadur;
 
 import android.os.Bundle;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,11 +20,11 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Listar fyrir öll gildi í Book.
     ArrayList<String> ListviewImage = new ArrayList<String>();
     ArrayList<String> ListviewTitle = new ArrayList<String>();
     ArrayList<String> ListviewAuthor = new ArrayList<String>();
 
-    TextView responseText;
     APIInterface apiInterface;
 
     @Override
@@ -34,28 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         apiInterface = APIClient.getClient().create(APIInterface.class);
-
-        final List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
-
-        for (int i = 0; i < ListviewTitle.size(); i++) {
-            HashMap<String, String> hm = new HashMap<String, String>();
-            hm.put("ListTitle", ListviewTitle.get(i));
-            hm.put("ListAuthor", ListviewAuthor.get(i));
-            hm.put("ListImage", ListviewImage.get(i));
-            aList.add(hm);
-        }
-
-        final String[] from = {
-                "ListImage", "ListTitle", "ListAuthor"
-        };
-
-        final int[] to = {
-            R.id.image, R.id.title, R.id.author
-        };
-
-        final SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_item, from, to);
-        ListView simpleListview = (ListView)findViewById(R.id.list);
-        simpleListview.setAdapter(simpleAdapter);
 
 //        /**
 //         Create new book
@@ -78,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         /**
-         GET List Books
+         GET kall sem skilar lista af öllum bókum.
          **/
         Call<MultipleResource> call2 = apiInterface.doGetBookList();
         call2.enqueue(new Callback<MultipleResource>() {
@@ -94,14 +70,32 @@ public class MainActivity extends AppCompatActivity {
                     ListviewAuthor.add(book.author);
 
                 }
-                Toast.makeText(getApplicationContext(), "Response received", Toast.LENGTH_LONG).show();
-//                simpleAdapter.notifyDataSetChanged();
 
-                SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_item, from, to);
+                // Má eyða - Birtir toast ef svar hefur borist.
+                Toast.makeText(getApplicationContext(), "Response received", Toast.LENGTH_LONG).show();
+
+                final List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
+
+                // Fyrir hverja bók, færum við viðeigandi gildi inn í ArrayList.
+                for (int i = 0; i < ListviewTitle.size(); i++) {
+                    HashMap<String, String> hm = new HashMap<String, String>();
+                    hm.put("ListImage", ListviewImage.get(i));
+                    hm.put("ListTitle", ListviewTitle.get(i));
+                    hm.put("ListAuthor", ListviewAuthor.get(i));
+                    aList.add(hm);
+                }
+
+                final String[] from = {
+                        "ListImage", "ListTitle", "ListAuthor"
+                };
+
+                final int[] to = {
+                        R.id.image, R.id.title, R.id.author
+                };
+
+                final SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), aList, R.layout.list_item, from, to);
                 ListView simpleListview = (ListView)findViewById(R.id.list);
                 simpleListview.setAdapter(simpleAdapter);
-
-                lv.setAdapter(adapter);
             }
 
             @Override
