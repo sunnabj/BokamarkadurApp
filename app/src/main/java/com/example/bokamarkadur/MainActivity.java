@@ -5,9 +5,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookResponse;
+import com.example.bokamarkadur.POJO.BooksAdapter;
 
 import java.util.List;
 
@@ -27,25 +30,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-//        /**
-//         Create new book
-//         **/
-//        Book book = new Book("Testing", "Tester Author", 2);
-//        Call<Book> call1 = apiInterface.createUser(book);
-//        call1.enqueue(new Callback<Book>() {
-//            @Override
-//            public void onResponse(Call<Book> call, Response<Book> response) {
-//                Book book1 = response.body();
-//
-//                Toast.makeText(getApplicationContext(), book1.title + " " + book1.author + " " + book1.edition, Toast.LENGTH_SHORT).show();
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Book> call, Throwable t) {
-//                call.cancel();
-//            }
-//        });
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.books_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
 
         /**
          GET kall sem skilar lista af öllum bókum.
@@ -54,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
         getAllBooks.enqueue(new Callback<BookResponse>() {
             @Override
             public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
-
+                int statusCode = response.code();
                 List<Book> books = response.body().getBookList().getBooks();
-                Log.d(TAG, "Number of books received: " + books.size());
+                recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
 
+                Log.d(TAG, "Number of books received: " + books.size());
 
                 // Má eyða - Birtir toast ef svar hefur borist.
                 Toast.makeText(getApplicationContext(), "Response received", Toast.LENGTH_LONG).show();
