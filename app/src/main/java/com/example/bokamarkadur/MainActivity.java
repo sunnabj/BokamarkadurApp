@@ -12,6 +12,7 @@ import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookResponse;
 import com.example.bokamarkadur.POJO.BooksAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.books_recycler_view);
+        final RecyclerView recyclerView = findViewById(R.id.books_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
 
         /**
@@ -45,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
                 List<Book> books = response.body().getBookList().getBooks();
                 recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
 
+
                 Log.d(TAG, "Number of books received: " + books.size());
+
 
                 // Má eyða - Birtir toast ef svar hefur borist.
                 Toast.makeText(getApplicationContext(), "Response received", Toast.LENGTH_LONG).show();
