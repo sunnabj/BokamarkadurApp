@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bokamarkadur.POJO.Book;
-import com.example.bokamarkadur.POJO.BookResponse;
+import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.BooksAdapter;
 
 import java.util.ArrayList;
@@ -39,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
         /**
          GET kall sem skilar lista af öllum bókum.
          **/
-        Call<BookResponse> getAllBooks = apiInterface.getBookList();
-        getAllBooks.enqueue(new Callback<BookResponse>() {
+        Call<BookList> getAllBooks = apiInterface.getBooks();
+        getAllBooks.enqueue(new Callback<BookList>() {
             @Override
-            public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
+            public void onResponse(Call<BookList> call, Response<BookList> response) {
                 int statusCode = response.code();
-                List<Book> books = response.body().getBookList().getBooks();
+                List<Book> books = response.body().getBooks();
                 recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
 
 
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<BookResponse> call, Throwable t) {
+            public void onFailure(Call<BookList> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
                 call.cancel();
