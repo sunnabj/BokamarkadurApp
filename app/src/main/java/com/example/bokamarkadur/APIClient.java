@@ -17,7 +17,7 @@ class APIClient {
 
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://radiant-bayou-59420.herokuapp.com/")
+                .baseUrl("https://fathomless-waters-17510.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();

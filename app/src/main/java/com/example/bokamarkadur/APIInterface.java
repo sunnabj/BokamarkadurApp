@@ -1,11 +1,11 @@
 package com.example.bokamarkadur;
 
-import com.example.bokamarkadur.POJO.BookResponse;
+import com.example.bokamarkadur.POJO.BookList;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 
 interface APIInterface {
-    @GET("/books")
-    Call<BookResponse> getBookList();
+    @GET("/all-books")
+    Call<BookList> getBooks();
 }
