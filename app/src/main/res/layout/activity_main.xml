@@ -13,11 +13,11 @@ android:padding="8dp">
     android:layout_height="match_parent"
     android:stretchColumns="1">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/books_recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/books_recycler_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent">-->
+<!--    </androidx.recyclerview.widget.RecyclerView>-->
 
 
     <Button
@@ -40,6 +40,11 @@ android:padding="8dp">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register PLEASE"></Button>
+    <Button
+        android:id="@+id/all_books"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View All Books"></Button>
 </TableLayout>
 </ScrollView>
 
