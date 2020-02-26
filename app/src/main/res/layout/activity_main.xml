@@ -17,11 +17,25 @@ android:padding="8dp">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorAccent" />
-
     <Button
-        android:id="@+id/button"
+        android:id="@+id/AddBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Book After Login !!"></Button>
+    <Button
+        android:id="@+id/RequestBook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Request Book After Login !!"></Button>
+    <Button
+        android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login PLEASE"></Button>
+    <Button
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register PLEASE"></Button>
 </TableLayout>
 </ScrollView>
