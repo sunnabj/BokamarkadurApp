@@ -29,12 +29,53 @@ public class MainActivity extends AppCompatActivity {
     private Button registerbutton;
     private Button AddBook;
     private Button RequestBook;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
+    APIInterface apiInterface;
     private TextView textViewResult;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+
+
+            /**
+             * Þórdís start hér
+             */
+            apiInterface = APIClient.getClient().create(APIInterface.class);
+
+            final RecyclerView recyclerView = findViewById(R.id.books_recycler_view);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
+
+
+            /**
+             GET kall sem skilar lista af öllum bókum.
+             **/
+            Call<BookList> getAllBooks = apiInterface.getBooks();
+            getAllBooks.enqueue(new Callback<BookList>() {
+                @Override
+                public void onResponse(Call<BookList> call, Response<BookList> response) {
+                    int statusCode = response.code();
+                    List<Book> books = response.body().getBooks();
+                    recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
+
+
+                    Log.d(TAG, "Number of books received: " + books.size());
+
+
+                    // Má eyða - Birtir toast ef svar hefur borist.
+                    Toast.makeText(getApplicationContext(), "Response received", Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(Call<BookList> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e(TAG, t.toString());
+                    call.cancel();
+                }
+            });
+
 
             //add book 4 sale
             AddBook = (Button) findViewById(R.id.AddBook);
@@ -71,9 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            textViewResult = findViewById(R.id.text_view_result);
-            textViewResult.setText("Allar Bækur hérnar :D"+"\n"+
-                    "Bækur 1"+"\n"+"Bækur 2"+"\n"+"Bækur 3"+"\n"+"Bækur 4"+"\n"+"Bækur 5"+"\n");
         }
 
     public void openLoginActivity() {
@@ -89,50 +127,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void openRequestBookActivity() {
-        Intent intent= new Intent(this, RequestBookActivity.class);
+        Intent intent = new Intent(this, RequestBookActivity.class);
         startActivity(intent);
-    private static final String TAG = MainActivity.class.getSimpleName();
-
-    APIInterface apiInterface;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        apiInterface = APIClient.getClient().create(APIInterface.class);
-
-        final RecyclerView recyclerView = findViewById(R.id.books_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
-
-
-        /**
-         GET kall sem skilar lista af öllum bókum.
-         **/
-        Call<BookList> getAllBooks = apiInterface.getBooks();
-        getAllBooks.enqueue(new Callback<BookList>() {
-            @Override
-            public void onResponse(Call<BookList> call, Response<BookList> response) {
-                int statusCode = response.code();
-                List<Book> books = response.body().getBooks();
-                recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
-
-
-                Log.d(TAG, "Number of books received: " + books.size());
-
-
-                // Má eyða - Birtir toast ef svar hefur borist.
-                Toast.makeText(getApplicationContext(), "Response received", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call<BookList> call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-                call.cancel();
-            }
-        });
-
     }
 }
 

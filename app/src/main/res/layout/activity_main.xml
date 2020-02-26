@@ -8,18 +8,18 @@ android:padding="8dp">
 
 
 <TableLayout
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:stretchColumns="1">
 
-    <TextView
-        android:id="@+id/text_view_result"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/books_recycler_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorAccent" />
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
+
     <Button
         android:id="@+id/AddBook"
         android:layout_width="wrap_content"
@@ -42,9 +42,4 @@ android:padding="8dp">
         android:text="Register PLEASE"></Button>
 </TableLayout>
 </ScrollView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/books_recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
-</RelativeLayout>
+
