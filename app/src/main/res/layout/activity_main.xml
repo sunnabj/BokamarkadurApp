@@ -16,7 +16,12 @@ android:padding="8dp">
         android:id="@+id/text_view_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#000" />
+        android:textColor="@color/colorAccent" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login PLEASE"></Button>
 </TableLayout>
 </ScrollView>
