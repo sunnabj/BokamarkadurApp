@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Bokamarkadur</string>
     <string name="user_greeting">Hello World!</string>
+    <string name="title">%1$s</string>
+    <string name="author">%1$s</string>
+    <string name="edition">%1$d</string>
 </resources>
