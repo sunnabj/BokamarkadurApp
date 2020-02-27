@@ -2,7 +2,6 @@ package com.example.bokamarkadur;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +19,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AllBooksActivity extends AppCompatActivity {
+
+    // Notað fyrir debugging
     private static final String TAG = MainActivity.class.getSimpleName();
 
     APIInterface apiInterface;
@@ -43,16 +44,11 @@ public class AllBooksActivity extends AppCompatActivity {
         getAllBooks.enqueue(new Callback<BookList>() {
             @Override
             public void onResponse(Call<BookList> call, Response<BookList> response) {
-                int statusCode = response.code();
                 List<Book> books = response.body().getBooks();
                 recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
 
-
+                // TODO: Debug virkni, má eyða síðar meir.
                 Log.d(TAG, "Number of books received: " + books.size());
-
-
-                // Má eyða - Birtir toast ef svar hefur borist.
-                Toast.makeText(getApplicationContext(), "Response received", Toast.LENGTH_LONG).show();
             }
 
             @Override

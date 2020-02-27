@@ -8,4 +8,7 @@ import retrofit2.http.GET;
 interface APIInterface {
     @GET("/all-books")
     Call<BookList> getBooks();
+
+    @GET("/newest-books")
+    Call<BookList> getNewestBooks();
 }
