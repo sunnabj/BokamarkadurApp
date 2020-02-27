@@ -7,11 +7,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.data.model.User;
+import com.example.bokamarkadur.data.model.remote.FileService;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -29,7 +31,10 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private Button submit;
     private ProgressDialog progressDialog;
     private String baseUrl;
+    private ImageView IdProf;
+    FileService fileService;
 
+    String imagePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,19 +65,26 @@ public class AddBookForSaleActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        //File file = new  File("/sdcard/Images/test.png");
+        //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        //MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName());
+        //Call<FileInfo> call1 = fileService.upload(body);
+
+
+
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("title", "1");
         jsonObject.addProperty("author", "1");
         jsonObject.addProperty("edition", "1");
+        jsonObject.addProperty("price", "1");
         jsonObject.addProperty("subject", "COMPUTERSCIENCE");
-        //jsonObject.addProperty("file", "null");
-
-        AddBookForSaleActivity.ApiService service = retrofit.create(AddBookForSaleActivity.ApiService.class);
-        Call<AddBookForSaleActivity.PostResponse> call = service.postData(jsonObject);
+        //jsonObject.addProperty("file", file.getName());
+        ApiService service = retrofit.create(ApiService.class);
+        Call<PostResponse> call = service.postData(jsonObject);
         //calling the api
-        call.enqueue(new Callback<AddBookForSaleActivity.PostResponse>() {
+        call.enqueue(new Callback<PostResponse>() {
             @Override
-            public void onResponse(Call<AddBookForSaleActivity.PostResponse> call, Response<AddBookForSaleActivity.PostResponse> response) {
+            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 //hiding progress dialog
                 progressDialog.dismiss();
                 if (response.isSuccessful()) {
@@ -83,7 +95,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<AddBookForSaleActivity.PostResponse> call, Throwable t) {
+            public void onFailure(Call<PostResponse> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("myTag", "HELPHLEP");
@@ -99,7 +111,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private interface ApiService {
         @POST("addbookforsale")
         Call<AddBookForSaleActivity.PostResponse> postData(
-                @Body JsonObject body);
+                @Body JsonObject body
+        );
+
     }
 
     private class PostResponse {

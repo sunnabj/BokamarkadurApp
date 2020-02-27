@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                     List<Book> books = response.body().getBooks();
                     recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
 
-
                     Log.d(TAG, "Number of books received: " + books.size());
 
 

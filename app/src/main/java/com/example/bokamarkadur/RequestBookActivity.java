@@ -3,7 +3,7 @@ package com.example.bokamarkadur;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.telephony.mbms.FileInfo;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,10 +12,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.data.model.User;
+import com.example.bokamarkadur.data.model.remote.FileService;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +37,7 @@ public class RequestBookActivity extends AppCompatActivity {
     private String baseUrl;
     private EditText edtUsername;
     private EditText edtPassword;
+    FileService fileService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,25 +72,30 @@ public class RequestBookActivity extends AppCompatActivity {
         jsonObject.addProperty("username", username.getText().toString());
         jsonObject.addProperty("password", password.getText().toString());
 
+
+        File file = new  File("/sdcard/Images/test.png");
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        //MultipartBody.Part body = MultipartBody.Part.createFormData("file", "");
+
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+        Call<FileInfo> call = fileService.upload(body);
+
+
+
         RequestBookActivity.ApiService service = retrofit.create(RequestBookActivity.ApiService.class);
-        Call<RequestBookActivity.PostResponse> call = service.postData(jsonObject);
+        //Call<RequestBookActivity.PostResponse> call = service.postData(jsonObject);
         //calling the api
-        call.enqueue(new Callback<RequestBookActivity.PostResponse>() {
+        call.enqueue(new Callback<FileInfo>()  {
             @Override
-            public void onResponse(Call<RequestBookActivity.PostResponse> call, Response<RequestBookActivity.PostResponse> response) {
-                //hiding progress dialog
-                progressDialog.dismiss();
-                if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "Book: "+response.body().getTitle()+" has been added", Toast.LENGTH_LONG).show();
-                    openRequestBookActivity();
-                    Log.d("myTag", String.valueOf(response.body().getUser()));
+            public void onResponse(Call<FileInfo> call, Response<FileInfo> response) {
+                if(response.isSuccessful()) {
+                    Toast.makeText(RequestBookActivity.this, "hello", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<RequestBookActivity.PostResponse> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            public void onFailure(Call<FileInfo> call, Throwable t) {
+                Toast.makeText(RequestBookActivity.this, "hello"+t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
