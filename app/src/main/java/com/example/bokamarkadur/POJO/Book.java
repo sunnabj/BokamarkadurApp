@@ -1,12 +1,14 @@
 package com.example.bokamarkadur.POJO;
 
+import com.example.bokamarkadur.data.model.User;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
 public class Book {
 
-    // Vantar að bæta við: subjects, user & messages.
+    // Vantar að bæta við messages.
+
     @SerializedName("id")
     private long id;
     @SerializedName("title")
@@ -25,32 +27,30 @@ public class Book {
     private String status;
     @SerializedName("date")
     private Date date;
+    @SerializedName("user")
+    private User user;
+//    @SerializedName("messages")
+//    private Message messages;
+    @SerializedName("subjects")
+    private String subjects;
 
-    // Fjarlægt héðan í bili: Subjects subjects, User user, List<Message> messages
+    // Fjarlægt héðan í bili: List<Message> messages
     public Book(long id, String title, String author, Integer edition, String condition,
-                Integer price, String image, String status, Date date) {
+                Integer price, String image, String status, Date date, User user, String subjects) {
 
         this.id = id;
         this.title = title;
         this.author = author;
         this.edition = edition;
         this.condition = condition;
-//        this.subjects = subjects;
         this.price = price;
         this.image = image;
         this.status = status;
         this.date = date;
-//        this.user = user;
+        this.user = user;
 //        this.messages = messages;
+        this.subjects = subjects;
     }
-
-//    public List<Message> getMessages() {
-//        return messages;
-//    }
-
-//    public void setMessages(List<Message> messages) {
-//        this.messages = messages;
-//    }
 
     public long getId() {
         return id;
@@ -72,8 +72,6 @@ public class Book {
         return condition;
     }
 
-//    public Subjects getSubjects() {return subjects; }
-
     public Integer getPrice() {
         return price;
     }
@@ -84,7 +82,13 @@ public class Book {
 
     public Date getDate() { return date; }
 
-//    public User getUser() { return user; }
+    public User getUser() { return user; }
+
+//    public List<Message> getMessages() {
+//        return messages;
+//    }
+
+    public String getSubjects() { return subjects; }
 
     public void setId(long id) {
         this.id = id;
@@ -106,8 +110,6 @@ public class Book {
         this.condition = condition;
     }
 
-//    public void setSubjects(Subjects subjects) { this.subjects = subjects; }
-
     public void setPrice(Integer price) {
         this.price = price;
     }
@@ -118,6 +120,12 @@ public class Book {
 
     public void setDate(Date date) { this.date = date; }
 
-//    public void setUser(User user) { this.user = user; }
+    public void setUser(User user) { this.user = user; }
+
+//    public void setMessages(List<Message> messages) {
+//        this.messages = messages;
+//    }
+
+    public void setSubjects(String subjects) { this.subjects = subjects; }
 }
 
