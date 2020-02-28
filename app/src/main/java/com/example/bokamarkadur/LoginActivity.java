@@ -1,6 +1,5 @@
 package com.example.bokamarkadur;
 
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,33 +11,28 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bokamarkadur.data.model.User;
+import com.example.bokamarkadur.POJO.User;
 import com.google.gson.JsonObject;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
 
 public class LoginActivity extends AppCompatActivity {
 
     private Button submit;
     private ProgressDialog progressDialog;
-    private String baseUrl;
-    private EditText edtUsername;
-    private EditText edtPassword;
+
+    APIInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         submit = (Button) findViewById(R.id.submit);
-        baseUrl = "https://fathomless-waters-17510.herokuapp.com/";
+
+        // Tengjumst API Interface sem talar við bakendann okkar.
+        apiInterface = APIClient.getClient().create(APIInterface.class);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,94 +50,83 @@ public class LoginActivity extends AppCompatActivity {
         //progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
-        //Defining retrofit api service
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("username", username.getText().toString());
         jsonObject.addProperty("password", password.getText().toString());
 
-        ApiService service = retrofit.create(ApiService.class);
-        Call<PostResponse> call = service.postData(jsonObject);
-        //calling the api
-        call.enqueue(new Callback<PostResponse>() {
+        Call<User> loginUser = apiInterface.login(jsonObject);
+        loginUser.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 //hiding progress dialog
                 progressDialog.dismiss();
                 if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "username: "+response.body().getMsg()+" pass: "+response.body().getUser(), Toast.LENGTH_LONG).show();
-                            openLoginActivity();
-                    Log.d("myTag", String.valueOf(response.body().getUser()));
+                    Toast.makeText(getApplicationContext(), "success: "+response.body(), Toast.LENGTH_LONG).show();
+                            openMainActivity();
+                    Log.d("myTag", String.valueOf(response.body()));
                 }
             }
 
             @Override
-            public void onFailure(Call<PostResponse> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    public void openLoginActivity() {
+    public void openMainActivity() {
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    private interface ApiService {
-        @POST("login")
-        Call<PostResponse> postData(
-                @Body JsonObject body);
-    }
+    // Færa Response í bakenda eða annað?
 
-    private class PostResponse {
-        @SerializedName("errors")
-        @Expose
-        private Object errors;
-        @SerializedName("user")
-        @Expose
-        private User user;
-        @SerializedName("ok")
-        @Expose
-        private Boolean ok;
-        @SerializedName("msg")
-        @Expose
-        private String msg;
-
-        public Object getErrors() {
-            return errors;
-        }
-
-        public void setErrors(Object errors) {
-            this.errors = errors;
-        }
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-
-        public Boolean getOk() {
-            return ok;
-        }
-
-        public void setOk(Boolean ok) {
-            this.ok = ok;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-    }
+//    private class PostResponse {
+//        @SerializedName("errors")
+//        @Expose
+//        private Object errors;
+//        @SerializedName("user")
+//        @Expose
+//        private User user;
+//        @SerializedName("ok")
+//        @Expose
+//        private Boolean ok;
+//        @SerializedName("msg")
+//        @Expose
+//        private String msg;
+//
+//        public Object getErrors() {
+//            return errors;
+//        }
+//
+//        public void setErrors(Object errors) {
+//            this.errors = errors;
+//        }
+//
+//        public User getUser() {
+//            return user;
+//        }
+//
+//        public void setUser(User user) {
+//            this.user = user;
+//        }
+//
+//        public Boolean getOk() {
+//            return ok;
+//        }
+//
+//        public void setOk(Boolean ok) {
+//            this.ok = ok;
+//        }
+//
+//        public String getMsg() {
+//            return msg;
+//        }
+//
+//        public void setMsg(String msg) {
+//            this.msg = msg;
+//        }
+//    }
 }

@@ -12,27 +12,19 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bokamarkadur.data.model.User;
-import com.example.bokamarkadur.data.model.remote.FileService;
+import com.example.bokamarkadur.POJO.Book;
 import com.google.gson.JsonObject;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
 
 public class AddBookForSaleActivity extends AppCompatActivity {
 
     private Button submit;
     private ProgressDialog progressDialog;
-    private String baseUrl;
-    private ImageView IdProf;
-    FileService fileService;
+
+    APIInterface apiInterface;
 
     String imagePath;
     @Override
@@ -40,7 +32,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_for_sale);
         submit = (Button) findViewById(R.id.submit);
-        baseUrl = "https://fathomless-waters-17510.herokuapp.com/";
+
+        // Tengjumst API Interface sem talar við bakendann okkar.
+        apiInterface = APIClient.getClient().create(APIInterface.class);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,11 +53,6 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         //progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
-        //Defining retrofit api service
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
         //File file = new  File("/sdcard/Images/test.png");
         //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -78,24 +67,23 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         jsonObject.addProperty("edition", "1");
         jsonObject.addProperty("price", "1");
         jsonObject.addProperty("subject", "COMPUTERSCIENCE");
-        //jsonObject.addProperty("file", file.getName());
-        ApiService service = retrofit.create(ApiService.class);
-        Call<PostResponse> call = service.postData(jsonObject);
-        //calling the api
-        call.enqueue(new Callback<PostResponse>() {
+        //jsonObject.addProperty("file", "null");
+
+        Call<Book> newBookForSale = apiInterface.addBookForSale(jsonObject);
+        newBookForSale.enqueue(new Callback<Book>() {
             @Override
-            public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
+            public void onResponse(Call<Book> call, Response<Book> response) {
                 //hiding progress dialog
                 progressDialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Title: " + response.body().getTitle() + " Price: " + response.body().getPrice(), Toast.LENGTH_LONG).show();
                     openMainActivity();
-                    Log.d("myTag", String.valueOf(response.body().getUser()));
+                    Log.d("myTag", String.valueOf(response.body()));
                 }
             }
 
             @Override
-            public void onFailure(Call<PostResponse> call, Throwable t) {
+            public void onFailure(Call<Book> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("myTag", "HELPHLEP");
@@ -106,149 +94,5 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-    }
-
-    private interface ApiService {
-        @POST("addbookforsale")
-        Call<AddBookForSaleActivity.PostResponse> postData(
-                @Body JsonObject body
-        );
-
-    }
-
-    private class PostResponse {
-
-        @SerializedName("id")
-        @Expose
-        private Integer id;
-        @SerializedName("title")
-        @Expose
-        private String title;
-        @SerializedName("author")
-        @Expose
-        private String author;
-        @SerializedName("edition")
-        @Expose
-        private Integer edition;
-        @SerializedName("condition")
-        @Expose
-        private Object condition;
-        @SerializedName("price")
-        @Expose
-        private Object price;
-        @SerializedName("image")
-        @Expose
-        private String image;
-        @SerializedName("status")
-        @Expose
-        private String status;
-        @SerializedName("date")
-        @Expose
-        private String date;
-        @SerializedName("user")
-        @Expose
-        private User user;
-        @SerializedName("messages")
-        @Expose
-        private Object messages;
-        @SerializedName("subjects")
-        @Expose
-        private Object subjects;
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public void setAuthor(String author) {
-            this.author = author;
-        }
-
-        public Integer getEdition() {
-            return edition;
-        }
-
-        public void setEdition(Integer edition) {
-            this.edition = edition;
-        }
-
-        public Object getCondition() {
-            return condition;
-        }
-
-        public void setCondition(Object condition) {
-            this.condition = condition;
-        }
-
-        public Object getPrice() {
-            return price;
-        }
-
-        public void setPrice(Object price) {
-            this.price = price;
-        }
-
-        public String getImage() {
-            return image;
-        }
-
-        public void setImage(String image) {
-            this.image = image;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
-        }
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-
-        public Object getMessages() {
-            return messages;
-        }
-
-        public void setMessages(Object messages) {
-            this.messages = messages;
-        }
-
-        public Object getSubjects() {
-            return subjects;
-        }
-
-        public void setSubjects(Object subjects) {
-            this.subjects = subjects;
-        }
     }
 }

@@ -11,34 +11,28 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bokamarkadur.data.model.User;
+import com.example.bokamarkadur.POJO.User;
 import com.google.gson.JsonObject;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private Button submit;
     private ProgressDialog progressDialog;
-    private String baseUrl;
-    private EditText edtUsername;
-    private EditText edtPassword;
-    private EditText edtReTypepassword;
+
+    APIInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         submit = (Button) findViewById(R.id.submit);
-        baseUrl = "https://fathomless-waters-17510.herokuapp.com/";
+
+        // Tengjumst API Interface sem talar við bakendann okkar.
+        apiInterface = APIClient.getClient().create(APIInterface.class);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,36 +53,29 @@ public class RegisterActivity extends AppCompatActivity {
         //progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
-        //Defining retrofit api service
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        JsonObject jsonObject = new JsonObject();
+        final JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("name", name.getText().toString());
         jsonObject.addProperty("email", email.getText().toString());
         jsonObject.addProperty("username", username.getText().toString());
         jsonObject.addProperty("password", password.getText().toString());
         jsonObject.addProperty("retypePassword", retypepassword.getText().toString());
 
-        RegisterActivity.ApiService service = retrofit.create(RegisterActivity.ApiService.class);
-        Call<RegisterActivity.PostResponse> call = service.postData(jsonObject);
-        //calling the api
-        call.enqueue(new Callback<RegisterActivity.PostResponse>() {
+        Call<User> registerUser = apiInterface.register(jsonObject);
+        registerUser.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<RegisterActivity.PostResponse> call, Response<RegisterActivity.PostResponse> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 //hiding progress dialog
                 progressDialog.dismiss();
                 if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), response.body().getMsg(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "success: " + response.body(), Toast.LENGTH_LONG).show();
                     openMainActivity();
-                    Log.d("myTag", String.valueOf(response.body().getUser()));
+                    Log.d("myTag", String.valueOf(response.body()));
                 }
             }
 
             @Override
-            public void onFailure(Call<RegisterActivity.PostResponse> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -100,57 +87,53 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private interface ApiService {
-        @POST("newAccount")
-        Call<RegisterActivity.PostResponse> postData(
-                @Body JsonObject body);
-    }
+    // Færa response í bakenda eða annað?
 
-    private class PostResponse {
-
-        @SerializedName("errors")
-        @Expose
-        private Object errors;
-        @SerializedName("user")
-        @Expose
-        private User user;
-        @SerializedName("msg")
-        @Expose
-        private String msg;
-        @SerializedName("ok")
-        @Expose
-        private Boolean ok;
-
-        public Object getErrors() {
-            return errors;
-        }
-
-        public void setErrors(Object errors) {
-            this.errors = errors;
-        }
-
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-
-        public Boolean getOk() {
-            return ok;
-        }
-
-        public void setOk(Boolean ok) {
-            this.ok = ok;
-        }
-    }
+//    private class PostResponse {
+//
+//        @SerializedName("errors")
+//        @Expose
+//        private Object errors;
+//        @SerializedName("user")
+//        @Expose
+//        private User user;
+//        @SerializedName("msg")
+//        @Expose
+//        private String msg;
+//        @SerializedName("ok")
+//        @Expose
+//        private Boolean ok;
+//
+//        public Object getErrors() {
+//            return errors;
+//        }
+//
+//        public void setErrors(Object errors) {
+//            this.errors = errors;
+//        }
+//
+//        public User getUser() {
+//            return user;
+//        }
+//
+//        public void setUser(User user) {
+//            this.user = user;
+//        }
+//
+//        public String getMsg() {
+//            return msg;
+//        }
+//
+//        public void setMsg(String msg) {
+//            this.msg = msg;
+//        }
+//
+//        public Boolean getOk() {
+//            return ok;
+//        }
+//
+//        public void setOk(Boolean ok) {
+//            this.ok = ok;
+//        }
+//    }
 }

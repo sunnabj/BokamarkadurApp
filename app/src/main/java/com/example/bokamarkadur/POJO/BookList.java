@@ -13,6 +13,8 @@ public class BookList {
         return books;
     }
 
+    public List<Book> getNewestBooks() { return books; }
+
     public void setBooks(List<Book> books) {
         this.books = books;
     }
