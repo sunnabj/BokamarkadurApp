@@ -59,7 +59,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         holder.bookTitle.setText(books.get(position).getTitle());
         holder.bookAuthor.setText(books.get(position).getAuthor());
         holder.price.setText("Verð: " + books.get(position).getPrice().toString() + " kr");
-        Picasso.get().load("https://radiant-bayou-59420.herokuapp.com/" + books.get(position).getImage()).into(holder.image);
+        Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + books.get(position).getImage()).into(holder.image);
     }
 
     @Override

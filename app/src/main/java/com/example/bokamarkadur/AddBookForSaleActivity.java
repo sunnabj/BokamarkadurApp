@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
     APIInterface apiInterface;
 
+    String imagePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +54,18 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
+        //File file = new  File("/sdcard/Images/test.png");
+        //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        //MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName());
+        //Call<FileInfo> call1 = fileService.upload(body);
+
+
+
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("title", "1");
         jsonObject.addProperty("author", "1");
         jsonObject.addProperty("edition", "1");
+        jsonObject.addProperty("price", "1");
         jsonObject.addProperty("subject", "COMPUTERSCIENCE");
         //jsonObject.addProperty("file", "null");
 
