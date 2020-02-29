@@ -45,9 +45,13 @@ public class MainActivity extends AppCompatActivity {
             apiInterface = APIClient.getClient().create(APIInterface.class);
 
             // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
-            final RecyclerView recyclerView = findViewById(R.id.newest_books_recycler_view);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
+            final RecyclerView BookrecyclerView = findViewById(R.id.newest_books_recycler_view);
+            BookrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            BookrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
+
+            final RecyclerView SubjectsrecyclerView = findViewById(R.id.newest_books_recycler_view);
+            SubjectsrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            SubjectsrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
 
             /**
@@ -58,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<BookList> call, Response<BookList> response) {
                     List<Book> books = response.body().getNewestBooks();
-                    recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
+                    BookrecyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
+                    SubjectsrecyclerView.setAdapter(new BooksAdapter(books, R.layout.list_subjects,  getApplicationContext()));
 
                     // TODO: Debug virkni, má eyða síðar meir.
                     Log.d(TAG, "Number of books received: " + books.size());

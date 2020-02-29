@@ -17,6 +17,9 @@ interface APIInterface {
     @GET("/newest-books")
     Call<BookList> getNewestBooks();
 
+    @GET("/available-subjects")
+    Call<Book> getAvailableSubjects();
+
     @POST("/addbookforsale")
     Call<Book> addBookForSale(@Body JsonObject body);
 
