@@ -36,7 +36,6 @@ public class AllBooksActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
-
         /**
          GET kall sem skilar lista af öllum bókum.
          **/
