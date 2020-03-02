@@ -59,16 +59,24 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         return new BookViewHolder(view);
     }
 
-
+    // Tökum viðeigandi gildi fyrir hverja bók og tengjum við layout hluti.
     @Override
     public void onBindViewHolder(BookViewHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder: called." + books.get(position).getTitle());
+
+        String image = books.get(position).getImage();
 
         holder.bookTitle.setText(books.get(position).getTitle());
         holder.bookAuthor.setText(books.get(position).getAuthor());
-        holder.price.setText("Price: " + books.get(position).getPrice().toString() + " kr");
-        Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + books.get(position).getImage()).into(holder.image);
+        holder.price.setText("Verð: " + books.get(position).getPrice().toString() + " kr");
 
+        // Ef image inniheldur tóma strenginn þá skilum við Noimage.jpg.
+        if (image.equals("")) {
+            image = "Noimage.jpg";
+        }
+
+        Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(holder.image);
+
+        // Sendum gildi áfram á ViewBookActivity.
         holder.booksLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -23,7 +23,8 @@ public class ViewBookActivity extends AppCompatActivity {
     }
 
     private void getIncomingIntent(){
-        Log.d(TAG, "getIncomingIntent: checking for incoming intents.");
+
+        // TODO: Fá NoImage til að birtast.
 
         if(getIntent().hasExtra("bookTitle") && getIntent().hasExtra("bookAuthor")){
             Log.d(TAG, "getIncomingIntent: found intent extras.");
@@ -40,6 +41,10 @@ public class ViewBookActivity extends AppCompatActivity {
 
             if (condition == null) {
                 condition = "Unknown";
+            }
+
+            if (image.equals("")) {
+                image = "Noimage.jpg";
             }
 
             setBookInfo(title, author, edition, condition, price, subject, status, user, image);
