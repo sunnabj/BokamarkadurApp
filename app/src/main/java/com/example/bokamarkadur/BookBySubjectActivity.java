@@ -1,11 +1,11 @@
 package com.example.bokamarkadur;
 
-import android.os.Bundle;
-import android.util.Log;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
+import android.util.Log;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
@@ -18,10 +18,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AllBooksActivity extends AppCompatActivity {
+public class BookBySubjectActivity extends AppCompatActivity {
 
     // Notað fyrir debugging
-    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = "BookBySubjectAct";
 
     APIInterface apiInterface;
 
@@ -32,22 +32,23 @@ public class AllBooksActivity extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
+        // RecyclerView - Birtir lista af bókum eftir fagi (subjects).
+        // Notum sama layout list layout og all-books.
         final RecyclerView recyclerView = findViewById(R.id.books_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
+        final String subject = getIncomingIntent();
+
         /**
-         GET kall sem skilar lista af öllum bókum.
+         GET kall sem skilar lista af öllum bókum eftir völdu fagi.
          **/
-        Call<BookList> getAllBooks = apiInterface.getBooks();
-        getAllBooks.enqueue(new Callback<BookList>() {
+        Call<BookList> getBooksBySubject = apiInterface.getBooksBySubject(subject);
+        getBooksBySubject.enqueue(new Callback<BookList>() {
             @Override
             public void onResponse(Call<BookList> call, Response<BookList> response) {
-                List<Book> books = response.body().getBooks();
+                List<Book> books = response.body().getBooksBySubject();
                 recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
-
-                // TODO: Debug virkni, má eyða síðar meir.
-                Log.d(TAG, "Number of books received: " + books.size());
             }
 
             @Override
@@ -57,5 +58,11 @@ public class AllBooksActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+    }
+
+    // Sækjum gildi frá mainActivity - hér valið fag (subject).
+    private String getIncomingIntent(){
+        String subject = getIntent().getStringExtra("viewSubject");
+        return subject;
     }
 }
