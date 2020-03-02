@@ -7,16 +7,17 @@ import java.util.List;
 import javax.security.auth.Subject;
 
 public class SubjectsResponse {
+
     @SerializedName("errors")
     private String errors;
     @SerializedName("subjects")
-    private List<Subject> subjects;
+    private List<String> subjects;
     @SerializedName("msg")
     private String msg;
     @SerializedName("ok")
     private Boolean ok;
 
-    public SubjectsResponse(String errors, List<Subject> subjects, String msg, Boolean ok) {
+    public SubjectsResponse(String errors, List<String> subjects, String msg, Boolean ok) {
 
         this.errors = errors;
         this.subjects = subjects;
@@ -32,11 +33,11 @@ public class SubjectsResponse {
         this.errors = errors;
     }
 
-    public List<Subject> getSubjects() {
+    public List<String> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(List<Subject> subjects) {
+    public void setSubjects(List<String> subjects) {
         this.subjects = subjects;
     }
 
@@ -55,4 +56,6 @@ public class SubjectsResponse {
     public void setOk(Boolean ok) {
         this.ok = ok;
     }
+
+    public List<String> getAvailableSubjects() { return subjects; }
 }

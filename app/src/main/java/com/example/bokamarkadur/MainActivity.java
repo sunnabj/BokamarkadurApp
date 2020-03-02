@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.BooksAdapter;
+import com.example.bokamarkadur.POJO.SubjectsResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
             BookrecyclerView.setLayoutManager(new LinearLayoutManager(this));
             BookrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
-            final RecyclerView SubjectsrecyclerView = findViewById(R.id.newest_books_recycler_view);
+            final RecyclerView SubjectsrecyclerView = findViewById(R.id.available_subjects_recycler_view);
             SubjectsrecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            SubjectsrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
+            SubjectsrecyclerView.setAdapter(new AvailableSubjectsAdapter(new ArrayList<String>(), R.layout.list_subjects, getApplicationContext()));
 
 
             /**
@@ -71,6 +72,28 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<BookList> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e(TAG, t.toString());
+                    call.cancel();
+                }
+            });
+
+            /**
+             GET kall sem skilar lista af mögulegum deildum.
+             **/
+            Call<SubjectsResponse> getAvailableSubjects = apiInterface.getAvailableSubjects();
+            getAvailableSubjects.enqueue(new Callback<SubjectsResponse>() {
+                @Override
+                public void onResponse(Call<SubjectsResponse> call, Response<SubjectsResponse> response) {
+                    List<String> subjects = response.body().getAvailableSubjects();
+                    SubjectsrecyclerView.setAdapter(new AvailableSubjectsAdapter(subjects, R.layout.list_subjects,  getApplicationContext()));
+
+                    // TODO: Debug virkni, má eyða síðar meir.
+                    Log.d(TAG, "Number of books received: " + subjects.size());
+                }
+
+                @Override
+                public void onFailure(Call<SubjectsResponse> call, Throwable t) {
                     // Log error here since request failed
                     Log.e(TAG, t.toString());
                     call.cancel();

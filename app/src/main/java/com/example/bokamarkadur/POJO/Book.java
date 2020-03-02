@@ -34,8 +34,6 @@ public class Book {
 //    private Message messages;
     @SerializedName("subjects")
     private String subjects;
-    @SerializedName("subjectsList")
-    private List<Subjects> subjects;
 
     // Fjarlægt héðan í bili: List<Message> messages
     public Book(long id, String title, String author, Integer edition, String condition,

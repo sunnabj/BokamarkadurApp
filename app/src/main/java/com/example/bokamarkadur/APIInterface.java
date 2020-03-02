@@ -2,6 +2,7 @@ package com.example.bokamarkadur;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
+import com.example.bokamarkadur.POJO.SubjectsResponse;
 import com.example.bokamarkadur.POJO.User;
 import com.google.gson.JsonObject;
 
@@ -18,7 +19,7 @@ interface APIInterface {
     Call<BookList> getNewestBooks();
 
     @GET("/available-subjects")
-    Call<Book> getAvailableSubjects();
+    Call<SubjectsResponse> getAvailableSubjects();
 
     @POST("/addbookforsale")
     Call<Book> addBookForSale(@Body JsonObject body);

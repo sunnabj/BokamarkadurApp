@@ -18,7 +18,7 @@ public class AvailableSubjectsAdapter extends RecyclerView.Adapter<AvailableSubj
 
     private static final String TAG = "ASubjectsAdapter";
 
-    private List<Book> books;
+    private List<String> subjects;
     private int rowLayout;
     private Context context;
 
@@ -35,8 +35,8 @@ public class AvailableSubjectsAdapter extends RecyclerView.Adapter<AvailableSubj
         }
     }
 
-    public AvailableSubjectsAdapter(List<Book> books, int rowLayout, Context context) {
-        this.books = books;
+    public AvailableSubjectsAdapter(List<String> subjects, int rowLayout, Context context) {
+        this.subjects = subjects;
         this.rowLayout = rowLayout;
         this.context = context;
     }
@@ -53,11 +53,11 @@ public class AvailableSubjectsAdapter extends RecyclerView.Adapter<AvailableSubj
     public void onBindViewHolder(AvailableSubjectsAdapter.SubjectViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called.");
 
-        holder.availableSubjects.setText();
+        holder.availableSubjects.setText(subjects.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return books.size();
+        return subjects.size();
     }
 }
