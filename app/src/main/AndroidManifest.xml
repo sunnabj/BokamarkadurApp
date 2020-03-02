@@ -15,7 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ViewBookActivity"></activity>
+        <activity android:name=".BookBySubjectActivity"></activity>
+        <activity android:name=".BooksBySubject" />
+        <activity android:name=".ViewBookActivity" />
         <activity android:name=".AllBooksActivity" />
         <activity android:name=".RequestBookActivity" />
         <activity android:name=".AddBookForSaleActivity" />

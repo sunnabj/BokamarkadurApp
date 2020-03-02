@@ -1,6 +1,7 @@
 package com.example.bokamarkadur;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,11 @@ import java.util.List;
 
 public class AvailableSubjectsAdapter extends RecyclerView.Adapter<AvailableSubjectsAdapter.SubjectViewHolder> {
 
-    private static final String TAG = "ASubjectsAdapter";
+    private static final String TAG = "SubjectsAdapter";
 
     private List<String> subjects;
     private int rowLayout;
     private Context context;
-
 
     public static class SubjectViewHolder extends RecyclerView.ViewHolder {
 
@@ -48,12 +48,23 @@ public class AvailableSubjectsAdapter extends RecyclerView.Adapter<AvailableSubj
         return new AvailableSubjectsAdapter.SubjectViewHolder(view);
     }
 
-
+    // Tökum viðeigandi gildi fyrir hverja bók og tengjum við layout hluti.
     @Override
     public void onBindViewHolder(AvailableSubjectsAdapter.SubjectViewHolder holder, final int position) {
-        Log.d(TAG, "onBindViewHolder: called.");
 
         holder.availableSubjects.setText(subjects.get(position));
+
+        // Sendum það subject sem var valið áfram í BookBySubjectActivity.
+        holder.availableSubjects.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: clicked on: " + subjects.get(position));
+
+                Intent intent = new Intent(context, BookBySubjectActivity.class);
+                intent.putExtra("viewSubject", subjects.get(position));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

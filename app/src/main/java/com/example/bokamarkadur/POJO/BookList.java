@@ -15,6 +15,8 @@ public class BookList {
 
     public List<Book> getNewestBooks() { return books; }
 
+    public List<Book> getBooksBySubject() { return books; }
+
     public void setBooks(List<Book> books) {
         this.books = books;
     }

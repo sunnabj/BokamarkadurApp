@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             BookrecyclerView.setLayoutManager(new LinearLayoutManager(this));
             BookrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
+            // RecyclerView - Birtir lista af mögulegum fögum (subjects).
             final RecyclerView SubjectsrecyclerView = findViewById(R.id.available_subjects_recycler_view);
             SubjectsrecyclerView.setLayoutManager(new LinearLayoutManager(this));
             SubjectsrecyclerView.setAdapter(new AvailableSubjectsAdapter(new ArrayList<String>(), R.layout.list_subjects, getApplicationContext()));
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onResponse(Call<BookList> call, Response<BookList> response) {
                     List<Book> books = response.body().getNewestBooks();
                     BookrecyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
-                    SubjectsrecyclerView.setAdapter(new BooksAdapter(books, R.layout.list_subjects,  getApplicationContext()));
 
                     // TODO: Debug virkni, má eyða síðar meir.
                     Log.d(TAG, "Number of books received: " + books.size());
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             /**
-             GET kall sem skilar lista af mögulegum deildum.
+             GET kall sem skilar lista af mögulegum fögum (subjects).
              **/
             Call<SubjectsResponse> getAvailableSubjects = apiInterface.getAvailableSubjects();
             getAvailableSubjects.enqueue(new Callback<SubjectsResponse>() {
@@ -100,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            // TODO: Eyða tökkum hér að neðan þegar navigation er komið.
 
             //add book 4 sale
             AddBook = (Button) findViewById(R.id.AddBook);

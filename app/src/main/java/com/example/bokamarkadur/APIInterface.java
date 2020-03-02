@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 interface APIInterface {
     @GET("/all-books")
@@ -20,6 +21,9 @@ interface APIInterface {
 
     @GET("/available-subjects")
     Call<SubjectsResponse> getAvailableSubjects();
+
+    @GET("/viewsubjectbooks/{subjects}")
+    Call<BookList> getBooksBySubject(@Path("subjects") String subjects);
 
     @POST("/addbookforsale")
     Call<Book> addBookForSale(@Body JsonObject body);
