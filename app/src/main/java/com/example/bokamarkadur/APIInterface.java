@@ -17,14 +17,20 @@ interface APIInterface {
     @GET("/newest-books")
     Call<BookList> getNewestBooks();
 
+    @GET("/loggedin")
+    Call<User> getLoggedin();
+
     @POST("/addbookforsale")
-    Call<Book> addBookForSale(@Body JsonObject body);
+    Call<Book> addBookForSale1(@Body JsonObject body);
 
     @POST("/addrequestbook")
     Call<Book> addBookRequested(@Body JsonObject body);
 
     @POST("/login")
     Call<User> login(@Body JsonObject body);
+
+    @POST("/login")
+    Call<Book> addBookForSale(@Body JsonObject body);
 
     @POST("/newAccount")
     Call<User> register(@Body JsonObject body);

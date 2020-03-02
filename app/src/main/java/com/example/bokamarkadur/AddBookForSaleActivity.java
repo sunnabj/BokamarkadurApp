@@ -7,14 +7,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.Book;
+import com.example.bokamarkadur.data.model.remote.FileService;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
+import java.io.File;
+
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,6 +27,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
     private Button submit;
     private ProgressDialog progressDialog;
+    FileService fileService;
 
     APIInterface apiInterface;
 
@@ -54,9 +59,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        //File file = new  File("/sdcard/Images/test.png");
+        File file = new  File("");
         //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        //MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName());
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", "");
         //Call<FileInfo> call1 = fileService.upload(body);
 
 
@@ -67,7 +72,10 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         jsonObject.addProperty("edition", "1");
         jsonObject.addProperty("price", "1");
         jsonObject.addProperty("subject", "COMPUTERSCIENCE");
-        //jsonObject.addProperty("file", "null");
+        //jsonObject.addProperty("file", "");
+        jsonObject.add("file",new JsonPrimitive(file.toString()));
+        //jsonObject.addMultipartFile("file", "");
+
 
         Call<Book> newBookForSale = apiInterface.addBookForSale(jsonObject);
         newBookForSale.enqueue(new Callback<Book>() {

@@ -11,9 +11,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.User;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
+import java.io.File;
+
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,6 +26,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
 
     private Button submit;
+    private Button submit1;
     private ProgressDialog progressDialog;
 
     APIInterface apiInterface;
@@ -30,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         submit = (Button) findViewById(R.id.submit);
+        submit1 = (Button) findViewById(R.id.submit1);
 
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -40,6 +47,13 @@ public class LoginActivity extends AppCompatActivity {
                 submitData();
             }
         });
+        submit1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitData1();
+            }
+        });
+
     }
 
     private void submitData(){
@@ -63,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "success: "+response.body(), Toast.LENGTH_LONG).show();
-                            openMainActivity();
+                            //openMainActivity();
                     Log.d("myTag", String.valueOf(response.body()));
                 }
             }
@@ -72,6 +86,56 @@ public class LoginActivity extends AppCompatActivity {
             public void onFailure(Call<User> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void submitData1() {
+
+        EditText title = (EditText) findViewById(R.id.edtTitle);
+        EditText author = (EditText) findViewById(R.id.edtAuthor);
+        EditText edition = (EditText) findViewById(R.id.edtEdition);
+        progressDialog = new ProgressDialog(LoginActivity.this);
+        //progressDialog.setMessage(getString(R.string.loading));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        File file = new  File("");
+        //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", "");
+        //Call<FileInfo> call1 = fileService.upload(body);
+
+
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("title", "1");
+        jsonObject.addProperty("author", "1");
+        jsonObject.addProperty("edition", "1");
+        jsonObject.addProperty("price", "1");
+        jsonObject.addProperty("subject", "COMPUTERSCIENCE");
+        //jsonObject.addProperty("file", "");
+        jsonObject.add("file",new JsonPrimitive(file.toString()));
+        //jsonObject.addMultipartFile("file", "");
+
+
+        Call<Book> newBookForSale = apiInterface.addBookForSale(jsonObject);
+        newBookForSale.enqueue(new Callback<Book>() {
+            @Override
+            public void onResponse(Call<Book> call, Response<Book> response) {
+                //hiding progress dialog
+                progressDialog.dismiss();
+                if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Title: " + response.body().getTitle() + " Price: " + response.body().getPrice(), Toast.LENGTH_LONG).show();
+                    openMainActivity();
+                    Log.d("myTag", String.valueOf(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Book> call, Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("myTag", "HELPHLEP");
             }
         });
     }

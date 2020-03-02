@@ -47,6 +47,16 @@
             android:text="Submit"
             android:textColor="#ffffff" />
 
+        <Button
+            android:id="@+id/submit1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorAccent"
+            android:text="ADDDDDBOOOOOK"
+            android:textColor="#ffffff" />
+
+
     </LinearLayout>
 
 
