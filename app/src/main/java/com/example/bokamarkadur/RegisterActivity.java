@@ -40,6 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
                 submitData();
             }
         });
+
     }
 
     private void submitData() {

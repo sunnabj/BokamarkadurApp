@@ -3,6 +3,8 @@ package com.example.bokamarkadur;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.telephony.mbms.FileInfo;
 import android.util.Log;
 import android.view.View;
@@ -10,16 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.Book;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonObject;
 
-import java.io.File;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +43,35 @@ public class RequestBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 submitData();
+            }
+        });
+
+        /**+
+         * Þetta er navigation bar Sensei minn !!!
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        // Virkjað það ??
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(),
+                                AllBooksActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.about:
+                        startActivity(new Intent(getApplicationContext(),
+                                AboutusActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
             }
         });
     }

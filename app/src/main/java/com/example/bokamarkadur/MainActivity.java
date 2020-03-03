@@ -3,9 +3,11 @@ package com.example.bokamarkadur;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.BooksAdapter;
+import com.example.bokamarkadur.POJO.SubjectsResponse;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +24,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,13 +44,47 @@ public class MainActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
 
+            /**+
+             * Þetta er navigation bar Sensei minn !!!
+             */
+            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+            // set home selected :D
+            bottomNavigationView.setSelectedItemId(R.id.home);
+            // Virkjað það ??
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    switch (menuItem.getItemId()){
+                        case R.id.dashboard:
+                            startActivity(new Intent(getApplicationContext(),
+                                    AllBooksActivity.class));
+                            overridePendingTransition(0,0);
+                            return true;
+                        case R.id.home:
+                            return true;
+                        case R.id.about:
+                            startActivity(new Intent(getApplicationContext(),
+                                    AboutusActivity.class));
+                            overridePendingTransition(0,0);
+                            return true;
+                    }
+                    return false;
+                }
+            });
+
+
             // Tengjumst API Interface sem talar við bakendann okkar.
             apiInterface = APIClient.getClient().create(APIInterface.class);
 
             // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
-            final RecyclerView recyclerView = findViewById(R.id.newest_books_recycler_view);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
+            final RecyclerView BookrecyclerView = findViewById(R.id.newest_books_recycler_view);
+            BookrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            BookrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
+
+            // RecyclerView - Birtir lista af mögulegum fögum (subjects).
+            final RecyclerView SubjectsrecyclerView = findViewById(R.id.available_subjects_recycler_view);
+            SubjectsrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            SubjectsrecyclerView.setAdapter(new AvailableSubjectsAdapter(new ArrayList<String>(), R.layout.list_subjects, getApplicationContext()));
 
 
             /**
@@ -58,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<BookList> call, Response<BookList> response) {
                     List<Book> books = response.body().getNewestBooks();
-                    recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
+                    BookrecyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
 
                     // TODO: Debug virkni, má eyða síðar meir.
                     Log.d(TAG, "Number of books received: " + books.size());
@@ -72,6 +109,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            /**
+             GET kall sem skilar lista af mögulegum fögum (subjects).
+             **/
+            Call<SubjectsResponse> getAvailableSubjects = apiInterface.getAvailableSubjects();
+            getAvailableSubjects.enqueue(new Callback<SubjectsResponse>() {
+                @Override
+                public void onResponse(Call<SubjectsResponse> call, Response<SubjectsResponse> response) {
+                    List<String> subjects = response.body().getAvailableSubjects();
+                    SubjectsrecyclerView.setAdapter(new AvailableSubjectsAdapter(subjects, R.layout.list_subjects,  getApplicationContext()));
+
+                    // TODO: Debug virkni, má eyða síðar meir.
+                    Log.d(TAG, "Number of books received: " + subjects.size());
+                }
+
+                @Override
+                public void onFailure(Call<SubjectsResponse> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e(TAG, t.toString());
+                    call.cancel();
+                }
+            });
+
+            // TODO: Eyða tökkum hér að neðan þegar navigation er komið.
 
             //add book 4 sale
             AddBook = (Button) findViewById(R.id.AddBook);

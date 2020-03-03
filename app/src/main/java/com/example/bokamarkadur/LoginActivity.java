@@ -31,6 +31,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         submit = (Button) findViewById(R.id.submit);
 
+
+
+
+
+
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
