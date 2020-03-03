@@ -3,10 +3,11 @@ package com.example.bokamarkadur;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.BooksAdapter;
 import com.example.bokamarkadur.POJO.SubjectsResponse;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +43,35 @@ public class MainActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+
+            /**+
+             * Þetta er navigation bar Sensei minn !!!
+             */
+            BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+            // set home selected :D
+            bottomNavigationView.setSelectedItemId(R.id.home);
+            // Virkjað það ??
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    switch (menuItem.getItemId()){
+                        case R.id.dashboard:
+                            startActivity(new Intent(getApplicationContext(),
+                                    AllBooksActivity.class));
+                            overridePendingTransition(0,0);
+                            return true;
+                        case R.id.home:
+                            return true;
+                        case R.id.about:
+                            startActivity(new Intent(getApplicationContext(),
+                                    LoginActivity.class));
+                            overridePendingTransition(0,0);
+                            return true;
+                    }
+                    return false;
+                }
+            });
+
 
             // Tengjumst API Interface sem talar við bakendann okkar.
             apiInterface = APIClient.getClient().create(APIInterface.class);
