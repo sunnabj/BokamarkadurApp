@@ -1,12 +1,16 @@
 package com.example.bokamarkadur;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 public class ViewBookActivity extends AppCompatActivity {
@@ -20,6 +24,7 @@ public class ViewBookActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: started.");
 
         getIncomingIntent();
+
     }
 
     private void getIncomingIntent(){

@@ -67,9 +67,14 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
         holder.bookTitle.setText(books.get(position).getTitle());
         holder.bookAuthor.setText(books.get(position).getAuthor());
+        //TODO: Þessi lína fyrir neðan crashar forritinu!
+        // Attempt to invoke virtual method 'java.lang.String java.lang.Integer.toString()' on a
+        // null object reference
         holder.price.setText("Verð: " + books.get(position).getPrice().toString() + " kr");
 
         // Ef image inniheldur tóma strenginn þá skilum við Noimage.jpg.
+        // TODO: Hér kemur null ...
+
         if (image.equals("")) {
             image = "Noimage.jpg";
         }
