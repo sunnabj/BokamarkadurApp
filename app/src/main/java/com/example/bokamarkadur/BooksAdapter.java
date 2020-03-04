@@ -1,4 +1,4 @@
-package com.example.bokamarkadur.POJO;
+package com.example.bokamarkadur;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,22 +15,23 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bokamarkadur.R;
-import com.example.bokamarkadur.ViewBookActivity;
+import com.example.bokamarkadur.POJO.Book;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> {
+public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> implements Filterable {
 
     private static final String TAG = "BooksAdapter";
 
     private List<Book> books;
+    private List<Book> booksListAll;
     private int rowLayout;
     private Context context;
 
-
-    public static class BookViewHolder extends RecyclerView.ViewHolder {
+    public class BookViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout booksLayout;
         TextView bookTitle;
@@ -48,6 +51,8 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
     public BooksAdapter(List<Book> books, int rowLayout, Context context) {
         this.books = books;
+        booksListAll = new ArrayList<>();
+        booksListAll.addAll(books);
         this.rowLayout = rowLayout;
         this.context = context;
     }
@@ -103,4 +108,40 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
     public int getItemCount() {
         return books.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+
+    Filter filter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Book> filteredList = new ArrayList<>();
+            if(constraint.toString().isEmpty()) {
+                filteredList.addAll(booksListAll);
+            } else {
+                for (Book book: booksListAll) {
+                    if(book.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        filteredList.add(book);
+                    }
+                    if(book.getAuthor().toLowerCase().contains(constraint.toString().toLowerCase())) {
+                        filteredList.add(book);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = filteredList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            books.clear();
+            books.addAll((Collection<? extends Book>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }
