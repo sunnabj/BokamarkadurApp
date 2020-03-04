@@ -61,6 +61,7 @@ public class AvailableSubjectsAdapter extends RecyclerView.Adapter<AvailableSubj
                 Log.d(TAG, "onClick: clicked on: " + subjects.get(position));
 
                 Intent intent = new Intent(context, BookBySubjectActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("viewSubject", subjects.get(position));
                 context.startActivity(intent);
             }

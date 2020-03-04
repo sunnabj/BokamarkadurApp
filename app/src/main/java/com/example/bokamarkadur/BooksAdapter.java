@@ -90,6 +90,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
                 Toast.makeText(context, books.get(position).toString(), Toast.LENGTH_LONG);
 
                 Intent intent = new Intent(context, ViewBookActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("bookTitle", books.get(position).getTitle());
                 intent.putExtra("bookAuthor", books.get(position).getAuthor());
                 intent.putExtra("bookEdition", books.get(position).getEdition());
