@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
-import com.example.bokamarkadur.POJO.BooksAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

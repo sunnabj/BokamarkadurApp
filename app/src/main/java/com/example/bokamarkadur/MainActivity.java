@@ -3,6 +3,7 @@ package com.example.bokamarkadur;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
-import com.example.bokamarkadur.POJO.BooksAdapter;
 import com.example.bokamarkadur.POJO.SubjectsResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
