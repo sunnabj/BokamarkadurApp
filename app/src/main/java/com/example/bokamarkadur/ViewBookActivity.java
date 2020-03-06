@@ -2,15 +2,19 @@ package com.example.bokamarkadur;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.squareup.picasso.Picasso;
 
 public class ViewBookActivity extends AppCompatActivity {
 
+    Button btNotification;
     private static final String TAG = "ViewBookActivity";
 
     @Override
@@ -20,6 +24,25 @@ public class ViewBookActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: started.");
 
         getIncomingIntent();
+
+
+
+        // Notification start here :D
+        btNotification = findViewById(R.id.bt_notification);
+
+        btNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = "Hver er myndalegur eins og Ég ?";
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                        ViewBookActivity.this
+                )
+                        .setSmallIcon(R.drawable.ic_dashboard)
+                        .setContentTitle("New Notification")
+                        .setContentText(message)
+                        .setAutoCancel(true);
+            }
+        });
     }
 
     private void getIncomingIntent(){

@@ -92,6 +92,12 @@
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
 
+        <Button
+            android:id="@+id/bt_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Take This Book" />
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -15,12 +15,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AboutusActivity"
-            android:theme="@style/AboutusTheme"></activity>
+        <activity android:name=".MenuActivity"
+            android:theme="@style/MenuTheme"></activity>
+        <activity
+            android:name=".AboutusActivity"
+            android:theme="@style/AboutusTheme" />
         <activity android:name=".BookBySubjectActivity" />
         <activity android:name=".BooksBySubject" />
         <activity android:name=".ViewBookActivity" />
-        <activity android:name=".AllBooksActivity" />
+        <activity
+            android:name=".AllBooksActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".RequestBookActivity" />
         <activity android:name=".AddBookForSaleActivity" />
         <activity android:name=".RegisterActivity" />

@@ -57,7 +57,7 @@ public class AllBooksActivity extends AppCompatActivity {
                         return true;
                     case R.id.about:
                         startActivity(new Intent(getApplicationContext(),
-                                AboutusActivity.class));
+                                MenuActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                 }
