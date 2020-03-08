@@ -34,7 +34,7 @@ The project should be uploaded to Android Studio, and then run either by setting
 
 ### ViewBookActivity ###
 
-* Shows all information about a particular book. It is possible to push a button to request/offer the book, which sends a sms to the user that added the book. This function is still in progress.
+* Shows all information about a particular book. It is possible to push a button to request/offer the book, which sends a text message to the user that added the book. This function is still in progress.
 
 ### LoginActivity ###
 
@@ -43,6 +43,10 @@ The project should be uploaded to Android Studio, and then run either by setting
 ### MenuActivity ###
 
 * Provides a menu at the bottom of the screen, where the user can navigate to major activities. Some of this is still in progress.
+
+### AboutUsActivity ###
+
+* Shows information about the developers.
 
 ### RegisterActivity ###
 
@@ -58,26 +62,62 @@ The project should be uploaded to Android Studio, and then run either by setting
 * Allows a logged in user to add a book for sale to the application.
 * This function is still under construction. An error occurs if a user enters the activity when not logged in, and if logged in, the book he adds is not added to the database. 
 
+## Helper classes ##
 
+### BooksAdapter ###
+
+* Takes a list of books and processes it so that the user sees a well ordered list view layout in the application.
+
+### AvailableSubjectsAdapter ###
+
+* Does the same as BooksAdapter, but with subjects.
+
+### SliderAdapter ###
+
+* Works with AboutUsActivity to show information about the developers in a nice manner.
+
+### Book ###
+
+* Helps Android work with Book objects, retrieved from the backend (and ultimately the database).
+
+### User ###
+
+* Helps Android work with User objects, retrieved from the backend (and ultimately the database).
+
+### BookList ###
+
+* Makes it easier for Android to work with Book objects together in a list.
+
+### SubjectsReponse ###
+
+* Makes it easier to work with subjects that are retrieved by calling the availableSubjects function.
+
+### APIInterface ###
+
+* Defines the pages each function on the client side is working with from the server side.
+
+### APIClient ###
+
+* Connects the client to the server.
 
 
 ## Expected Activities for future releases ##
 
 ### UserInfoActivity ###
 
-* asdfasdf
+* This activity will provide information about users of the application, so that users can learn about users that are selling or requesting books, for example get their contact information.
 
 ### UserProfileActivity ###
 
-* asdfasdf
+* This activity will allow users to update their profile information and get an overlook of the books they have put up for sale or requested in the application.
 
 ### ReviewActivity ###
 
-* asdfasdf
+* This will allow users to write reviews of users they have had business with, and look at reviews for users they might plan to conduct business with.
 
 ### MessageActivity ###
 
-* asdfasdf
+* This activity is supposed to let users communicate with each other regarding certain books, but might not be implemented - the text message function might be sufficient.
 
 
 ## Developers ##
