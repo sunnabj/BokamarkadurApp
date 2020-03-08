@@ -1,21 +1,36 @@
 package com.example.bokamarkadur;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 public class ViewBookActivity extends AppCompatActivity {
 
-    Button btNotification;
+    Button btSMS;
     private static final String TAG = "ViewBookActivity";
+    private static final int REQUEST_SMS = 0;
+    private static final int REQ_PICK_CONTACT = 2 ;
+    private EditText phoneEditText;
+    private EditText messageEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +42,68 @@ public class ViewBookActivity extends AppCompatActivity {
 
 
 
-        // Notification start here :D
-        btNotification = findViewById(R.id.bt_notification);
+        // SMS start here :D
+        messageEditText = (EditText) findViewById(R.id.message_edit_text);
+        btSMS = findViewById(R.id.bt_sms);
 
-        btNotification.setOnClickListener(new View.OnClickListener() {
+        btSMS.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String message = "Hver er myndalegur eins og Ég ?";
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(
-                        ViewBookActivity.this
-                )
-                        .setSmallIcon(R.drawable.ic_dashboard)
-                        .setContentTitle("New Notification")
-                        .setContentText(message)
-                        .setAutoCancel(true);
+            public void onClick(View view) {
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                    int hasSMSPermission = checkSelfPermission(Manifest.permission.SEND_SMS);
+                    if (hasSMSPermission != PackageManager.PERMISSION_GRANTED) {
+                        if (!shouldShowRequestPermissionRationale(Manifest.permission.SEND_SMS)) {
+                            showMessageOKCancel("You need to allow access to Send SMS",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                requestPermissions(new String[] {Manifest.permission.SEND_SMS},
+                                                        REQUEST_SMS);
+                                            }
+                                        }
+                                    });
+                            return;
+                        }
+                        requestPermissions(new String[] {Manifest.permission.SEND_SMS},
+                                REQUEST_SMS);
+                        return;
+                    }
+                    sendMySMS();
+                }
             }
         });
+    }
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+        new AlertDialog.Builder(ViewBookActivity.this)
+                .setMessage(message)
+                .setPositiveButton("OK", okListener)
+                .setNegativeButton("Cancel", null)
+                .create()
+                .show();
+    }
+    public void sendMySMS() {
+
+        String phone = "6161350";
+        String message = messageEditText.getText().toString();
+
+        //Check if the phoneNumber is empty
+        if (phone.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Please Enter a Valid Phone Number", Toast.LENGTH_SHORT).show();
+        } else {
+
+            SmsManager sms = SmsManager.getDefault();
+            // if message length is too long messages are divided
+            List<String> messages = sms.divideMessage(message);
+            for (String msg : messages) {
+
+                PendingIntent sentIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), 0);
+                PendingIntent deliveredIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), 0);
+                sms.sendTextMessage(phone, null, msg, sentIntent, deliveredIntent);
+
+            }
+        }
     }
 
     private void getIncomingIntent(){

@@ -31,7 +31,7 @@ interface APIInterface {
     @POST("/addrequestbook")
     Call<Book> addBookRequested(@Body JsonObject body);
 
-    @POST("/login")
+    @POST("/authenticate")
     Call<User> login(@Body JsonObject body);
 
     @POST("/newAccount")
