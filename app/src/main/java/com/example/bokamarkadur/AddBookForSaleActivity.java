@@ -2,6 +2,7 @@ package com.example.bokamarkadur;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
     private Button submit;
     private ProgressDialog progressDialog;
+    private MediaSession.Token token;
 
     APIInterface apiInterface;
 
@@ -71,7 +73,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         jsonObject.addProperty("subject", "COMPUTERSCIENCE");
         //jsonObject.addProperty("file", "null");
 
-        Call<Book> newBookForSale = apiInterface.addBookForSale(jsonObject);
+        Call<Book> newBookForSale = apiInterface.addBookForSale(jsonObject, "Bearer "+token);
         newBookForSale.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
