@@ -73,7 +73,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         jsonObject.addProperty("subject", "COMPUTERSCIENCE");
         //jsonObject.addProperty("file", "null");
 
-        Call<Book> newBookForSale = apiInterface.addBookForSale(jsonObject, "Bearer "+token);
+        Call<Book> newBookForSale = apiInterface.addBookForSale(jsonObject);
         newBookForSale.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
