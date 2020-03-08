@@ -44,8 +44,6 @@ public class AddBookForSaleActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     private void submitData() {
@@ -73,7 +71,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         jsonObject.addProperty("price", price.getText().toString());
         jsonObject.addProperty("subject", subject.getText().toString());
         jsonObject.addProperty("condition", condition.getText().toString());
-        //jsonObject.addProperty("file", "null");
+        jsonObject.addProperty("file", "null");
 
         Call<Book> newBookForSale = apiInterface.addBookForSale(jsonObject, "Bearer "+token);
         newBookForSale.enqueue(new Callback<Book>() {
