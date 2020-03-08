@@ -34,7 +34,7 @@ The project should be uploaded to Android Studio, and then run either by setting
 
 ### ViewBookActivity ###
 
-* Shows all information about a particular book. It is possible to push a button to request/offer the book, which sends a sms to the user that added the book. This function is still in progress.
+* Shows all information about a particular book. It is possible to push a button to request/offer the book, which sends a text message to the user that added the book. This function is still in progress.
 
 ### LoginActivity ###
 
@@ -65,19 +65,19 @@ The project should be uploaded to Android Studio, and then run either by setting
 
 ### UserInfoActivity ###
 
-* asdfasdf
+* This activity will provide information about users of the application, so that users can learn about users that are selling or requesting books, for example get their contact information.
 
 ### UserProfileActivity ###
 
-* asdfasdf
+* This activity will allow users to update their profile information and get an overlook of the books they have put up for sale or requested in the application.
 
 ### ReviewActivity ###
 
-* asdfasdf
+* This will allow users to write reviews of users they have had business with, and look at reviews for users they might plan to conduct business with.
 
 ### MessageActivity ###
 
-* asdfasdf
+* This activity is supposed to let users communicate with each other regarding certain books, but might not be implemented - the text message function might be sufficient.
 
 
 ## Developers ##
