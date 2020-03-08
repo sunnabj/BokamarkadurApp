@@ -27,13 +27,11 @@ interface APIInterface {
     @GET("/viewsubjectbooks/{subjects}")
     Call<BookList> getBooksBySubject(@Path("subjects") String subjects);
 
-    @Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("/addbookforsale")
-    Call<Book> addBookForSale(@Body JsonObject body, @Header("Authorization") String authHeader);
+    Call<Book> addBookForSale(@Body JsonObject body);
 
-    //@Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("/addrequestbook")
-    Call<Book> addBookRequested(@Body JsonObject body); //, @Header("Authorization") String authHeader);
+    Call<Book> addBookRequested(@Body JsonObject body);
 
     @POST("/authenticate")
     Call<User> login(@Body JsonObject body);
