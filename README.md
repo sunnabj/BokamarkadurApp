@@ -62,37 +62,41 @@ The project should be uploaded to Android Studio, and then run either by setting
 * Allows a logged in user to add a book for sale to the application.
 * This function is still under construction. An error occurs if a user enters the activity when not logged in, and if logged in, the book he adds is not added to the database. 
 
-### Helper classes ###
+## Helper classes ##
 
-#### BooksAdapter ####
+### BooksAdapter ###
 
 * Takes a list of books and processes it so that the user sees a well ordered list view layout in the application.
 
-#### AvailableSubjectsAdapter ####
+### AvailableSubjectsAdapter ###
 
 * Does the same as BooksAdapter, but with subjects.
 
-#### SliderAdapter ####
+### SliderAdapter ###
 
 * Works with AboutUsActivity to show information about the developers in a nice manner.
 
-#### Book ####
+### Book ###
 
 * Helps Android work with Book objects, retrieved from the backend (and ultimately the database).
 
-#### User ####
+### User ###
 
 * Helps Android work with User objects, retrieved from the backend (and ultimately the database).
 
-#### BookList ####
+### BookList ###
 
 * Makes it easier for Android to work with Book objects together in a list.
 
-#### APIInterface ####
+### SubjectsReponse ###
+
+* Makes it easier to work with subjects that are retrieved by calling the availableSubjects function.
+
+### APIInterface ###
 
 * Defines the pages each function on the client side is working with from the server side.
 
-#### APIClient ####
+### APIClient ###
 
 * Connects the client to the server.
 
