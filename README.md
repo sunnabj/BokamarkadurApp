@@ -31,6 +31,7 @@ The project should be uploaded to Android Studio, and then run either by setting
 
 * Shows a list of all available books. 
 * When a book is pushed, the viewBookActivity is activated.
+* A search bar is visible on top of the screen - there the user can put a search string and books that contain this string either in their title or author's name are shown.
 
 ### ViewBookActivity ###
 
