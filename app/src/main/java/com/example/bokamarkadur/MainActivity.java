@@ -44,12 +44,10 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);
 
             /**+
-             * Þetta er navigation bar Sensei minn !!!
+             * Bottom navigation
              */
             BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-            // set home selected :D
             bottomNavigationView.setSelectedItemId(R.id.home);
-            // Virkjað það ??
             bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
