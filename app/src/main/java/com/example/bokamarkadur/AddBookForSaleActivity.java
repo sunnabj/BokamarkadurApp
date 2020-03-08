@@ -53,6 +53,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         EditText title = (EditText) findViewById(R.id.edtTitle);
         EditText author = (EditText) findViewById(R.id.edtAuthor);
         EditText edition = (EditText) findViewById(R.id.edtEdition);
+        EditText subject = (EditText) findViewById(R.id.edtSubject);
+        EditText price = (EditText) findViewById(R.id.edtPrice);
+        EditText condition = (EditText) findViewById(R.id.edtCondition);
         progressDialog = new ProgressDialog(AddBookForSaleActivity.this);
         //progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
@@ -63,14 +66,13 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         //MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName());
         //Call<FileInfo> call1 = fileService.upload(body);
 
-
-
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("title", "1");
-        jsonObject.addProperty("author", "1");
-        jsonObject.addProperty("edition", "1");
-        jsonObject.addProperty("price", "1");
-        jsonObject.addProperty("subject", "COMPUTERSCIENCE");
+        jsonObject.addProperty("title", title.getText().toString());
+        jsonObject.addProperty("author", author.getText().toString());
+        jsonObject.addProperty("edition", edition.getText().toString());
+        jsonObject.addProperty("price", price.getText().toString());
+        jsonObject.addProperty("subject", subject.getText().toString());
+        jsonObject.addProperty("condition", condition.getText().toString());
         //jsonObject.addProperty("file", "null");
 
         Call<Book> newBookForSale = apiInterface.addBookForSale(jsonObject, "Bearer "+token);
