@@ -13,6 +13,10 @@ import androidx.viewpager.widget.ViewPager;
 
 public class AboutusActivity extends AppCompatActivity {
 
+    /**
+     * Þessi activity sýnir upplýsingar um fólkið á bak við appið.
+     */
+
     private ViewPager mSlidePager;
     private LinearLayout mDotLayout;
 
@@ -45,7 +49,7 @@ public class AboutusActivity extends AppCompatActivity {
 
 
 
-        // Sitja listener fyrir takkan
+        // Setja listener fyrir takkan
         mNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

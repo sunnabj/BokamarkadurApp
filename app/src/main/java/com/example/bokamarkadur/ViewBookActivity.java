@@ -40,9 +40,10 @@ public class ViewBookActivity extends AppCompatActivity {
 
         getIncomingIntent();
 
-
-
-        // SMS start here :D
+        /**
+         * Takk er fyrir neðan hverja bók sem hægt er að ýta á til að senda sms til þess sem setti
+         * bókina inn. Þessi virkni er í vinnslu.
+         */
         messageEditText = (EditText) findViewById(R.id.message_edit_text);
         btSMS = findViewById(R.id.bt_sms);
 
@@ -83,6 +84,9 @@ public class ViewBookActivity extends AppCompatActivity {
                 .create()
                 .show();
     }
+    /**
+    * Sms-ið er sent - nú í bráðabirgðasímanúmer.
+     */
     public void sendMySMS() {
 
         String phone = "6161350";
@@ -105,6 +109,10 @@ public class ViewBookActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * Kóðinn hér fyrir neðan birtir þá bók sem notandi ýtti á til að komast inn í þetta Activity.
+     */
 
     private void getIncomingIntent(){
 

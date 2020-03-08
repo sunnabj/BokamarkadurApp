@@ -45,6 +45,9 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void submitData() {
 
+        /**
+         * Upplýsingar eru fengnar úr formi í layout og JsonObject búinn til út frá þeim
+         */
         EditText name = (EditText) findViewById(R.id.edtName);
         EditText email = (EditText) findViewById(R.id.edtEmail);
         EditText username = (EditText) findViewById(R.id.edtUsername);
@@ -61,6 +64,10 @@ public class RegisterActivity extends AppCompatActivity {
         jsonObject.addProperty("username", username.getText().toString());
         jsonObject.addProperty("password", password.getText().toString());
         jsonObject.addProperty("retypePassword", retypepassword.getText().toString());
+
+        /**
+         * JsonObjectinn er svo notaður til að búa til nýjan User í gagnagrunninn.
+         */
 
         Call<User> registerUser = apiInterface.register(jsonObject);
         registerUser.enqueue(new Callback<User>() {

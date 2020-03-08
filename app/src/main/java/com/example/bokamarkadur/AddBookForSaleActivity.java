@@ -21,9 +21,12 @@ import retrofit2.Response;
 
 public class AddBookForSaleActivity extends AppCompatActivity {
 
+    /**
+     * Virkni hér er ekki tilbúin, kóðinn hér er mest megnis prufukóði.
+     */
+
     private Button submit;
     private ProgressDialog progressDialog;
-    private MediaSession.Token token;
 
     APIInterface apiInterface;
 
@@ -44,8 +47,6 @@ public class AddBookForSaleActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     private void submitData() {
@@ -58,12 +59,18 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
+        /*
+         * Prufulínur sem tengjast því að setja inn mynd
+         */
+
         //File file = new  File("/sdcard/Images/test.png");
         //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         //MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName());
         //Call<FileInfo> call1 = fileService.upload(body);
 
-
+        /**
+         * Harðkóðað JSON object til að testa
+         */
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("title", "1");

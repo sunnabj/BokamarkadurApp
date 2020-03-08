@@ -25,6 +25,10 @@ import retrofit2.Response;
 
 public class RequestBookActivity extends AppCompatActivity {
 
+    /**
+     * Virkni hér er ekki tilbúin, kóðinn hér er mest megnis prufukóði.
+     */
+
     private Button submit;
     private ProgressDialog progressDialog;
 

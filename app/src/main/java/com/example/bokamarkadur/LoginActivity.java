@@ -32,10 +32,6 @@ public class LoginActivity extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
 
 
-
-
-
-
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -49,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void submitData(){
 
+        /**
+         * Gögn sem notandi slær inn í form í layout eru tekin og JsonObject búinn til úr þeim.
+         */
         EditText username = (EditText) findViewById(R.id.edtUsername);
         EditText password = (EditText) findViewById(R.id.edtPassword);
         progressDialog = new ProgressDialog(LoginActivity.this);
@@ -60,6 +59,10 @@ public class LoginActivity extends AppCompatActivity {
         jsonObject.addProperty("username", username.getText().toString());
         jsonObject.addProperty("password", password.getText().toString());
 
+        /**
+         * JsonObjectinn er notaður til að ákvarða hvaða notandi í gagnagrunninnum er nú
+         * loggaður inn. Fáum response á skjá sem segir til um success.
+         */
         Call<User> loginUser = apiInterface.login(jsonObject);
         loginUser.enqueue(new Callback<User>() {
             @Override
