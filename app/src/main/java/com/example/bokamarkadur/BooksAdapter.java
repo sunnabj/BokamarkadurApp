@@ -24,6 +24,7 @@ import java.util.List;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> implements Filterable {
 
+    // Notað fyrir debugging
     private static final String TAG = "BooksAdapter";
 
     private List<Book> books;

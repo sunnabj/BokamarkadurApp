@@ -17,6 +17,7 @@ import java.util.List;
 
 public class AvailableSubjectsAdapter extends RecyclerView.Adapter<AvailableSubjectsAdapter.SubjectViewHolder> {
 
+    // Notað fyrir debugging
     private static final String TAG = "SubjectsAdapter";
 
     private List<String> subjects;

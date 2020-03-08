@@ -47,10 +47,9 @@ public class RequestBookActivity extends AppCompatActivity {
         });
 
         /**+
-         * Þetta er navigation bar Sensei minn !!!
+         *  Bottom navigation.
          */
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // Virkjað það ??
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
