@@ -73,7 +73,11 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
         holder.bookTitle.setText(books.get(position).getTitle());
         holder.bookAuthor.setText(books.get(position).getAuthor());
-        holder.price.setText("Verð: " + books.get(position).getPrice().toString() + " kr");
+        if (books.get(position).getPrice() == null) {
+            holder.price.setText("Ekkert verð");
+        } else {
+            holder.price.setText("Verð: " + books.get(position).getPrice().toString() + " kr");
+        }
 
         // Ef image inniheldur tóma strenginn þá skilum við Noimage.jpg.
         if (image.equals("")) {
