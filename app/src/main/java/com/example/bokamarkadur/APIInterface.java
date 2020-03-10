@@ -31,6 +31,7 @@ interface APIInterface {
     @GET("/viewsubjectbooks/{subjects}")
     Call<BookList> getBooksBySubject(@Path("subjects") String subjects);
 
+
 //    @GET("api/Profiles/GetProfile?id={id}")
 //    Call<UserProfile> getUser(@Path("id") String id, @Header("Authorization") String authHeader);
 
@@ -46,9 +47,8 @@ interface APIInterface {
                               @Part("price") int price,
                               @Part("subject") String subject);
 
-    //@Headers({ "Content-Type: application/json;charset=UTF-8"})
     @POST("/addrequestbook")
-    Call<Book> addBookRequested(@Body JsonObject body); //, @Header("Authorization") String authHeader);
+    Call<Book> addBookRequested(@Body JsonObject body);
 
     @POST("/authenticate")
     Call<User> login(@Body JsonObject body);

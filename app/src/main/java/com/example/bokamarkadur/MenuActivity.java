@@ -10,7 +10,6 @@ import androidx.cardview.widget.CardView;
 
 public class MenuActivity extends AppCompatActivity {
 
-    // Takkar neðst á síðu - Verður fært í menu.
     private Button loginbutton;
     private Button registerbutton;
     private CardView AddBook;

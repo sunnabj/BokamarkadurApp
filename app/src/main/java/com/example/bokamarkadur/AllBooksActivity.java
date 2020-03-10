@@ -38,12 +38,10 @@ public class AllBooksActivity extends AppCompatActivity {
 
 
         /**+
-         * Þetta er navigation bar Sensei minn !!!
+         *  Bottom navigation
          */
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // set home selected :D
         bottomNavigationView.setSelectedItemId(R.id.dashboard);
-        // Virkjað það ??
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -98,6 +96,10 @@ public class AllBooksActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Leitin í all books, birtist efst á skjá (Top Nav).
+     * @param menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -111,13 +113,10 @@ public class AllBooksActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 booksAdapter.getFilter().filter(newText);
-
                 return false;
             }
         }));
-
 
         return super.onCreateOptionsMenu(menu);
     }

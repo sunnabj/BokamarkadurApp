@@ -25,6 +25,10 @@ import retrofit2.Response;
 
 public class RequestBookActivity extends AppCompatActivity {
 
+    /**
+     * Virkni hér er ekki tilbúin, kóðinn hér er mest megnis prufukóði.
+     */
+
     private Button submit;
     private ProgressDialog progressDialog;
 
@@ -47,10 +51,9 @@ public class RequestBookActivity extends AppCompatActivity {
         });
 
         /**+
-         * Þetta er navigation bar Sensei minn !!!
+         *  Bottom navigation.
          */
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        // Virkjað það ??
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

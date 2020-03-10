@@ -92,11 +92,20 @@
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/bt_notification"
+        <EditText
+            android:id="@+id/message_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Take This Book" />
+            android:contentDescription="Message to seller"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Message to seller(change here)" />
+
+        <Button
+            android:id="@+id/bt_sms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send request for this book" />
 
     </LinearLayout>
 

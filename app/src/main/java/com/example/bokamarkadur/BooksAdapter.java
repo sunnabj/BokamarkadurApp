@@ -24,6 +24,7 @@ import java.util.List;
 
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> implements Filterable {
 
+    // Notað fyrir debugging
     private static final String TAG = "BooksAdapter";
 
     private List<Book> books;
@@ -72,7 +73,11 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
         holder.bookTitle.setText(books.get(position).getTitle());
         holder.bookAuthor.setText(books.get(position).getAuthor());
-        holder.price.setText("Verð: " + books.get(position).getPrice().toString() + " kr");
+        if (books.get(position).getPrice() == null) {
+            holder.price.setText("Ekkert verð");
+        } else {
+            holder.price.setText("Verð: " + books.get(position).getPrice().toString() + " kr");
+        }
 
         // Ef image inniheldur tóma strenginn þá skilum við Noimage.jpg.
         if (image.equals("")) {

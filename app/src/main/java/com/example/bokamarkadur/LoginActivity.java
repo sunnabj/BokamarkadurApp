@@ -45,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void submitData(){
 
+        /**
+         * Gögn sem notandi slær inn í form í layout eru tekin og JsonObject búinn til úr þeim.
+         */
         EditText username = (EditText) findViewById(R.id.edtUsername);
         EditText password = (EditText) findViewById(R.id.edtPassword);
         progressDialog = new ProgressDialog(LoginActivity.this);
@@ -56,6 +59,10 @@ public class LoginActivity extends AppCompatActivity {
         jsonObject.addProperty("username", username.getText().toString());
         jsonObject.addProperty("password", password.getText().toString());
 
+        /**
+         * JsonObjectinn er notaður til að ákvarða hvaða notandi í gagnagrunninnum er nú
+         * loggaður inn. Fáum response á skjá sem segir til um success.
+         */
         Call<User> loginUser = apiInterface.login(jsonObject);
         loginUser.enqueue(new Callback<User>() {
             @Override
@@ -83,53 +90,4 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
-    // Færa Response í bakenda eða annað?
-
-//    private class PostResponse {
-//        @SerializedName("errors")
-//        @Expose
-//        private Object errors;
-//        @SerializedName("user")
-//        @Expose
-//        private User user;
-//        @SerializedName("ok")
-//        @Expose
-//        private Boolean ok;
-//        @SerializedName("msg")
-//        @Expose
-//        private String msg;
-//
-//        public Object getErrors() {
-//            return errors;
-//        }
-//
-//        public void setErrors(Object errors) {
-//            this.errors = errors;
-//        }
-//
-//        public User getUser() {
-//            return user;
-//        }
-//
-//        public void setUser(User user) {
-//            this.user = user;
-//        }
-//
-//        public Boolean getOk() {
-//            return ok;
-//        }
-//
-//        public void setOk(Boolean ok) {
-//            this.ok = ok;
-//        }
-//
-//        public String getMsg() {
-//            return msg;
-//        }
-//
-//        public void setMsg(String msg) {
-//            this.msg = msg;
-//        }
-//    }
 }
