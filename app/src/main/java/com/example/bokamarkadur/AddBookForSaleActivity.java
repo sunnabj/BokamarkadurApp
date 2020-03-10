@@ -44,16 +44,13 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
     private Button uploadImage;
     private Button submit;
+    private Uri selectedImage;
+    private String imgDecodableString;
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1888;
 
-    private Uri selectedImage;
-    private String imgDecodableString;
-
     APIInterface apiInterface;
-
-    String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,27 +141,14 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        //File file = new  File("/sdcard/Images/test.png");
-        //RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        //MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName());
-        //Call<FileInfo> call1 = fileService.upload(body);
-
-//        final JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("title", title.getText().toString());
-//        jsonObject.addProperty("author", author.getText().toString());
-//        jsonObject.addProperty("edition", edition.getText().toString());
-//        jsonObject.addProperty("price", price.getText().toString());
-//        jsonObject.addProperty("subject", subject.getText().toString());
-//        jsonObject.addProperty("condition", condition.getText().toString());
-//        jsonObject.addProperty("file", "");
-
         File file = new File(imgDecodableString);
         Log.d("filepath: ", imgDecodableString);
         // Create a request body with file and image media type
         okhttp3.RequestBody fileReqBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("image/*"), file);
         // Create MultipartBody.Part using file request-body,file name and part name
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
-        //Create request body with text description and text media type
+
+        // Get values from form.
         String titlePart = title.getText().toString();
         String authorPart = author.getText().toString();
         int editionPart = Integer.parseInt(edition.getText().toString());
@@ -181,12 +165,10 @@ public class AddBookForSaleActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 Log.d("onResponse: ", String.valueOf(response.body()));
                 if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "Title: " + response.body().getTitle() + " Price: " + response.body().getPrice(), Toast.LENGTH_LONG).show();
                     openMainActivity();
-                    Log.d("Success: ", String.valueOf(response.body()));
+                    Log.d("Success: ", response.body().getTitle() + " has been added.");
                 } else {
                     try {
-                        Log.d("error", response.raw().body().string());
                         Log.d("error", response.errorBody().string());
                     } catch (Exception e) {
                         Log.d("error: ", e.getMessage());
