@@ -37,7 +37,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
         LinearLayout booksLayout;
         TextView bookTitle;
         TextView bookAuthor;
-        TextView price;
+        TextView bookStatus;
         ImageView image;
 
         public BookViewHolder(View v) {
@@ -45,7 +45,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             booksLayout = (LinearLayout) v.findViewById(R.id.books_layout);
             bookTitle = (TextView) v.findViewById(R.id.title);
             bookAuthor = (TextView) v.findViewById(R.id.author);
-            price = (TextView) v.findViewById(R.id.price);
+            bookStatus = (TextView) v.findViewById(R.id.status);
             image = (ImageView) v.findViewById(R.id.image);
         }
     }
@@ -73,11 +73,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
         holder.bookTitle.setText(books.get(position).getTitle());
         holder.bookAuthor.setText(books.get(position).getAuthor());
-        if (books.get(position).getPrice() == null) {
-            holder.price.setText("Ekkert verð");
-        } else {
-            holder.price.setText("Verð: " + books.get(position).getPrice().toString() + " kr");
-        }
+        holder.bookStatus.setText(books.get(position).getStatus());
 
         // Ef image inniheldur tóma strenginn þá skilum við Noimage.jpg.
         if (image.equals("")) {

@@ -34,7 +34,7 @@
             android:textColor="@color/colorGreyLight" />
 
         <TextView
-            android:id="@+id/price"
+            android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="3"
