@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button submit;
     private ProgressDialog progressDialog;
+    public static String token;
 
     APIInterface apiInterface;
 
@@ -30,11 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         submit = (Button) findViewById(R.id.submit);
-
-
-
-
-
 
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -69,7 +65,9 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "success: "+response.body(), Toast.LENGTH_LONG).show();
                             openMainActivity();
-                    Log.d("myTag", String.valueOf(response.body()));
+                    Log.d("login", String.valueOf(response.body()));
+
+                    token = response.body().getToken();
                 }
             }
 
