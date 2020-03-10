@@ -24,11 +24,12 @@ public class User {
     private String retypePassword;
     @SerializedName("books")
     private List<Book> books;
+    @SerializedName("token")
+    private String token;
 
     // Fjarlægt héðan í bili: List<Message> messages
     public User(long id, String info, String name, String username, String email, String password,
                 String retypePassword, List<Book> books) {
-
         this.id = id;
         this.info = info;
         this.name = name;
@@ -37,6 +38,10 @@ public class User {
         this.password = password;
         this.retypePassword = retypePassword;
         this.books = books;
+    }
+
+    public User(String token) {
+        this.token = token;
     }
 
     public long getId() {
@@ -71,6 +76,10 @@ public class User {
         return books;
     }
 
+    public String getToken() {
+        return token;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -101,5 +110,9 @@ public class User {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
