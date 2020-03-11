@@ -2,70 +2,134 @@
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-<TableLayout
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:stretchColumns="1">
+    android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/newest_books_recycler_view"
-        android:layout_width="wrap_content"
-        android:layout_height="312dp"></androidx.recyclerview.widget.RecyclerView>
+    <ScrollView style="@style/parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-    <Button
-        android:id="@+id/AddBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Book After Login !!"></Button>
-    <Button
-        android:id="@+id/RequestBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Request Book After Login !!"></Button>
-    <Button
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login PLEASE"></Button>
-    <Button
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register PLEASE"></Button>
-    <Button
-        android:id="@+id/all_books"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="View All Books"></Button>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:weightSum="12">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/available_subjects_recycler_view"
-        android:scrollbars="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"/>
-</TableLayout>
+                <LinearLayout
+                    style="@style/parent"
+                    android:layout_weight="3"
+                    android:background="@drawable/login_shape_bk"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/parent"
+                        android:background="@drawable/ic_login_bk"
+                        android:contentDescription="login background" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="30dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    style="@style/headerText"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:text="Besti Bókamarkaður" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:paddingTop="170dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/shape"
+                    android:orientation="vertical">
+
+                    <TableLayout
+                        android:id="@+id/activity_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:stretchColumns="1">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/newest_books_recycler_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="312dp"></androidx.recyclerview.widget.RecyclerView>
+
+
+                        <Button
+                            android:id="@+id/AddBook"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Book After Login !!"></Button>
+
+                        <Button
+                            android:id="@+id/RequestBook"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Request Book After Login !!"></Button>
+
+                        <Button
+                            android:id="@+id/login"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Login PLEASE"></Button>
+
+                        <Button
+                            android:id="@+id/register"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Register PLEASE"></Button>
+
+                        <Button
+                            android:id="@+id/all_books"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="View All Books"></Button>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/available_subjects_recycler_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="150dp"
+                            android:scrollbars="vertical" />
+                    </TableLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:itemBackground="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/primaryTextColor"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
-        app:menu="@menu/menu_navigation"
-        android:layout_alignParentBottom="true"/>
+        app:menu="@menu/menu_navigation" />
 </RelativeLayout>
 
 

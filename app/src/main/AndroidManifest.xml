@@ -24,14 +24,20 @@
             android:name=".AboutusActivity"
             android:theme="@style/AboutusTheme" />
         <activity android:name=".BookBySubjectActivity" />
-        <activity android:name=".ViewBookActivity" />
+        <activity android:name=".ViewBookActivity"
+            android:theme="@style/AboutusTheme"/>
         <activity
             android:name=".AllBooksActivity"
+            android:theme="@style/AllBookTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".RequestBookActivity" />
-        <activity android:name=".AddBookForSaleActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".RequestBookActivity"
+            android:theme="@style/AboutusTheme"/>
+        <activity android:name=".AddBookForSaleActivity"
+            android:theme="@style/AboutusTheme"/>
+        <activity android:name=".RegisterActivity"
+            android:theme="@style/AboutusTheme"/>
+        <activity android:name=".LoginActivity"
+            android:theme="@style/AboutusTheme"/>
         <activity
             android:name=".Splashscreen"
             android:theme="@style/SplashTheme">
@@ -41,7 +47,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:theme="@style/AboutusTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

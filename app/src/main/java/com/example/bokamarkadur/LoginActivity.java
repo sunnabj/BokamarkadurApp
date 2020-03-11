@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button submit;
     private ProgressDialog progressDialog;
+    private TextView signup;
     public static String token;
 
     APIInterface apiInterface;
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         submit = (Button) findViewById(R.id.submit);
-
+        signup = (TextView) findViewById(R.id.bt_signup);
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -39,6 +41,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 submitData();
+            }
+        });
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRegisterActivity();
             }
         });
     }
@@ -88,6 +96,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void openMainActivity() {
         Intent intent= new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+    public void openRegisterActivity() {
+        Intent intent= new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 }

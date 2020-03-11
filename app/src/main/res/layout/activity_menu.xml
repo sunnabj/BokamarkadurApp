@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,26 +9,44 @@
     >
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        style="@style/parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <RelativeLayout
-                android:id="@+id/topArea"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@drawable/gradient"
-                >
+                style="@style/parent">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:weightSum="12">
+
+                    <LinearLayout
+                        style="@style/parent"
+                        android:background="@drawable/login_shape_bk"
+                        android:orientation="vertical"
+                        android:layout_weight="3">
+
+                        <ImageView
+                            style="@style/parent"
+                            android:background="@drawable/ic_login_bk"
+                            android:contentDescription="login background" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
 
                 <TextView
                     android:id="@+id/myMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="    My Menu"
+                    android:text="    My Menu           "
                     android:textStyle="bold"
                     android:textSize="25sp"
                     android:layout_margin="20dp"
@@ -38,7 +56,7 @@
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Hieu Van Phan"
+                    android:text="Hieu Van Phan                   "
                     android:textSize="15sp"
                     android:layout_below="@id/myMenu"
                     android:layout_alignEnd="@id/myMenu"
@@ -64,15 +82,13 @@
                 android:layout_height="match_parent"
                 android:columnCount="2"
                 android:layout_marginTop="-80dp"
-                android:padding="5dp"
-                android:layout_marginLeft="10dp"
                 >
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/myBook"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="30dp"
                     app:cardElevation="7dp"
                     app:cardCornerRadius="10dp"
                     >
@@ -107,9 +123,9 @@
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/AddBook"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="30dp"
                     app:cardElevation="7dp"
                     app:cardCornerRadius="10dp"
                     >
@@ -142,9 +158,9 @@
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/RequestBook"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="30dp"
                     app:cardElevation="7dp"
                     app:cardCornerRadius="10dp"
                     >
@@ -178,9 +194,9 @@
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/feedback"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="30dp"
                     app:cardElevation="7dp"
                     app:cardCornerRadius="10dp"
                     >
@@ -215,9 +231,9 @@
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/all_books"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="30dp"
                     app:cardElevation="7dp"
                     app:cardCornerRadius="10dp"
                     >
@@ -251,9 +267,9 @@
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/setting"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="30dp"
                     app:cardElevation="7dp"
                     app:cardCornerRadius="10dp"
                     >
@@ -286,9 +302,9 @@
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/about"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="30dp"
                     app:cardElevation="7dp"
                     app:cardCornerRadius="10dp"
                     >
@@ -321,9 +337,9 @@
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
                     android:id="@+id/logout"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_margin="10dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="30dp"
                     app:cardElevation="7dp"
                     app:cardCornerRadius="10dp"
                     >
@@ -360,6 +376,14 @@
 
         </LinearLayout>
     </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/primaryTextColor"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
+        app:menu="@menu/menu_navigation" />
 
-
-</LinearLayout>
+</RelativeLayout>

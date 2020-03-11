@@ -7,4 +7,11 @@
     <color name="colorTransparentWhite">#cccccc</color>
     <color name="colorBlack">#555555</color>
     <color name="colorGreyLight">#8A8A8A</color>
+    <!--colors for modern ui-->
+    <color name="whiteTextColor">#fff</color>
+    <color name="primaryTextColor">#00a5ff</color>
+    <color name="loginBkColor">#f0f0f0</color>
+
+    <!--colros for card-->
+    <color name="whiteCardColor">#fff</color>
 </resources>
