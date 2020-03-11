@@ -84,11 +84,29 @@
                             android:layout_width="wrap_content"
                             android:layout_height="312dp"></androidx.recyclerview.widget.RecyclerView>
 
+                    </TableLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="400dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/shape">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15dp"
+                        android:layout_marginTop="400dp"
+                        android:stretchColumns="1">
 
                         <TextView
                             style="@style/headerTextPrimary"
-                            android:text="Subject"
-                            android:layout_marginTop="@dimen/loginViewsMargin"/>
+                            android:layout_marginTop="@dimen/loginViewsMargin"
+                            android:text="Subject" />
 
 
                         <androidx.recyclerview.widget.RecyclerView
@@ -96,37 +114,165 @@
                             android:layout_width="wrap_content"
                             android:layout_height="150dp"
                             android:scrollbars="vertical" />
-
-                        <Button
-                            android:id="@+id/AddBook"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Add Book After Login !!"></Button>
-
-                        <Button
-                            android:id="@+id/RequestBook"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Request Book After Login !!"></Button>
-
-                        <Button
-                            android:id="@+id/login"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Login PLEASE"></Button>
-
-                        <Button
-                            android:id="@+id/register"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Register PLEASE"></Button>
-
-                        <Button
-                            android:id="@+id/all_books"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="View All Books"></Button>
                     </TableLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="655dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/shape">
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:columnCount="2"
+                        android:layout_marginTop="-80dp"
+                        android:paddingTop="80dp"
+                        android:layout_marginLeft="0dp"
+                        android:paddingBottom="50dp"
+                        >
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/AddBook"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_margin="30dp"
+                            app:cardElevation="7dp"
+                            app:cardCornerRadius="10dp"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_margin="2dp"
+                                android:padding="10dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/thordis"
+                                    android:layout_gravity="center_horizontal|center_vertical"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sell book"
+                                    android:textSize="15sp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textStyle="bold"
+                                    />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/RequestBook"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_margin="30dp"
+                            app:cardElevation="7dp"
+                            app:cardCornerRadius="10dp"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_margin="2dp"
+                                android:padding="10dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/sunna"
+                                    android:layout_gravity="center_horizontal|center_vertical"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Request book"
+                                    android:textSize="15sp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textStyle="bold"
+                                    />
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/login"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_margin="30dp"
+                            app:cardElevation="7dp"
+                            app:cardCornerRadius="10dp"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_margin="2dp"
+                                android:padding="10dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/baldvin"
+                                    android:layout_gravity="center_horizontal|center_vertical"                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Login"
+                                    android:textSize="15sp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/register"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_margin="30dp"
+                            app:cardElevation="7dp"
+                            app:cardCornerRadius="10dp"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_margin="2dp"
+                                android:padding="10dp"
+                                >
+
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/hieu"
+                                    android:layout_gravity="center_horizontal|center_vertical"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Register"
+                                    android:textSize="15sp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textStyle="bold"/>
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+                    </GridLayout>
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

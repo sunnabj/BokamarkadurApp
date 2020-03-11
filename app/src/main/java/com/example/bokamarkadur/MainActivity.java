@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,11 +29,11 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     // Takkar neðst á síðu - Verður fært í menu.
-    private Button loginbutton;
-    private Button registerbutton;
-    private Button AddBook;
-    private Button RequestBook;
-    private Button AllBooksBtn;
+    private CardView loginbutton;
+    private CardView registerbutton;
+    private CardView AddBook;
+    private CardView RequestBook;
+    private CardView AllBooksBtn;
 
     // Notað fyrir debugging
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             // TODO: Eyða tökkum hér að neðan þegar navigation er komið.
 
             //add book 4 sale
-            AddBook = (Button) findViewById(R.id.AddBook);
+            AddBook = (CardView) findViewById(R.id.AddBook);
             AddBook.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             //Request book
-            RequestBook = (Button) findViewById(R.id.RequestBook);
+            RequestBook = (CardView) findViewById(R.id.RequestBook);
             RequestBook.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             // login button
-            loginbutton = (Button) findViewById(R.id.login);
+            loginbutton = (CardView) findViewById(R.id.login);
             loginbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -158,19 +159,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             //register
-            registerbutton = (Button) findViewById(R.id.register);
+            registerbutton = (CardView) findViewById(R.id.register);
             registerbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openRegisterActivity();
-                }
-            });
-            // Förum yfir í AllBooksActivity þar sem allar bækur eru birtar.
-            AllBooksBtn = (Button) findViewById(R.id.all_books);
-            AllBooksBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openAllBooksActivity();
                 }
             });
 
