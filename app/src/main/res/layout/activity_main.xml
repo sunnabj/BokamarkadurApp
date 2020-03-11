@@ -58,7 +58,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:paddingTop="170dp">
+                android:paddingTop="170dp"
+                android:paddingBottom="80dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -66,6 +67,11 @@
                     android:layout_margin="15dp"
                     android:background="@drawable/shape"
                     android:orientation="vertical">
+
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:text="Newest books"
+                        android:layout_marginTop="@dimen/loginViewsMargin"/>
 
                     <TableLayout
                         android:id="@+id/activity_main"
@@ -78,6 +84,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="312dp"></androidx.recyclerview.widget.RecyclerView>
 
+
+                        <TextView
+                            style="@style/headerTextPrimary"
+                            android:text="Subject"
+                            android:layout_marginTop="@dimen/loginViewsMargin"/>
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/available_subjects_recycler_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="150dp"
+                            android:scrollbars="vertical" />
 
                         <Button
                             android:id="@+id/AddBook"
@@ -108,14 +126,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="View All Books"></Button>
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/available_subjects_recycler_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="150dp"
-                            android:scrollbars="vertical" />
                     </TableLayout>
-
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
@@ -125,11 +136,17 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/primaryTextColor"
-        app:itemIconTint="@drawable/selector"
+        android:background="@drawable/bottom_navigation_background"
+        android:elevation="8dp"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@drawable/bottom_navigation_color_selector"
         app:itemTextColor="@drawable/selector"
-        app:menu="@menu/menu_navigation" />
+        app:menu="@menu/menu_navigation"
+        />
 </RelativeLayout>
 
 
