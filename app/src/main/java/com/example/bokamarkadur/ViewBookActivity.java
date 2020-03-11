@@ -35,7 +35,11 @@ public class ViewBookActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_book);
+        if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
+            setContentView(R.layout.activity_view_book);
+        } else {
+            setContentView(R.layout.activity_view_requested_book);
+        }
         Log.d(TAG, "onCreate: started.");
 
         getIncomingIntent();
@@ -139,11 +143,17 @@ public class ViewBookActivity extends AppCompatActivity {
                 image = "Noimage.jpg";
             }
 
-            setBookInfo(title, author, edition, condition, price, subject, status, user, image);
+            if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
+                setBookInfoFS(title, author, edition, condition, price, subject, status, user, image);
+            } else {
+                setBookInfoR(title, author, edition, subject, status, user, image);
+            }
+
         }
     }
 
-    private void setBookInfo(String title, String author, int edition, String condition,
+    // Set info for books that are for sale
+    private void setBookInfoFS(String title, String author, int edition, String condition,
                              int price, String subject, String status, String user, String image){
         Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
 
@@ -161,6 +171,33 @@ public class ViewBookActivity extends AppCompatActivity {
 
         TextView bookPrice = findViewById(R.id.view_book_price);
         bookPrice.setText("Price: " + price);
+
+        TextView bookSubject = findViewById(R.id.view_book_subject);
+        bookSubject.setText("Subject: " + subject);
+
+        TextView bookStatus = findViewById(R.id.view_book_status);
+        bookStatus.setText(status);
+
+        TextView bookUser = findViewById(R.id.view_book_user);
+        bookUser.setText("Posted by: " + user);
+
+        ImageView bookImage = findViewById(R.id.view_book_image);
+        Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(bookImage);
+    }
+
+    // Set info for books that are requested
+    private void setBookInfoR(String title, String author, int edition, String subject,
+                               String status, String user, String image){
+        Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
+
+        TextView bookTitle = findViewById(R.id.view_book_title);
+        bookTitle.setText(title);
+
+        TextView bookAuthor = findViewById(R.id.view_book_author);
+        bookAuthor.setText("By " + author);
+
+        TextView bookEdition = findViewById(R.id.view_book_edition);
+        bookEdition.setText("Edition: " + edition);
 
         TextView bookSubject = findViewById(R.id.view_book_subject);
         bookSubject.setText("Subject: " + subject);

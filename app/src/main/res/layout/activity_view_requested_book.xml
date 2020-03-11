@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ViewBookActivity">
+
+    <ScrollView style="@style/parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:weightSum="12">
+
+                <LinearLayout
+                    style="@style/parent"
+                    android:layout_weight="3"
+                    android:background="@drawable/login_shape_bk"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/parent"
+                        android:background="@drawable/ic_login_bk"
+                        android:contentDescription="login background" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="30dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    style="@style/headerText"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:text="View Book" />
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:paddingTop="170dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="186dp"
+        android:layout_margin="15dp">
+
+        <TextView
+            android:id="@+id/view_book_title"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/view_book_author"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorGreyLight"
+            android:textAlignment="center"
+            android:gravity="center"/>
+
+        <ImageView
+            android:id="@+id/view_book_image"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:layout_width="150dp"
+            android:layout_height="225dp"
+            android:src="@drawable/book"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/view_book_edition"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/view_book_subject"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/view_book_status"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/view_book_user"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/message_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="Message to seller"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Message to seller(change here)" />
+
+        <Button
+            android:id="@+id/bt_sms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send request for this book" />
+
+    </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

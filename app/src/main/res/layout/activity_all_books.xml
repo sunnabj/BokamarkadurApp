@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ScrollView
-        style="@style/parent">
+    android:layout_height="match_parent">
 
-        <RelativeLayout android:layout_height="match_parent"
-            android:layout_width="match_parent">
+    <ScrollView style="@style/parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="80dp">
 
 
             <LinearLayout
@@ -18,9 +20,9 @@
 
                 <LinearLayout
                     style="@style/parent"
+                    android:layout_weight="3"
                     android:background="@drawable/login_shape_bk"
-                    android:orientation="vertical"
-                    android:layout_weight="3">
+                    android:orientation="vertical">
 
                     <ImageView
                         style="@style/parent"
@@ -35,46 +37,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:orientation="vertical"
+                android:layout_marginLeft="30dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginLeft="30dp">
+                android:orientation="vertical">
 
 
                 <TextView
                     style="@style/headerText"
                     android:layout_gravity="center"
-                    android:text="All Book"
-                    android:layout_marginTop="40dp"/>
+                    android:layout_marginTop="40dp"
+                    android:text="All Book" />
 
 
             </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:paddingTop="170dp">
+                android:paddingTop="170dp"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="15dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/shape">
-    <TableLayout
-        android:id="@+id/activity_all_books"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:stretchColumns="1"
-        android:padding="8dp">
+                    android:background="@drawable/shape"
+                    android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/books_recycler_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-        </androidx.recyclerview.widget.RecyclerView>
+                    <TableLayout
+                        android:id="@+id/activity_all_books"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:stretchColumns="1">
 
-    </TableLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/books_recycler_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+                    </TableLayout>
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

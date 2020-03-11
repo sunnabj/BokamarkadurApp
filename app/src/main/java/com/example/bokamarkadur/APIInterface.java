@@ -5,14 +5,12 @@ import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.SubjectsResponse;
 import com.example.bokamarkadur.POJO.User;
 import com.google.gson.JsonObject;
-import com.squareup.okhttp.RequestBody;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -47,8 +45,15 @@ interface APIInterface {
                               @Part("price") int price,
                               @Part("subject") String subject);
 
+    @Multipart
     @POST("/addrequestbook")
-    Call<Book> addBookRequested(@Body JsonObject body);
+    Call<Book> addBookRequested(@Header("Accept") String accept,
+                                @Header("Authorization") String authorization,
+                                @Part MultipartBody.Part file,
+                                @Part("title") String title,
+                                @Part("author") String author,
+                                @Part("edition") int edition,
+                                @Part("subject") String subject);
 
     @POST("/authenticate")
     Call<User> login(@Body JsonObject body);

@@ -67,12 +67,10 @@
                 android:orientation="vertical"
                 android:background="@drawable/shape">
 
-            <TextView
-                android:textColor="@color/primaryTextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Book For Sale"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                <TextView
+                    style="@style/headerTextPrimary"
+                    android:text="Add Book For Sale"
+                    android:layout_marginTop="@dimen/loginViewsMargin"/>
 
             <TextView
                 android:textColor="@color/primaryTextColor"
@@ -124,11 +122,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Subject: " />
-            <EditText
-                android:textColor="@color/primaryTextColor"
-                android:id="@+id/edtSubject"
-                android:layout_width="match_parent"
-                android:layout_height="36dp" />
+
+                <Spinner
+                    android:id="@+id/edtSubject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:outlineAmbientShadowColor="@color/primaryTextColor" />
 
             <TextView
                 android:textColor="@color/primaryTextColor"
@@ -149,11 +148,12 @@
                 android:text="Upload Image"
                 style="@style/loginButton"/>
 
-            <ImageView
-                android:id="@+id/uploadImage"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginTop="10dp" />
+                <ImageView
+                    android:id="@+id/uploadImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="10dp"
+                    app:srcCompat="@drawable/book" />
 
                 <Button
                     android:id="@+id/submit"

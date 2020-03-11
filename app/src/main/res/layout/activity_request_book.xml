@@ -58,6 +58,11 @@
                 android:layout_centerInParent="true"
                 android:paddingTop="170dp">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -66,11 +71,9 @@
         android:background="@drawable/shape">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Request a book"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/primaryTextColor"/>
+            style="@style/headerTextPrimary"
+            android:text="Request Book"
+            android:layout_marginTop="@dimen/loginViewsMargin"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -124,7 +127,9 @@
             style="@style/loginButton"
             android:text="Submit"/>
 
+
     </LinearLayout>
+    </ScrollView>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

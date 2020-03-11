@@ -6,16 +6,17 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.BitmapFactory;
-import android.media.session.MediaSession;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.bokamarkadur.POJO.Book;
-import com.google.gson.JsonObject;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.RequestBody;
-
-import org.json.JSONObject;
+import com.example.bokamarkadur.POJO.Subjects;
 
 import java.io.File;
 
@@ -36,9 +32,6 @@ import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Multipart;
-
-import static com.squareup.okhttp.MediaType.parse;
 
 public class AddBookForSaleActivity extends AppCompatActivity {
 
@@ -49,6 +42,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1888;
+    AdapterView mySpinner;
 
     APIInterface apiInterface;
 
@@ -60,6 +54,13 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
         viewUploadedImage = (ImageView) findViewById(R.id.uploadImage);
 
+        //Spinner spinner = findViewById(R.id.edtSubject);
+        //ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(AddBookForSaleActivity.this,
+        //        android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.subject));
+        //myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //spinner.setAdapter(myAdapter);
+        Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
+        mySpinner.setAdapter(new ArrayAdapter<Subjects>(this, android.R.layout.simple_spinner_item, Subjects.values()));
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -133,7 +134,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         EditText title = (EditText) findViewById(R.id.edtTitle);
         EditText author = (EditText) findViewById(R.id.edtAuthor);
         EditText edition = (EditText) findViewById(R.id.edtEdition);
-        EditText subject = (EditText) findViewById(R.id.edtSubject);
+        final Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
         EditText price = (EditText) findViewById(R.id.edtPrice);
         EditText condition = (EditText) findViewById(R.id.edtCondition);
         progressDialog = new ProgressDialog(AddBookForSaleActivity.this);
@@ -154,7 +155,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         int editionPart = Integer.parseInt(edition.getText().toString());
         String conditionPart = condition.getText().toString();
         int pricePart = Integer.parseInt(price.getText().toString());
-        String subjectPart = subject.getText().toString();
+        String subjectPart = mySpinner.getSelectedItem().toString();
 
         Call<Book> newBookForSale = apiInterface.addBookForSale("application/json", "Bearer " + LoginActivity.token,
                 imagePart, titlePart, authorPart, editionPart, conditionPart, pricePart, subjectPart);
@@ -166,6 +167,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
                 Log.d("onResponse: ", String.valueOf(response.body()));
                 if (response.isSuccessful()) {
                     openMainActivity();
+                    Toast.makeText
+                            (getApplicationContext(), "Selected : " + mySpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
+                            .show();
                     Log.d("Success: ", response.body().getTitle() + " has been added.");
                 } else {
                     try {

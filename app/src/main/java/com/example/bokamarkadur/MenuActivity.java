@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -121,12 +122,22 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void AddbookforsaleActivity() {
-        Intent intent= new Intent(this, AddBookForSaleActivity.class);
-        startActivity(intent);
+        if (LoginActivity.token == null) {
+            openLoginActivity();
+            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent= new Intent(this, AddBookForSaleActivity.class);
+            startActivity(intent);
+        }
     }
     public void openRequestBookActivity() {
-        Intent intent = new Intent(this, RequestBookActivity.class);
-        startActivity(intent);
+        if (LoginActivity.token == null) {
+            openLoginActivity();
+            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(this, RequestBookActivity.class);
+            startActivity(intent);
+        }
     }
     public void openAllBooksActivity() {
         Intent intent = new Intent(this, AllBooksActivity.class);

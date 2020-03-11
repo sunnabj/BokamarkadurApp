@@ -10,6 +10,8 @@
 
     <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/activity_splashscreen</item>
+        <item name="colorPrimaryDark">@color/primaryTextColor</item>
+        <item name="colorAccent">@color/primaryTextColor</item>
     </style>
 
     <style name="AboutusTheme" parent="Theme.AppCompat.Light.NoActionBar">
