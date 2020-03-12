@@ -1,6 +1,7 @@
 package com.example.bokamarkadur;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -37,6 +38,10 @@ public class AboutusActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
+        final MediaPlayer cheer = MediaPlayer.create(AboutusActivity.this, R.raw.about);
+        cheer.start();
+
+
         mSlidePager = (ViewPager) findViewById(R.id.slideViewPager);
         mDotLayout = (LinearLayout) findViewById(R.id.dots);
 
@@ -58,6 +63,7 @@ public class AboutusActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if (test.equals(mNextBtn.getText())) {
+                    cheer.stop();
                     openMainActivity();
                 } else {
                     mSlidePager.setCurrentItem(mCurrentPage + 1);
