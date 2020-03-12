@@ -40,6 +40,7 @@ The project should be uploaded to Android Studio, and then run either by setting
 ### LoginActivity ###
 
 * Allows a user to login.
+* It is possible to log in with the username Tester and password 12345678.
 
 ### MenuActivity ###
 
