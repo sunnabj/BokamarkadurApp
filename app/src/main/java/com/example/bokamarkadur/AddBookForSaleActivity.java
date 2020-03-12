@@ -54,6 +54,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
         viewUploadedImage = (ImageView) findViewById(R.id.uploadImage);
 
+        // Hide System UI for best experience
+        hideSystemUI();
+
         //Spinner spinner = findViewById(R.id.edtSubject);
         //ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(AddBookForSaleActivity.this,
         //        android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.subject));
@@ -192,5 +195,21 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+    private void hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                        // Set the content to appear under the system bars so that the
+                        // content doesn't resize when the system bars hide and show.
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        // Hide the nav bar and status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 }

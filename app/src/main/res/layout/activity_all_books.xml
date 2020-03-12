@@ -94,9 +94,10 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/bottom_navigation_background"
         android:elevation="8dp"
-        app:labelVisibilityMode="unlabeled"
+        app:labelVisibilityMode="selected"
         app:itemIconTint="@drawable/bottom_navigation_color_selector"
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/menu_navigation"
+        app:itemHorizontalTranslationEnabled="true"
         />
 </RelativeLayout>
