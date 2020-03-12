@@ -52,16 +52,17 @@ The project should be uploaded to Android Studio, and then run either by setting
 ### RegisterActivity ###
 
 * Allows a user to create an account.
+* However, a new user cannot log in. This is yet to be fixed.
 
 ### RequestBookActivity ###
 
 * Allows a logged in user to add a book request to the application.
-* This function is still under construction. An error occurs if a user enters the activity when not logged in, and if logged in, the book he adds is not added to the database. 
+* The user needs to add an image, but it cannot be more than about 100 kB.
 
 ### AddBookForSaleActivity ###
 
 * Allows a logged in user to add a book for sale to the application.
-* This function is still under construction. An error occurs if a user enters the activity when not logged in, and if logged in, the book he adds is not added to the database. 
+* The user needs to add an image, but it cannot be more than about 100 kB.
 
 ## Helper classes ##
 
