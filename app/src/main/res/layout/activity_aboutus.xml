@@ -4,11 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/aboutus_background"
+    style="@style/parent"
     tools:context=".AboutusActivity"
     >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
+
+        <Button
+            android:id="@+id/preBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:shadowColor="#777777"
+            android:text="Back"
+            android:textColor="@color/contentTextColor"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/nextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:shadowColor="#777777"
+            android:text="Next"
+            android:textColor="@color/contentTextColor" />
+
+        <LinearLayout
         android:id="@+id/dots"
         android:layout_width="80dp"
         android:layout_height="52dp"
@@ -18,33 +45,43 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:textAlignment="center"></LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="80dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:text="About us           "
+                    style="@style/viewParent.headerText"
+                    android:layout_gravity="bottom"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/hero"
+                    android:adjustViewBounds="true" />
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape"
+            android:orientation="vertical"
+            android:backgroundTint="@color/whiteCardColor">
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slideViewPager"
         android:layout_width="match_parent"
-        android:layout_height="682dp">
+        android:layout_height="500dp">
 
     </androidx.viewpager.widget.ViewPager>
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/preBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/transparent"
-        android:text="Back"
-        android:textColor="@color/colorWhite"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/nextBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/transparent"
-        android:text="Next"
-        android:textColor="@color/colorWhite" />
-
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>

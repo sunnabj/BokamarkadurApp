@@ -64,9 +64,13 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.home:
                             return true;
                         case R.id.about:
+                            if (LoginActivity.token == null) {
+                                openLoginActivity();
+                                Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                            } else {
                             startActivity(new Intent(getApplicationContext(),
                                     MenuActivity.class));
-                            overridePendingTransition(0,0);
+                            overridePendingTransition(0,0);}
                             return true;
                     }
                     return false;
@@ -134,23 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
             // TODO: Eyða tökkum hér að neðan þegar navigation er komið.
 
-            //add book 4 sale
-            AddBook = (CardView) findViewById(R.id.AddBook);
-            AddBook.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AddbookforsaleActivity();
-                }
-            });
 
-            //Request book
-            RequestBook = (CardView) findViewById(R.id.RequestBook);
-            RequestBook.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openRequestBookActivity();
-                }
-            });
 
             // login button
             loginbutton = (CardView) findViewById(R.id.login);

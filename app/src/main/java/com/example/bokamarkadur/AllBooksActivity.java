@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -58,9 +59,13 @@ public class AllBooksActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.about:
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                        } else {
                         startActivity(new Intent(getApplicationContext(),
                                 MenuActivity.class));
-                        overridePendingTransition(0,0);
+                        overridePendingTransition(0,0);}
                         return true;
                 }
                 return false;
@@ -100,6 +105,11 @@ public class AllBooksActivity extends AppCompatActivity {
         });
     }
 
+    public void openLoginActivity() {
+        Intent intent= new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
     /**
      * Leitin í all books, birtist efst á skjá (Top Nav).
      * @param menu
@@ -133,8 +143,6 @@ public class AllBooksActivity extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_IMMERSIVE
                         // Set the content to appear under the system bars so that the
                         // content doesn't resize when the system bars hide and show.
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         // Hide the nav bar and status bar
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

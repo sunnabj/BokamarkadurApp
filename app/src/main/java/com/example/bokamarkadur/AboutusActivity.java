@@ -29,6 +29,7 @@ public class AboutusActivity extends AppCompatActivity {
     private Button mBackBtn;
     private int mCurrentPage;
     String test = "Finish";
+    private int clickcount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,6 @@ public class AboutusActivity extends AppCompatActivity {
         final MediaPlayer cheer = MediaPlayer.create(AboutusActivity.this, R.raw.about);
         cheer.start();
 
-
         mSlidePager = (ViewPager) findViewById(R.id.slideViewPager);
         mDotLayout = (LinearLayout) findViewById(R.id.dots);
 
@@ -49,6 +49,7 @@ public class AboutusActivity extends AppCompatActivity {
         mBackBtn = (Button) findViewById(R.id.preBtn);
 
         sliderAdapter = new SliderAdapter(this);
+        sliderAdapter.notifyDataSetChanged();
         mSlidePager.setAdapter(sliderAdapter);
 
         addDotsIndicator(0);
@@ -104,7 +105,7 @@ public class AboutusActivity extends AppCompatActivity {
     ViewPager.OnPageChangeListener viewListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int i, float v, int i1) {
-
+            sliderAdapter.clickcount = 0;
         }
 
         @Override
