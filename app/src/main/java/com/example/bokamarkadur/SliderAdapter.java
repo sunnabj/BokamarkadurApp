@@ -102,6 +102,7 @@ public class SliderAdapter extends PagerAdapter {
                                 }
                             }
                     );
+                    clickcount = 0;
                     alertDialog.show();
                 } else if ( position == 1 && clickcount==5) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder((Activity) v.getContext());
@@ -119,6 +120,7 @@ public class SliderAdapter extends PagerAdapter {
                                 }
                             }
                     );
+                    clickcount = 0;
                     alertDialog.show();
                 } else if ( position == 2 && clickcount==5) {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder((Activity) v.getContext());
@@ -137,6 +139,7 @@ public class SliderAdapter extends PagerAdapter {
                                 }
                             }
                     );
+                    clickcount = 0;
                     alertDialog.show();
                 } else if ( position == 3 && clickcount==5 ){
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder((Activity) v.getContext());
@@ -155,6 +158,7 @@ public class SliderAdapter extends PagerAdapter {
                                 }
                             }
                     );
+                    clickcount = 0;
                     alertDialog.show();
                 }
             }
