@@ -153,7 +153,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_marginTop="10dp"
-                    app:srcCompat="@drawable/book" />
+                    app:srcCompat="@drawable/please_upload_image" />
 
                 <Button
                     android:id="@+id/submit"

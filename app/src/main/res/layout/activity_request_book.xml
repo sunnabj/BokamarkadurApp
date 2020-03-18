@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddBookForSaleActivity">
-    <ScrollView style="@style/parent">
+    tools:context=".RequestBookActivity">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <ScrollView
+        style="@style/parent">
+
+        <RelativeLayout android:layout_height="match_parent"
+            android:layout_width="match_parent">
 
 
             <LinearLayout
@@ -20,9 +21,9 @@
 
                 <LinearLayout
                     style="@style/parent"
-                    android:layout_weight="3"
                     android:background="@drawable/login_shape_bk"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_weight="3">
 
                     <ImageView
                         style="@style/parent"
@@ -37,20 +38,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
+                android:orientation="vertical"
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="30dp"
-                android:orientation="vertical">
+                android:layout_marginLeft="30dp">
 
 
                 <TextView
                     style="@style/headerText"
                     android:layout_gravity="center"
-                    android:layout_marginTop="40dp"
-                    android:text="Besti Bókamarkaður" />
+                    android:text="Request a Book"
+                    android:layout_marginTop="40dp"/>
 
 
             </LinearLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -58,78 +60,108 @@
                 android:layout_centerInParent="true"
                 android:paddingTop="170dp">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:orientation="vertical"
+                    android:background="@drawable/shape">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="15dp"
-        android:background="@drawable/shape">
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:text="Request a Book"
+                        android:layout_marginTop="@dimen/loginViewsMargin"/>
 
-        <TextView
-            style="@style/headerTextPrimary"
-            android:text="Request Book"
-            android:layout_marginTop="@dimen/loginViewsMargin"/>
+                    <TextView
+                        android:textColor="@color/primaryTextColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Title: " />
+                    <EditText
+                        android:textColor="@color/primaryTextColor"
+                        android:id="@+id/edtTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Title: "
-            android:textColor="@color/primaryTextColor"/>
+                    <TextView
+                        android:textColor="@color/primaryTextColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Author: " />
+                    <EditText
+                        android:textColor="@color/primaryTextColor"
+                        android:id="@+id/edtAuthor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/edtTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primaryTextColor"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Author: "
-            android:textColor="@color/primaryTextColor"/>
+                    <TextView
+                        android:textColor="@color/primaryTextColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edition: " />
+                    <EditText
+                        android:textColor="@color/primaryTextColor"
+                        android:id="@+id/edtEdition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/edtAuthor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primaryTextColor"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edition: "
-            android:textColor="@color/primaryTextColor"/>
+                    <TextView
+                        android:textColor="@color/primaryTextColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Condition: " />
+                    <EditText
+                        android:textColor="@color/primaryTextColor"
+                        android:id="@+id/edtCondition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/edtEdition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/primaryTextColor"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Subject: "
-            android:textColor="@color/primaryTextColor"/>
+                    <TextView
+                        android:textColor="@color/primaryTextColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Subject: " />
 
-        <EditText
-            android:id="@+id/edtSubject"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:textColor="@color/primaryTextColor"/>
+                    <Spinner
+                        android:id="@+id/edtSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:outlineAmbientShadowColor="@color/primaryTextColor" />
 
-        <Button
-            android:id="@+id/submit"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            style="@style/loginButton"
-            android:text="Submit"/>
+                    <TextView
+                        android:textColor="@color/primaryTextColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Price: " />
+                    <EditText
+                        android:textColor="@color/primaryTextColor"
+                        android:id="@+id/edtPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp" />
 
+                    <Button
+                        android:id="@+id/btnUploadImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Image"
+                        style="@style/loginButton"/>
 
-    </LinearLayout>
-    </ScrollView>
+                    <ImageView
+                        android:id="@+id/uploadImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="10dp"
+                        app:srcCompat="@drawable/please_upload_image" />
+
+                    <Button
+                        android:id="@+id/submit"
+                        android:layout_alignParentBottom="true"
+                        android:layout_gravity="center"
+                        style="@style/loginButton"
+                        android:text="Submit"/>
+                </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>

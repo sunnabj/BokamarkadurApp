@@ -47,13 +47,15 @@ interface APIInterface {
 
     @Multipart
     @POST("/addrequestbook")
-    Call<Book> addBookRequested(@Header("Accept") String accept,
-                                @Header("Authorization") String authorization,
-                                @Part MultipartBody.Part file,
-                                @Part("title") String title,
-                                @Part("author") String author,
-                                @Part("edition") int edition,
-                                @Part("subject") String subject);
+    Call<Book> addRequestBook(@Header("Accept") String accept,
+                              @Header("Authorization") String authorization,
+                              @Part MultipartBody.Part file,
+                              @Part("title") String title,
+                              @Part("author") String author,
+                              @Part("edition") int edition,
+                              @Part("condition") String condition,
+                              @Part("price") int price,
+                              @Part("subject") String subject);
 
     @POST("/authenticate")
     Call<User> login(@Body JsonObject body);

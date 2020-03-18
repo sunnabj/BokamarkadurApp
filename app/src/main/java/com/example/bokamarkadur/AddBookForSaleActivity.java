@@ -3,15 +3,17 @@ package com.example.bokamarkadur;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,10 +23,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.Subjects;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -39,10 +41,13 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private Button submit;
     private Uri selectedImage;
     private String imgDecodableString;
+
+    private Boolean imageIsUploaded = false;
+    private File file;
+
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1888;
-    AdapterView mySpinner;
 
     APIInterface apiInterface;
 
@@ -57,13 +62,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
-        //Spinner spinner = findViewById(R.id.edtSubject);
-        //ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(AddBookForSaleActivity.this,
-        //        android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.subject));
-        //myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinner.setAdapter(myAdapter);
         Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
         mySpinner.setAdapter(new ArrayAdapter<Subjects>(this, android.R.layout.simple_spinner_item, Subjects.values()));
+
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -102,35 +103,32 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         }
     }
 
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        // Result code is RESULT_OK only if the user selects an Image
-        if (resultCode == Activity.RESULT_OK)
-            switch (requestCode){
-                case GALLERY_REQUEST_CODE:
-                    // Get user permission to access gallery.
-                    if (ContextCompat.checkSelfPermission(AddBookForSaleActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        // Permission is not granted
-                    } else {
-                        //data.getData returns the content URI for the selected Image
-                        selectedImage = data.getData();
 
-                        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                        // Get the cursor
-                        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                        // Move to first row
-                        cursor.moveToFirst();
-                        //Get the column index of MediaStore.Images.Media.DATA
-                        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                        //Gets the String value in the column
-                        imgDecodableString = cursor.getString(columnIndex);
-                        cursor.close();
+public void onActivityResult(int requestCode,int resultCode,Intent data) {
+    // Result code is RESULT_OK only if the user selects an Image
+    if (resultCode == Activity.RESULT_OK) {
 
-                        viewUploadedImage.setImageURI(selectedImage);
-                    }
-                    break;
-            }
+        imageIsUploaded = true;
+        //data.getData returns the content URI for the selected Image
+        selectedImage = data.getData();
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+        // Get the cursor
+        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        // Move to first row
+        cursor.moveToFirst();
+
+        //Get the column index of MediaStore.Images.Media.DATA
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+
+        //Gets the String value in the column
+        imgDecodableString = cursor.getString(columnIndex);
+        cursor.close();
+
+        viewUploadedImage.setImageURI(selectedImage);
+        file = new File(imgDecodableString);
     }
+}
 
     private void submitData() {
 
@@ -142,11 +140,19 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         EditText condition = (EditText) findViewById(R.id.edtCondition);
         progressDialog = new ProgressDialog(AddBookForSaleActivity.this);
         //progressDialog.setMessage(getString(R.string.loading));
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.show();
 
-        File file = new File(imgDecodableString);
-        Log.d("filepath: ", imgDecodableString);
+        if (imageIsUploaded) {
+            file = new File(imgDecodableString);
+            Log.d("filepath: ", imgDecodableString);
+        }
+        else {
+           Picasso.get().load("https://notendur.hi.is/~bbo1/book_not_added_to_list.png").into(viewUploadedImage);
+            file = new File("https://notendur.hi.is/~bbo1/book_not_added_to_list.png");
+
+        }
+
         // Create a request body with file and image media type
         okhttp3.RequestBody fileReqBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("image/*"), file);
         // Create MultipartBody.Part using file request-body,file name and part name
@@ -187,7 +193,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
             public void onFailure(Call<Book> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("myTag", "HELPHLEP");
+                Log.wtf("myTag", "HELPHLEP");
             }
         });
     }
