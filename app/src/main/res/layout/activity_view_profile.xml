@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".ViewProfileActivity">
 
     <ScrollView style="@style/parent">
 
@@ -78,8 +78,8 @@
                     <TextView
                         style="@style/headerTextPrimary"
                         android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:textSize="30dp"
-                        android:text="@string/register" />
+                        android:textSize="34dp"
+                        android:text="@string/my_profile" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -97,6 +97,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Email: "
+                        android:textColor="@color/primaryTextColor" />
+
+                    <EditText
+                        android:id="@+id/edtPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryTextColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phone number: "
                         android:textColor="@color/primaryTextColor" />
 
                     <EditText
@@ -131,19 +143,6 @@
                         android:inputType="textPassword"
                         android:textColor="@color/primaryTextColor" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Re-Type Password: "
-                        android:textColor="@color/primaryTextColor" />
-
-                    <EditText
-                        android:id="@+id/edtReTypepassword"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:textColor="@color/primaryTextColor" />
-
 
                     <Button
                         android:id="@+id/submit"
@@ -151,8 +150,45 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:textSize="18dp"
-                        android:text="@string/register" />
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginBottom="40dp"
+                        android:text="@string/update_my_info"
+                        android:textSize="18dp" />
+
+                    <Button
+                        android:id="@+id/myBooks"
+                        style="@style/loginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:textSize="22dp"
+                        android:text="@string/my_books" />
+                    <Button
+                        android:id="@+id/myMessages"
+                        style="@style/loginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_alignParentBottom="true"
+                        android:textSize="22dp"
+                        android:text="@string/my_messages" />
+                    <Button
+                        android:id="@+id/myReviews"
+                        style="@style/loginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_alignParentBottom="true"
+                        android:textSize="22dp"
+                        android:text="@string/my_reviews" />
 
                 </LinearLayout>
             </RelativeLayout>

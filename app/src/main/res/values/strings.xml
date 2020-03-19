@@ -1,10 +1,18 @@
 <resources>
-    <string name="app_name">Besti Bókamarkaður</string>
+    <string name="app_name">Besti Bókamarkaðurinn</string>
     <string name="register">REGISTER</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="signup_login_hint">Already have an account? Sign In</string>
     <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
+    <string name="user_profile">User Profile</string>
+    <string name="my_info">My User Info</string>
+    <string name="my_profile">My Profile</string>
+    <string name="update_my_info">Update My Info</string>
+    <string name="my_books">My Books</string>
+    <string name="my_messages">My Messages</string>
+    <string name="my_reviews">My Reviews</string>
+
     <string-array name="subject">
         <item>4</item>
         <item>Industrial_and_Mechanical_Engineering</item>
