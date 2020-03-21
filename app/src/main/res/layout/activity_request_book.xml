@@ -114,14 +114,30 @@
             android:text="Subject: "
             android:textColor="@color/primaryTextColor"/>
 
-        <EditText
+        <Spinner
             android:id="@+id/edtSubject"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:textColor="@color/primaryTextColor"/>
+            android:layout_height="wrap_content"
+            android:outlineAmbientShadowColor="@color/primaryTextColor" />
+
+        <Button
+            android:id="@+id/btnUploadImage"
+            style="@style/loginButton"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:text="Upload Image" />
+
+        <ImageView
+            android:id="@+id/uploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@drawable/book" />
 
         <Button
             android:id="@+id/submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             style="@style/loginButton"
