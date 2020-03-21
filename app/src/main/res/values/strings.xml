@@ -5,8 +5,8 @@
     <string name="login_password_hint">Password</string>
     <string name="signup_login_hint">Already have an account? Sign In</string>
     <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
-    <string-array name="subject">
-        <item>4</item>
+    <string-array name="subject_array">
+        <!--<item>4</item>-->
         <item>Industrial_and_Mechanical_Engineering</item>
         <item>Electrical_Computer_Engineering</item>
         <item>BUSINESSADMINISTRATION</item>

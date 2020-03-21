@@ -1,3 +1,4 @@
+
 package com.example.bokamarkadur.POJO;
 
 import com.google.gson.annotations.SerializedName;
@@ -59,3 +60,4 @@ public class SubjectsResponse {
 
     public List<String> getAvailableSubjects() { return subjects; }
 }
+

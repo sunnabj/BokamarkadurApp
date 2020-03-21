@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.bokamarkadur.POJO.Book;
-import com.example.bokamarkadur.POJO.Subjects;
+//import com.example.bokamarkadur.POJO.Subjects;
 
 import java.io.File;
 
@@ -42,7 +43,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1888;
-    AdapterView mySpinner;
+    Spinner mySpinner;
 
     APIInterface apiInterface;
 
@@ -57,13 +58,19 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
-        //Spinner spinner = findViewById(R.id.edtSubject);
-        //ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(AddBookForSaleActivity.this,
-        //        android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.subject));
-        //myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinner.setAdapter(myAdapter);
-        Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
-        mySpinner.setAdapter(new ArrayAdapter<Subjects>(this, android.R.layout.simple_spinner_item, Subjects.values()));
+        // Dropdown list with subjects
+        mySpinner = (Spinner) findViewById(R.id.edtSubject);
+        // The dropdown list notices what the user chooses
+        mySpinner.setOnItemSelectedListener(new SpinnerActivity());
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.subject_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        mySpinner.setAdapter(adapter);
+
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -137,11 +144,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         EditText title = (EditText) findViewById(R.id.edtTitle);
         EditText author = (EditText) findViewById(R.id.edtAuthor);
         EditText edition = (EditText) findViewById(R.id.edtEdition);
-        final Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
         EditText price = (EditText) findViewById(R.id.edtPrice);
         EditText condition = (EditText) findViewById(R.id.edtCondition);
         progressDialog = new ProgressDialog(AddBookForSaleActivity.this);
-        //progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
 
@@ -160,8 +165,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         int pricePart = Integer.parseInt(price.getText().toString());
         String subjectPart = mySpinner.getSelectedItem().toString();
 
-        Call<Book> newBookForSale = apiInterface.addBookForSale("application/json", "Bearer " + LoginActivity.token,
-                imagePart, titlePart, authorPart, editionPart, conditionPart, pricePart, subjectPart);
+        Call<Book> newBookForSale = apiInterface.addBookForSale("application/json",
+                "Bearer " + LoginActivity.token, imagePart, titlePart, authorPart,
+                editionPart, conditionPart, pricePart, subjectPart);
         newBookForSale.enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
@@ -191,6 +197,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public void openMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);

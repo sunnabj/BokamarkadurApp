@@ -1,11 +1,12 @@
 package com.example.bokamarkadur.POJO;
 
 // A list of available subjects users can categorize their uploaded books to.
+/*
 public enum Subjects {
     /*
      * Each entity class represents a table in the database.
      * This entity lists the Subjects available for books.
-     */
+
     BIO("BIOLOGY"),
     BUS("BUSINESSADMINISTRATION"),
     CIL("CIVILENGINEERING"),
@@ -39,3 +40,5 @@ public enum Subjects {
         return strSubject;
     }
 }
+
+ */
