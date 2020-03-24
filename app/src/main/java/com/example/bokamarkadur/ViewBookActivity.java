@@ -48,7 +48,7 @@ public class ViewBookActivity extends AppCompatActivity {
         getIncomingIntent();
 
         /**
-         * Takk er fyrir neðan hverja bók sem hægt er að ýta á til að senda sms til þess sem setti
+         * Takki er fyrir neðan hverja bók sem hægt er að ýta á til að senda sms til þess sem setti
          * bókina inn. Þessi virkni er í vinnslu.
          */
         messageEditText = (EditText) findViewById(R.id.message_edit_text);

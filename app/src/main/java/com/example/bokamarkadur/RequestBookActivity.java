@@ -11,9 +11,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.bokamarkadur.POJO.Book;
+import com.example.bokamarkadur.POJO.Subjects;
 
 import java.io.File;
 
@@ -37,6 +41,7 @@ public class RequestBookActivity extends AppCompatActivity {
     private String imgDecodableString;
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
+    AdapterView mySpinner;
     private static final int GALLERY_REQUEST_CODE = 1999;
 
     APIInterface apiInterface;
@@ -48,6 +53,8 @@ public class RequestBookActivity extends AppCompatActivity {
         uploadImage = (Button) findViewById(R.id.btnUploadImage);
         submit = (Button) findViewById(R.id.submit);
         viewUploadedImage = (ImageView) findViewById(R.id.uploadImage);
+        Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
+        mySpinner.setAdapter(new ArrayAdapter<Subjects>(this, android.R.layout.simple_spinner_item, Subjects.values()));
 
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -125,7 +132,7 @@ public class RequestBookActivity extends AppCompatActivity {
         EditText title = (EditText) findViewById(R.id.edtTitle);
         EditText author = (EditText) findViewById(R.id.edtAuthor);
         EditText edition = (EditText) findViewById(R.id.edtEdition);
-        EditText subject = (EditText) findViewById(R.id.edtSubject);
+        final Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
 
         progressDialog = new ProgressDialog(RequestBookActivity.this);
         //progressDialog.setMessage(getString(R.string.loading));
@@ -143,7 +150,7 @@ public class RequestBookActivity extends AppCompatActivity {
         String titlePart = title.getText().toString();
         String authorPart = author.getText().toString();
         int editionPart = Integer.parseInt(edition.getText().toString());
-        String subjectPart = subject.getText().toString();
+        String subjectPart = mySpinner.getSelectedItem().toString();
 
         Call<Book> newBookForSale = apiInterface.addBookRequested("application/json", "Bearer " + LoginActivity.token,
                 imagePart, titlePart, authorPart, editionPart, subjectPart);

@@ -6,163 +6,170 @@
     android:layout_height="match_parent"
     tools:context=".AddBookForSaleActivity">
 
-    <ScrollView
-        style="@style/parent">
-
-        <RelativeLayout android:layout_height="match_parent"
-            android:layout_width="match_parent">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:weightSum="12">
-
-            <LinearLayout
-                style="@style/parent"
-                android:background="@drawable/login_shape_bk"
-                android:orientation="vertical"
-                android:layout_weight="3">
-
-                <ImageView
-                    style="@style/parent"
-                    android:background="@drawable/ic_login_bk"
-                    android:contentDescription="login background" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:orientation="vertical"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp">
-
-
-            <TextView
-                style="@style/headerText"
-                android:layout_gravity="center"
-                android:text="Add Book For Sale"
-                android:layout_marginTop="40dp"/>
-
-
-        </LinearLayout>
-
+    <ScrollView style="@style/parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:paddingTop="170dp">
+            android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="15dp"
-                android:orientation="vertical"
-                android:background="@drawable/shape">
+                android:layout_alignParentTop="true"
+                android:weightSum="12">
+
+                <LinearLayout
+                    style="@style/parent"
+                    android:layout_weight="3"
+                    android:background="@drawable/login_shape_bk"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/parent"
+                        android:background="@drawable/ic_login_bk"
+                        android:contentDescription="login background" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="30dp"
+                android:orientation="vertical">
+
 
                 <TextView
-                    style="@style/headerTextPrimary"
-                    android:text="Add Book For Sale"
-                    android:layout_marginTop="@dimen/loginViewsMargin"/>
-
-            <TextView
-                android:textColor="@color/primaryTextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title: " />
-            <EditText
-                android:textColor="@color/primaryTextColor"
-                android:id="@+id/edtTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:textColor="@color/primaryTextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Author: " />
-            <EditText
-                android:textColor="@color/primaryTextColor"
-                android:id="@+id/edtAuthor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:textColor="@color/primaryTextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edition: " />
-            <EditText
-                android:textColor="@color/primaryTextColor"
-                android:id="@+id/edtEdition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:textColor="@color/primaryTextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Condition: " />
-            <EditText
-                android:textColor="@color/primaryTextColor"
-                android:id="@+id/edtCondition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:textColor="@color/primaryTextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Subject: " />
-
-                <Spinner
-                    android:id="@+id/edtSubject"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:outlineAmbientShadowColor="@color/primaryTextColor" />
-
-            <TextView
-                android:textColor="@color/primaryTextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Price: " />
-            <EditText
-                android:textColor="@color/primaryTextColor"
-                android:id="@+id/edtPrice"
-                android:layout_width="match_parent"
-                android:layout_height="36dp" />
-
-            <Button
-                android:id="@+id/btnUploadImage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Upload Image"
-                style="@style/loginButton"/>
-
-                <ImageView
-                    android:id="@+id/uploadImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_marginTop="10dp"
-                    app:srcCompat="@drawable/book" />
-
-                <Button
-                    android:id="@+id/submit"
-                    android:layout_alignParentBottom="true"
+                    style="@style/headerText"
                     android:layout_gravity="center"
-                    style="@style/loginButton"
-                    android:text="Submit"/>
+                    android:layout_marginTop="40dp"
+                    android:text="Add Book For Sale" />
+
+
             </LinearLayout>
-        </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:paddingTop="170dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/shape"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:text="Add Book For Sale" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Title: "
+                        android:textColor="@color/primaryTextColor" />
+
+                    <EditText
+                        android:id="@+id/edtTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryTextColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Author: "
+                        android:textColor="@color/primaryTextColor" />
+
+                    <EditText
+                        android:id="@+id/edtAuthor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryTextColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edition: "
+                        android:textColor="@color/primaryTextColor" />
+
+                    <EditText
+                        android:id="@+id/edtEdition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryTextColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Condition: "
+                        android:textColor="@color/primaryTextColor" />
+
+                    <EditText
+                        android:id="@+id/edtCondition"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryTextColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Subject: "
+                        android:textColor="@color/primaryTextColor" />
+
+                    <Spinner
+                        android:id="@+id/edtSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:outlineAmbientShadowColor="@color/primaryTextColor" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Price: "
+                        android:textColor="@color/primaryTextColor" />
+
+                    <EditText
+                        android:id="@+id/edtPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:textColor="@color/primaryTextColor" />
+
+                    <Button
+                        android:id="@+id/btnUploadImage"
+                        style="@style/loginButton"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        android:text="Upload Image" />
+
+                    <ImageView
+                        android:id="@+id/uploadImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="10dp"
+                        app:srcCompat="@drawable/book" />
+
+                    <Button
+                        android:id="@+id/submit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_gravity="center"
+                        style="@style/loginButton"
+                        android:text="Submit"/>
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 
