@@ -43,7 +43,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1888;
-    Spinner mySpinner;
+    Spinner subjectSpinner;
 
     APIInterface apiInterface;
 
@@ -59,9 +59,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         hideSystemUI();
 
         // Dropdown list with subjects
-        mySpinner = (Spinner) findViewById(R.id.edtSubject);
+        subjectSpinner = (Spinner) findViewById(R.id.edtSubject);
         // The dropdown list notices what the user chooses
-        mySpinner.setOnItemSelectedListener(new SpinnerActivity());
+        subjectSpinner.setOnItemSelectedListener(new SpinnerActivity());
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -69,7 +69,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        mySpinner.setAdapter(adapter);
+        subjectSpinner.setAdapter(adapter);
 
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
@@ -91,14 +91,18 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
     private void pickFromGallery() {
         try {
-            if (ActivityCompat.checkSelfPermission(AddBookForSaleActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(AddBookForSaleActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_REQUEST_CODE);
+            if (ActivityCompat.checkSelfPermission(AddBookForSaleActivity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(AddBookForSaleActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_REQUEST_CODE);
             } else {
                 //Create an Intent with action as ACTION_PICK
                 Intent intent=new Intent(Intent.ACTION_PICK);
                 // Sets the type as image/*. This ensures only components of type image are selected
                 intent.setType("image/*");
-                //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+                //We pass an extra array with the accepted mime types.
+                // This will ensure only components with these MIME types as targeted.
                 String[] mimeTypes = {"image/jpeg", "image/png"};
                 intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
                 // Launching the Intent
@@ -115,7 +119,8 @@ public class AddBookForSaleActivity extends AppCompatActivity {
             switch (requestCode){
                 case GALLERY_REQUEST_CODE:
                     // Get user permission to access gallery.
-                    if (ContextCompat.checkSelfPermission(AddBookForSaleActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    if (ContextCompat.checkSelfPermission(AddBookForSaleActivity.this,
+                            Manifest.permission.READ_EXTERNAL_STORAGE)
                             != PackageManager.PERMISSION_GRANTED) {
                         // Permission is not granted
                     } else {
@@ -124,7 +129,8 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
                         String[] filePathColumn = { MediaStore.Images.Media.DATA };
                         // Get the cursor
-                        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                        Cursor cursor = getContentResolver().query(selectedImage, filePathColumn,
+                                null, null, null);
                         // Move to first row
                         cursor.moveToFirst();
                         //Get the column index of MediaStore.Images.Media.DATA
@@ -141,30 +147,39 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
     private void submitData() {
 
-        EditText title = (EditText) findViewById(R.id.edtTitle);
-        EditText author = (EditText) findViewById(R.id.edtAuthor);
-        EditText edition = (EditText) findViewById(R.id.edtEdition);
-        EditText price = (EditText) findViewById(R.id.edtPrice);
-        EditText condition = (EditText) findViewById(R.id.edtCondition);
-        progressDialog = new ProgressDialog(AddBookForSaleActivity.this);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        /**
+         * Values are obtained from the form and processed so that it can make up a book object.
+         */
+        EditText title =  findViewById(R.id.edtTitle);
+        EditText author = findViewById(R.id.edtAuthor);
+        EditText edition = findViewById(R.id.edtEdition);
+        EditText price = findViewById(R.id.edtPrice);
+        EditText condition = findViewById(R.id.edtCondition);
 
-        File file = new File(imgDecodableString);
-        Log.d("filepath: ", imgDecodableString);
-        // Create a request body with file and image media type
-        okhttp3.RequestBody fileReqBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("image/*"), file);
-        // Create MultipartBody.Part using file request-body,file name and part name
-        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
-
-        // Get values from form.
         String titlePart = title.getText().toString();
         String authorPart = author.getText().toString();
         int editionPart = Integer.parseInt(edition.getText().toString());
         String conditionPart = condition.getText().toString();
         int pricePart = Integer.parseInt(price.getText().toString());
-        String subjectPart = mySpinner.getSelectedItem().toString();
+        String subjectPart = subjectSpinner.getSelectedItem().toString();
 
+        progressDialog = new ProgressDialog(AddBookForSaleActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+
+        File file = new File(imgDecodableString);
+        Log.d("filepath: ", imgDecodableString);
+        // Create a request body with file and image media type
+        okhttp3.RequestBody fileReqBody = okhttp3.RequestBody.create(
+                okhttp3.MediaType.parse("image/*"), file);
+        // Create MultipartBody.Part using file request-body,file name and part name
+        MultipartBody.Part imagePart = MultipartBody.Part.createFormData(
+                "file", file.getName(), fileReqBody);
+
+        /**
+         * A new book object is created with the values from the form.
+         */
         Call<Book> newBookForSale = apiInterface.addBookForSale("application/json",
                 "Bearer " + LoginActivity.token, imagePart, titlePart, authorPart,
                 editionPart, conditionPart, pricePart, subjectPart);
@@ -177,7 +192,8 @@ public class AddBookForSaleActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     openMainActivity();
                     Toast.makeText
-                            (getApplicationContext(), "Selected : " + mySpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
+                            (getApplicationContext(), "Selected : " +
+                                    subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
                             .show();
                     Log.d("Success: ", response.body().getTitle() + " has been added.");
                 } else {

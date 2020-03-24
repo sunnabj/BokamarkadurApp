@@ -88,6 +88,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked on: " + books.get(position));
 
+                Log.d(TAG, "Title: " + books.get(position).getTitle());
+                Log.d(TAG, "Subject: " + books.get(position).getSubject());
+
                 Toast.makeText(context, books.get(position).toString(), Toast.LENGTH_LONG);
 
                 Intent intent = new Intent(context, ViewBookActivity.class);
@@ -97,7 +100,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
                 intent.putExtra("bookEdition", books.get(position).getEdition());
                 intent.putExtra("bookCondition", books.get(position).getCondition());
                 intent.putExtra("bookPrice", books.get(position).getPrice());
-                intent.putExtra("bookSubject", books.get(position).getSubjects());
+                intent.putExtra("bookSubject", books.get(position).getSubject());
                 intent.putExtra("bookStatus", books.get(position).getStatus());
                 intent.putExtra("bookUser", books.get(position).getUser().getUsername());
                 intent.putExtra("bookImage", books.get(position).getImage());
