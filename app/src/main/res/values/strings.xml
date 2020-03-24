@@ -5,30 +5,29 @@
     <string name="login_password_hint">Password</string>
     <string name="signup_login_hint">Already have an account? Sign In</string>
     <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
-    <string-array name="subject">
-        <item>4</item>
-        <item>Industrial_and_Mechanical_Engineering</item>
-        <item>Electrical_Computer_Engineering</item>
-        <item>BUSINESSADMINISTRATION</item>
-        <item>CIVILENGINEERING</item>
-        <item>COMPUTATIONALENGINEERING</item>
-        <item>COMPUTERSCIENCE</item>
-        <item>CHEMISTRY</item>
-        <item>DENTISTRY</item>
-        <item>EDUCATION</item>
-        <item>ECONOMICS</item>
-        <item>ENGLISH</item>
-        <item>FRENCH</item>
-        <item>GEOGRAPHY</item>
-        <item>GEOLOGY</item>
-        <item>GERMAN</item>
-        <item>HEALTHSCIENCE</item>
-        <item>LAW</item>
-        <item>MEDICALSCIENCES</item>
-        <item>NURSING</item>
-        <item>PHYSICS</item>
-        <item>PSYCHOLOGY</item>
-        <item>SOFTWAREENGINEERING</item>
-        <item>SPANISH</item>
+    <string-array name="subject_array">
+        <item>Industrial and Mechanical Engineering</item>
+        <item>Electrical Computer Engineering</item>
+        <item>Business Administration</item>
+        <item>Civil Engineering</item>
+        <item>Computational Engineering</item>
+        <item>Computer Science</item>
+        <item>Chemistry</item>
+        <item>Dentistry</item>
+        <item>Education</item>
+        <item>Economics</item>
+        <item>English</item>
+        <item>French</item>
+        <item>Geography</item>
+        <item>Geology</item>
+        <item>German</item>
+        <item>Health Science</item>
+        <item>Law</item>
+        <item>Medical Science</item>
+        <item>Nursing</item>
+        <item>Physics</item>
+        <item>Psychology</item>
+        <item>Software Engineering</item>
+        <item>Spanish</item>
     </string-array>
 </resources>

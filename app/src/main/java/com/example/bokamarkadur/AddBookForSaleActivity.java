@@ -24,7 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.bokamarkadur.POJO.Book;
-import com.example.bokamarkadur.POJO.Subjects;
+//import com.example.bokamarkadur.POJO.Subjects;
 
 import java.io.File;
 
@@ -42,7 +42,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1888;
-    AdapterView mySpinner;
+    Spinner subjectSpinner;
 
     APIInterface apiInterface;
 
@@ -57,13 +57,19 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
-        //Spinner spinner = findViewById(R.id.edtSubject);
-        //ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(AddBookForSaleActivity.this,
-        //        android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.subject));
-        //myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinner.setAdapter(myAdapter);
-        Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
-        mySpinner.setAdapter(new ArrayAdapter<Subjects>(this, android.R.layout.simple_spinner_item, Subjects.values()));
+        // Dropdown list with subjects
+        subjectSpinner = (Spinner) findViewById(R.id.edtSubject);
+        // The dropdown list notices what the user chooses
+        subjectSpinner.setOnItemSelectedListener(new SpinnerActivity());
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.subject_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        subjectSpinner.setAdapter(adapter);
+
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -134,32 +140,39 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
     private void submitData() {
 
-        EditText title = (EditText) findViewById(R.id.edtTitle);
-        EditText author = (EditText) findViewById(R.id.edtAuthor);
-        EditText edition = (EditText) findViewById(R.id.edtEdition);
-        final Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
-        EditText price = (EditText) findViewById(R.id.edtPrice);
-        EditText condition = (EditText) findViewById(R.id.edtCondition);
-        progressDialog = new ProgressDialog(AddBookForSaleActivity.this);
-        //progressDialog.setMessage(getString(R.string.loading));
-        progressDialog.setCancelable(false);
-        progressDialog.show();
+        /**
+         * Values are obtained from the form and processed so that it can make up a book object.
+         */
+        EditText title =  findViewById(R.id.edtTitle);
+        EditText author = findViewById(R.id.edtAuthor);
+        EditText edition = findViewById(R.id.edtEdition);
+        EditText price = findViewById(R.id.edtPrice);
+        EditText condition = findViewById(R.id.edtCondition);
 
-        File file = new File(imgDecodableString);
-        Log.d("filepath: ", imgDecodableString);
-        // Create a request body with file and image media type
-        okhttp3.RequestBody fileReqBody = okhttp3.RequestBody.create(okhttp3.MediaType.parse("image/*"), file);
-        // Create MultipartBody.Part using file request-body,file name and part name
-        MultipartBody.Part imagePart = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
-
-        // Get values from form.
         String titlePart = title.getText().toString();
         String authorPart = author.getText().toString();
         int editionPart = Integer.parseInt(edition.getText().toString());
         String conditionPart = condition.getText().toString();
         int pricePart = Integer.parseInt(price.getText().toString());
-        String subjectPart = mySpinner.getSelectedItem().toString();
+        String subjectPart = subjectSpinner.getSelectedItem().toString();
 
+        progressDialog = new ProgressDialog(AddBookForSaleActivity.this);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+
+        File file = new File(imgDecodableString);
+        Log.d("filepath: ", imgDecodableString);
+        // Create a request body with file and image media type
+        okhttp3.RequestBody fileReqBody = okhttp3.RequestBody.create(
+                okhttp3.MediaType.parse("image/*"), file);
+        // Create MultipartBody.Part using file request-body,file name and part name
+        MultipartBody.Part imagePart = MultipartBody.Part.createFormData(
+                "file", file.getName(), fileReqBody);
+
+        /**
+         * A new book object is created with the values from the form.
+         */
         Call<Book> newBookForSale = apiInterface.addBookForSale("application/json", "Bearer " + LoginActivity.token,
                 imagePart, titlePart, authorPart, editionPart, conditionPart, pricePart, subjectPart);
         newBookForSale.enqueue(new Callback<Book>() {
@@ -171,7 +184,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     openMainActivity();
                     Toast.makeText
-                            (getApplicationContext(), "Selected : " + mySpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
+                            (getApplicationContext(), "Selected : " + subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
                             .show();
                     Log.d("Success: ", response.body().getTitle() + " has been added.");
                 } else {

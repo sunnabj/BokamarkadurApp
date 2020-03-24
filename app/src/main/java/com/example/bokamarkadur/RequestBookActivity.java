@@ -24,7 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.bokamarkadur.POJO.Book;
-import com.example.bokamarkadur.POJO.Subjects;
+//import com.example.bokamarkadur.POJO.Subjects;
 
 import java.io.File;
 
@@ -41,8 +41,8 @@ public class RequestBookActivity extends AppCompatActivity {
     private String imgDecodableString;
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
-    AdapterView mySpinner;
     private static final int GALLERY_REQUEST_CODE = 1999;
+    Spinner subjectSpinner;
 
     APIInterface apiInterface;
 
@@ -53,14 +53,25 @@ public class RequestBookActivity extends AppCompatActivity {
         uploadImage = (Button) findViewById(R.id.btnUploadImage);
         submit = (Button) findViewById(R.id.submit);
         viewUploadedImage = (ImageView) findViewById(R.id.uploadImage);
-        Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
-        mySpinner.setAdapter(new ArrayAdapter<Subjects>(this, android.R.layout.simple_spinner_item, Subjects.values()));
-
-        // Tengjumst API Interface sem talar við bakendann okkar.
-        apiInterface = APIClient.getClient().create(APIInterface.class);
 
         // Hide System UI for best experience
         hideSystemUI();
+
+        // Dropdown list with subjects
+        subjectSpinner = (Spinner) findViewById(R.id.edtSubject);
+        // The dropdown list notices what the user chooses
+        subjectSpinner.setOnItemSelectedListener(new SpinnerActivity());
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.subject_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        subjectSpinner.setAdapter(adapter);
+
+        // Tengjumst API Interface sem talar við bakendann okkar.
+        apiInterface = APIClient.getClient().create(APIInterface.class);
 
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,13 +140,19 @@ public class RequestBookActivity extends AppCompatActivity {
 
     private void submitData() {
 
-        EditText title = (EditText) findViewById(R.id.edtTitle);
-        EditText author = (EditText) findViewById(R.id.edtAuthor);
-        EditText edition = (EditText) findViewById(R.id.edtEdition);
-        final Spinner mySpinner = (Spinner) findViewById(R.id.edtSubject);
+        /**
+         * Values are obtained from the form and processed so that it can make up a book object.
+         */
+        EditText title = findViewById(R.id.edtTitle);
+        EditText author = findViewById(R.id.edtAuthor);
+        EditText edition = findViewById(R.id.edtEdition);
+
+        String titlePart = title.getText().toString();
+        String authorPart = author.getText().toString();
+        int editionPart = Integer.parseInt(edition.getText().toString());
+        String subjectPart = subjectSpinner.getSelectedItem().toString();
 
         progressDialog = new ProgressDialog(RequestBookActivity.this);
-        //progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
 
@@ -146,12 +163,9 @@ public class RequestBookActivity extends AppCompatActivity {
         // Create MultipartBody.Part using file request-body,file name and part name
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
 
-        // Get values from form.
-        String titlePart = title.getText().toString();
-        String authorPart = author.getText().toString();
-        int editionPart = Integer.parseInt(edition.getText().toString());
-        String subjectPart = mySpinner.getSelectedItem().toString();
-
+        /**
+         * A new book object is created with the values from the form.
+         */
         Call<Book> newBookForSale = apiInterface.addBookRequested("application/json", "Bearer " + LoginActivity.token,
                 imagePart, titlePart, authorPart, editionPart, subjectPart);
         newBookForSale.enqueue(new Callback<Book>() {

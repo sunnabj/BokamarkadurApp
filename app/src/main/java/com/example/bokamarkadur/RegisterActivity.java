@@ -51,19 +51,20 @@ public class RegisterActivity extends AppCompatActivity {
         /**
          * Upplýsingar eru fengnar úr formi í layout og JsonObject búinn til út frá þeim
          */
-        EditText name = (EditText) findViewById(R.id.edtName);
-        EditText email = (EditText) findViewById(R.id.edtEmail);
-        EditText username = (EditText) findViewById(R.id.edtUsername);
-        EditText password = (EditText) findViewById(R.id.edtPassword);
-        EditText retypepassword = (EditText) findViewById(R.id.edtReTypepassword);
+        EditText name = findViewById(R.id.edtName);
+        EditText email = findViewById(R.id.edtEmail);
+        EditText phonenumber = findViewById(R.id.edtPhone);
+        EditText username = findViewById(R.id.edtUsername);
+        EditText password = findViewById(R.id.edtPassword);
+        EditText retypepassword = findViewById(R.id.edtReTypepassword);
         progressDialog = new ProgressDialog(RegisterActivity.this);
-        //progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         final JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("name", name.getText().toString());
         jsonObject.addProperty("email", email.getText().toString());
+        jsonObject.addProperty("phonenumber", phonenumber.getText().toString());
         jsonObject.addProperty("username", username.getText().toString());
         jsonObject.addProperty("password", password.getText().toString());
         jsonObject.addProperty("retypePassword", retypepassword.getText().toString());

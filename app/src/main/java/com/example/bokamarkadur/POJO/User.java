@@ -26,10 +26,18 @@ public class User {
     private List<Book> books;
     @SerializedName("token")
     private String token;
+    @SerializedName("phonenumber")
+    private String phonenumber;
+    //@SerializedName("recievedReviews")
+    //private List<Review> receivedReviews;
+    //@SerializedName("writtenReviews")
+    //private List<Review> writtenReviews;
+
 
     // Fjarlægt héðan í bili: List<Message> messages
+    // Vanter List<Review> receivedReviews og List<Review> writtenReviews
     public User(long id, String info, String name, String username, String email, String password,
-                String retypePassword, List<Book> books) {
+                String retypePassword, List<Book> books, String phonenumber) {
         this.id = id;
         this.info = info;
         this.name = name;
@@ -38,6 +46,7 @@ public class User {
         this.password = password;
         this.retypePassword = retypePassword;
         this.books = books;
+        this.phonenumber = phonenumber;
     }
 
     public User(String token) {
@@ -80,6 +89,8 @@ public class User {
         return token;
     }
 
+    public String getPhonenumber() { return phonenumber; }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -115,4 +126,6 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+
+    public void setPhonenumber(String phonenumber) { this.phonenumber = phonenumber; }
 }

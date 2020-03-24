@@ -60,4 +60,7 @@ interface APIInterface {
 
     @POST("/register")
     Call<User> register(@Body JsonObject body);
+
+    @GET("/viewuser/{username]")
+    Call<User> viewUser(@Path("username") String username);
 }
