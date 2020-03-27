@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
@@ -57,6 +57,11 @@ interface APIInterface {
 
     @POST("/authenticate")
     Call<User> login(@Body JsonObject body);
+
+
+    @GET("/logout")
+    Call<User> logout();
+
 
     @POST("/register")
     Call<User> register(@Body JsonObject body);

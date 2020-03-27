@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bokamarkadur.POJO.Book;
+import com.example.bokamarkadur.R;
+import com.example.bokamarkadur.Activities.ViewBookActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,11 +44,11 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
 
         public BookViewHolder(View v) {
             super(v);
-            booksLayout = (LinearLayout) v.findViewById(R.id.books_layout);
-            bookTitle = (TextView) v.findViewById(R.id.title);
-            bookAuthor = (TextView) v.findViewById(R.id.author);
-            bookStatus = (TextView) v.findViewById(R.id.status);
-            image = (ImageView) v.findViewById(R.id.image);
+            booksLayout = v.findViewById(R.id.books_layout);
+            bookTitle = v.findViewById(R.id.title);
+            bookAuthor = v.findViewById(R.id.author);
+            bookStatus = v.findViewById(R.id.status);
+            image = v.findViewById(R.id.image);
         }
     }
 

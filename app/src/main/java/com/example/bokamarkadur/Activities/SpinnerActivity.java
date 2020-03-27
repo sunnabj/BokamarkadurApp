@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import android.app.Activity;
 import android.view.View;

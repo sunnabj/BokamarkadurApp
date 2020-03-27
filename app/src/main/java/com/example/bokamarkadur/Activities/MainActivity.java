@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +13,12 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bokamarkadur.Adapters.AvailableSubjectsAdapter;
+import com.example.bokamarkadur.Adapters.BooksAdapter;
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.SubjectsResponse;
+import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.about:
                             if (LoginActivity.token == null) {
                                 openLoginActivity();
-                                Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
                             } else {
                             startActivity(new Intent(getApplicationContext(),
                                     MenuActivity.class));
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             // login button
-            loginbutton = (CardView) findViewById(R.id.login);
+            loginbutton = findViewById(R.id.login);
             loginbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -149,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             //register
-            registerbutton = (CardView) findViewById(R.id.register);
+            registerbutton = findViewById(R.id.register);
             registerbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

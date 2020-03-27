@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Adapters;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,11 +15,13 @@ import android.widget.Toast;
 
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.example.bokamarkadur.R;
+
 public class SliderAdapter extends PagerAdapter {
 
     Context context;
     LayoutInflater layoutInflater;
-    int clickcount=0;
+    public int clickcount=0;
     public SliderAdapter(Context context){
         this.context = context;
     }

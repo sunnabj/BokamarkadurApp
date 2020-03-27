@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.bokamarkadur.POJO.Book;
+import com.example.bokamarkadur.R;
 //import com.example.bokamarkadur.POJO.Subjects;
 
 import java.io.File;

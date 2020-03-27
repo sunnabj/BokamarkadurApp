@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bokamarkadur.Adapters.BooksAdapter;
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
+import com.example.bokamarkadur.R;
 
 import java.util.ArrayList;
 import java.util.List;

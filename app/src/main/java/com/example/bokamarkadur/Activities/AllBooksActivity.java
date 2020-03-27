@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bokamarkadur.Adapters.BooksAdapter;
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
+import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;

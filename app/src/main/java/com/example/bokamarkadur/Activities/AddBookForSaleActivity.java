@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +23,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.bokamarkadur.POJO.Book;
-//import com.example.bokamarkadur.POJO.Subjects;
-
+import com.example.bokamarkadur.R;
 import java.io.File;
 
 import okhttp3.MultipartBody;
@@ -50,15 +48,15 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_for_sale);
-        uploadImage = (Button) findViewById(R.id.btnUploadImage);
-        submit = (Button) findViewById(R.id.submit);
-        viewUploadedImage = (ImageView) findViewById(R.id.uploadImage);
+        uploadImage = findViewById(R.id.btnUploadImage);
+        submit = findViewById(R.id.submit);
+        viewUploadedImage = findViewById(R.id.uploadImage);
 
         // Hide System UI for best experience
         hideSystemUI();
 
         // Dropdown list with subjects
-        subjectSpinner = (Spinner) findViewById(R.id.edtSubject);
+        subjectSpinner = findViewById(R.id.edtSubject);
         // The dropdown list notices what the user chooses
         subjectSpinner.setOnItemSelectedListener(new SpinnerActivity());
 

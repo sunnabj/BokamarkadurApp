@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -7,30 +7,34 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.User;
+import com.example.bokamarkadur.R;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private Button submit;
     private ProgressDialog progressDialog;
+    private TextView signup;
+    public static String token;
 
     APIInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        submit = (Button) findViewById(R.id.submit);
-
+        setContentView(R.layout.activity_login);
+        submit = findViewById(R.id.submit);
+        signup = findViewById(R.id.bt_signup);
         // Tengjumst API Interface sem talar við bakendann okkar.
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -43,46 +47,46 @@ public class RegisterActivity extends AppCompatActivity {
                 submitData();
             }
         });
-
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRegisterActivity();
+            }
+        });
     }
 
-    private void submitData() {
+    private void submitData(){
 
         /**
-         * Upplýsingar eru fengnar úr formi í layout og JsonObject búinn til út frá þeim
+         * Gögn sem notandi slær inn í form í layout eru tekin og JsonObject búinn til úr þeim.
          */
-        EditText name = findViewById(R.id.edtName);
-        EditText email = findViewById(R.id.edtEmail);
-        EditText phonenumber = findViewById(R.id.edtPhone);
         EditText username = findViewById(R.id.edtUsername);
         EditText password = findViewById(R.id.edtPassword);
-        EditText retypepassword = findViewById(R.id.edtReTypepassword);
-        progressDialog = new ProgressDialog(RegisterActivity.this);
+        progressDialog = new ProgressDialog(LoginActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        final JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("name", name.getText().toString());
-        jsonObject.addProperty("email", email.getText().toString());
-        jsonObject.addProperty("phonenumber", phonenumber.getText().toString());
+        JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("username", username.getText().toString());
         jsonObject.addProperty("password", password.getText().toString());
-        jsonObject.addProperty("retypePassword", retypepassword.getText().toString());
 
         /**
-         * JsonObjectinn er svo notaður til að búa til nýjan User í gagnagrunninn.
+         * JsonObjectinn er notaður til að ákvarða hvaða notandi í gagnagrunninnum er nú
+         * loggaður inn. Fáum response á skjá sem segir til um success.
          */
-
-        Call<User> registerUser = apiInterface.register(jsonObject);
-        registerUser.enqueue(new Callback<User>() {
+        Call<User> loginUser = apiInterface.login(jsonObject);
+        loginUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 //hiding progress dialog
                 progressDialog.dismiss();
-                if (response.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "success: " + response.body(), Toast.LENGTH_LONG).show();
+                if(response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "success: "+response.body(),
+                            Toast.LENGTH_LONG).show();
                     openMainActivity();
-                    Log.d("myTag", String.valueOf(response.body()));
+                    Log.d("login", String.valueOf(response.body()));
+
+                    token = response.body().getToken();
                 }
             }
 
@@ -95,7 +99,11 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent= new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+    public void openRegisterActivity() {
+        Intent intent= new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
     private void hideSystemUI() {

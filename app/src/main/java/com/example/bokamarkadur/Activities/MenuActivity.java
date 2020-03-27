@@ -1,5 +1,6 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MenuActivity extends AppCompatActivity {
@@ -21,6 +23,11 @@ public class MenuActivity extends AppCompatActivity {
     private CardView RequestBook;
     private CardView AllBooksBtn;
     private CardView aboutus;
+    private CardView logOut;
+
+    private ProgressDialog progressDialog;
+
+    APIInterface apiInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +64,7 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         //add book 4 sale
-        AddBook = (CardView) findViewById(R.id.AddBook);
+        AddBook = findViewById(R.id.AddBook);
         AddBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,13 +73,52 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         //Request book
-        RequestBook = (CardView) findViewById(R.id.RequestBook);
+        RequestBook = findViewById(R.id.RequestBook);
         RequestBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openRequestBookActivity();
             }
         });
+
+
+        /**
+         * Logout - algjörlega nýtt - testestestest - mjög mikið í vinnslu!!!
+         */
+        logOut = findViewById(R.id.logout);
+        logOut.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                apiInterface.logout();
+                openAllBooksActivity();
+                /*
+                Call<User> logout = apiInterface.logout();
+                logout.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        //hiding progress dialog
+                        progressDialog.dismiss();
+                        if (response.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "success: " + response.body(), Toast.LENGTH_LONG).show();
+                            openAllBooksActivity();
+                            Log.d("myTag", String.valueOf(response.body()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+                 */
+            }
+
+
+        });
+
 /*
         // login button
         loginbutton = (Button) findViewById(R.id.login);
@@ -94,7 +140,7 @@ public class MenuActivity extends AppCompatActivity {
 
  */
         //Aboutus
-        aboutus = (CardView) findViewById(R.id.about);
+        aboutus = findViewById(R.id.about);
         aboutus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +148,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
         // Förum yfir í AllBooksActivity þar sem allar bækur eru birtar.
-        AllBooksBtn = (CardView) findViewById(R.id.all_books);
+        AllBooksBtn = findViewById(R.id.all_books);
         AllBooksBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

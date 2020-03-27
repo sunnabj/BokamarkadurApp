@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bokamarkadur.POJO.Book;
+import com.example.bokamarkadur.Activities.BookBySubjectActivity;
+import com.example.bokamarkadur.R;
 
 import java.util.List;
 
@@ -31,8 +32,8 @@ public class AvailableSubjectsAdapter extends RecyclerView.Adapter<AvailableSubj
 
         public SubjectViewHolder(View v) {
             super(v);
-            subjectsLayout = (LinearLayout) v.findViewById(R.id.available_subjects_layout);
-            availableSubjects = (TextView) v.findViewById(R.id.available_subjects);
+            subjectsLayout = v.findViewById(R.id.available_subjects_layout);
+            availableSubjects = v.findViewById(R.id.available_subjects);
         }
     }
 

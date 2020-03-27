@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bokamarkadur.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

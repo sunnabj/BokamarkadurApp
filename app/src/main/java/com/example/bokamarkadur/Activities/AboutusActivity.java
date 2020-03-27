@@ -1,4 +1,4 @@
-package com.example.bokamarkadur;
+package com.example.bokamarkadur.Activities;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.bokamarkadur.Adapters.SliderAdapter;
+import com.example.bokamarkadur.R;
 
 public class AboutusActivity extends AppCompatActivity {
 

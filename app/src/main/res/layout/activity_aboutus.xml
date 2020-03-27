@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/parent"
-    tools:context=".AboutusActivity"
+    tools:context=".Activities.AboutusActivity"
     >
     <RelativeLayout
         android:layout_width="match_parent"
