@@ -158,7 +158,7 @@ public class ViewBookActivity extends AppCompatActivity {
 
     // Set info for books that are for sale
     private void setBookInfoFS(String title, String author, int edition, String condition,
-                             int price, String subject, String status, String user, String image){
+                             int price, String subject, String status, final String user, String image){
         Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
 
         TextView bookTitle = findViewById(R.id.view_book_title);
@@ -185,13 +185,28 @@ public class ViewBookActivity extends AppCompatActivity {
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
 
+        /**
+         * Listener á nafn notanda sem setti bókina inn.
+         * Opnar Activity með upplýsingum um viðkomandi notanda.
+         * Username er sent þangað með intent.
+         */
+        bookUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class); //eða bara this)
+                intent.putExtra("username", user); //þurfti að vera declared final til að vera accessible
+                startActivity(intent);
+            }
+        });
+
+
         ImageView bookImage = findViewById(R.id.view_book_image);
         Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(bookImage);
     }
 
     // Set info for books that are requested
     private void setBookInfoR(String title, String author, int edition, String subject,
-                               String status, String user, String image){
+                               String status, final String user, String image){
         Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
 
         TextView bookTitle = findViewById(R.id.view_book_title);
@@ -211,6 +226,20 @@ public class ViewBookActivity extends AppCompatActivity {
 
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
+
+        /**
+         * Listener á nafn notanda sem setti bókina inn.
+         * Opnar Activity með upplýsingum um viðkomandi notanda.
+         * Username er sent þangað með intent.
+         */
+        bookUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class); //eða bara this)
+                intent.putExtra("username", user); //þurfti að vera declared final til að vera accessible
+                startActivity(intent);
+            }
+        });
 
         ImageView bookImage = findViewById(R.id.view_book_image);
         Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(bookImage);

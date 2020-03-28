@@ -3,6 +3,7 @@ package com.example.bokamarkadur.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -84,17 +90,18 @@ public class MenuActivity extends AppCompatActivity {
 
         /**
          * Logout - algjörlega nýtt - testestestest - mjög mikið í vinnslu!!!
+         * Krassar eins og er!
          */
         logOut = findViewById(R.id.logout);
         logOut.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                apiInterface.logout();
-                openAllBooksActivity();
-                /*
-                Call<User> logout = apiInterface.logout();
-                logout.enqueue(new Callback<User>() {
+                //apiInterface.logout();
+                //openAllBooksActivity();
+
+                Call<User> logoutUser = apiInterface.logout();
+                logoutUser.enqueue(new Callback<User>() {
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         //hiding progress dialog
@@ -113,7 +120,7 @@ public class MenuActivity extends AppCompatActivity {
                     }
                 });
 
-                 */
+
             }
 
 

@@ -30,4 +30,5 @@
         <item>Software Engineering</item>
         <item>Spanish</item>
     </string-array>
+    <string name="title_activity_user_info">UserInfoActivity</string>
 </resources>

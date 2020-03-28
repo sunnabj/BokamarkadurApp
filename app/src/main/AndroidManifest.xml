@@ -7,9 +7,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -18,26 +18,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.MenuActivity"
-            android:theme="@style/MenuTheme"></activity>
+        <activity
+            android:name=".Activities.UserInfoActivity"
+            android:label="@string/title_activity_user_info"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activities.MenuActivity"
+            android:theme="@style/MenuTheme" />
         <activity
             android:name=".Activities.AboutusActivity"
             android:theme="@style/AboutusTheme" />
         <activity android:name=".Activities.BookBySubjectActivity" />
-        <activity android:name=".Activities.ViewBookActivity"
-            android:theme="@style/AboutusTheme"/>
+        <activity
+            android:name=".Activities.ViewBookActivity"
+            android:theme="@style/AboutusTheme" />
         <activity
             android:name=".Activities.AllBooksActivity"
             android:theme="@style/AllBookTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Activities.RequestBookActivity"
-            android:theme="@style/AboutusTheme"/>
-        <activity android:name=".Activities.AddBookForSaleActivity"
-            android:theme="@style/AboutusTheme"/>
-        <activity android:name=".Activities.RegisterActivity"
-            android:theme="@style/AboutusTheme"/>
-        <activity android:name=".Activities.LoginActivity"
-            android:theme="@style/AboutusTheme"/>
+        <activity
+            android:name=".Activities.RequestBookActivity"
+            android:theme="@style/AboutusTheme" />
+        <activity
+            android:name=".Activities.AddBookForSaleActivity"
+            android:theme="@style/AboutusTheme" />
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:theme="@style/AboutusTheme" />
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:theme="@style/AboutusTheme" />
         <activity
             android:name=".Splashscreen"
             android:theme="@style/SplashTheme">
@@ -47,7 +57,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainActivity"
+        <activity
+            android:name=".Activities.MainActivity"
             android:theme="@style/AboutusTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
