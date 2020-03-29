@@ -167,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent= new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
+
+    /*
     public void AddbookforsaleActivity() {
         if (LoginActivity.token == null) {
             openLoginActivity();
@@ -189,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AllBooksActivity.class);
         startActivity(intent);
     }
+    */
+
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.

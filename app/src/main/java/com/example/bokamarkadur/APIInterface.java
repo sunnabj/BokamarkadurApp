@@ -29,6 +29,10 @@ interface APIInterface {
     @GET("/viewsubjectbooks/{subjects}")
     Call<BookList> getBooksBySubject(@Path("subjects") String subjects);
 
+    @GET("/myBooks")
+    Call<BookList> getUsersBooks(@Path("username") String username);
+    // myBooks
+
 
 //    @GET("api/Profiles/GetProfile?id={id}")
 //    Call<UserProfile> getUser(@Path("id") String id, @Header("Authorization") String authHeader);

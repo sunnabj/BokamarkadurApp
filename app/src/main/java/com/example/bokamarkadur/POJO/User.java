@@ -10,34 +10,45 @@ public class User {
 
     @SerializedName("id")
     private long id;
-    @SerializedName("info")
-    private String info;
+
     @SerializedName("name")
     private String name;
-    @SerializedName("username")
-    private String username;
+    @SerializedName("info")
+    private String info;
+
     @SerializedName("email")
     private String email;
+    @SerializedName("phonenumber")
+    private int phonenumber;
+
+    @SerializedName("username")
+    private String username;
     @SerializedName("password")
     private String password;
     @SerializedName("retypePassword")
     private String retypePassword;
-    @SerializedName("books")
-    private List<Book> books;
+
+    @SerializedName("usersbooks")
+    private List<Book> usersBooks;
     @SerializedName("token")
     private String token;
 
     // Fjarlægt héðan í bili: List<Message> messages
-    public User(long id, String info, String name, String username, String email, String password,
-                String retypePassword, List<Book> books) {
+    public User (long id, String name, String info, String email, int phonenumber, String username, String password,
+                String retypePassword, List<Book> usersBooks) {
         this.id = id;
-        this.info = info;
+
         this.name = name;
-        this.username = username;
+        this.info = info;
+
         this.email = email;
+        this.phonenumber = phonenumber;
+
+        this.username = username;
         this.password = password;
         this.retypePassword = retypePassword;
-        this.books = books;
+
+        this.usersBooks = usersBooks;
     }
 
     public User(String token) {
@@ -48,69 +59,55 @@ public class User {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
     public String getInfo() {
         return info;
     }
 
-    public String getName() {
-        return name;
+
+    public String getEmail() {
+        return email;
+    }
+    public int getPhonenumber() {
+        return phonenumber;
     }
 
     public String getUsername() {
         return username;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
     public String getPassword() {
         return password;
     }
-
     public String getRetypePassword() {
         return retypePassword;
     }
 
     public List<Book> getBooks() {
-        return books;
+        return usersBooks;
     }
+
 
     public String getToken() {
         return token;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    public void setId(long id) { this.id = id; }
 
-    public void setInfo(String info) {
-        this.info = info;
-    }
+    public void setName(String name) { this.name = name; }
+    public void setInfo(String info) { this.info = info; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setEmail(String email) { this.email = email; }
+    public void setPhonenumber(String email) { this.phonenumber = phonenumber; }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public void setUsername(String username) { this.username = username; }
+    public void setPassword(String password) { this.password = password; }
+    public void setRetypePassword(String retypePassword) { this.retypePassword = retypePassword; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setBooks(List<Book> books) { this.usersBooks = usersBooks; }
 
-    public void setRetypePassword(String retypePassword) {
-        this.retypePassword = retypePassword;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
 
     public void setToken(String token) {
         this.token = token;

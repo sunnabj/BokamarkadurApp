@@ -13,6 +13,15 @@
     <string name="my_messages">My Messages</string>
     <string name="my_reviews">My Reviews</string>
 
+    <string name="my_name">Name: </string>
+    <string name="my_about">Few words about me: </string>
+    <string name="my_email">Email: </string>
+    <string name="my_phone_number">Phone number: </string>
+    <string name="my_username">Username: </string>
+    <string name="my_password">Password: </string>
+    <string name="my_re_password">Re-type password: </string>
+
+
     <string-array name="subject">
         <item>4</item>
         <item>Industrial_and_Mechanical_Engineering</item>
