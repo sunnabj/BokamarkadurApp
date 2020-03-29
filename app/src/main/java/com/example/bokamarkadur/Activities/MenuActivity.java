@@ -109,7 +109,7 @@ public class MenuActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "success: " + response.body(), Toast.LENGTH_LONG).show();
                             openAllBooksActivity();
-                            Log.d("myTag", String.valueOf(response.body()));
+                            //Log.d("myTag", String.valueOf(response.body()));
                         }
                     }
 

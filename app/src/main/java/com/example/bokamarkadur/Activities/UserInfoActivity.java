@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.bokamarkadur.R;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +43,7 @@ public class UserInfoActivity extends AppCompatActivity {
         final String username = getIncomingIntent();
 
         Call<User> viewUser = apiInterface.viewUser(username);
+        System.out.println("User úr apiInterface: " + viewUser.getClass());
         viewUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -49,7 +52,8 @@ public class UserInfoActivity extends AppCompatActivity {
                 // Textview-in virka - en það sem ég reyni að ná í úr responseBody er null.
                 // Responsebody sjálft er af tagi User, en er null!
 
-                System.out.println("RESPONSE BODY: " + response.body());
+                //System.out.println("RESPONSE BODY: " + response.body());
+                System.out.println("getname:" + response.body().getName());
 
                 TextView userName = findViewById(R.id.view_user_name);
                 userName.setText(response.body().getName());

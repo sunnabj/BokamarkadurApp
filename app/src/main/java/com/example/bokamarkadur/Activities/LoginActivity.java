@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "success: "+response.body(),
                             Toast.LENGTH_LONG).show();
                     openMainActivity();
-                    Log.d("login", String.valueOf(response.body()));
+                    //Log.d("login", String.valueOf(response.body()));
 
                     token = response.body().getToken();
                 }
