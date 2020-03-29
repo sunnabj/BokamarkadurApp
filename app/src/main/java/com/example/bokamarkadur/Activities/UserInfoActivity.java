@@ -3,11 +3,9 @@ package com.example.bokamarkadur.Activities;
 import android.os.Bundle;
 
 import com.example.bokamarkadur.POJO.User;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.bokamarkadur.POJO.UserResponse;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.util.Log;
 import android.view.View;
@@ -41,32 +39,30 @@ public class UserInfoActivity extends AppCompatActivity {
 
         //VIRKAR
         final String username = getIncomingIntent();
+        Log.d(TAG, "username: " + username);
 
-        Call<User> viewUser = apiInterface.viewUser(username);
-        System.out.println("User úr apiInterface: " + viewUser.getClass());
-        viewUser.enqueue(new Callback<User>() {
+
+        // String title = getIntent().getStringExtra("bookTitle");
+
+        final Call<UserResponse> viewUser = apiInterface.viewUser(username);
+        viewUser.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
 
-                //TODO: Hér er allt null
-                // Textview-in virka - en það sem ég reyni að ná í úr responseBody er null.
-                // Responsebody sjálft er af tagi User, en er null!
-
-                //System.out.println("RESPONSE BODY: " + response.body());
-                System.out.println("getname:" + response.body().getName());
+                Log.d(TAG, "RESPONSE BODY: " + response.body().getUser().getUsername());
 
                 TextView userName = findViewById(R.id.view_user_name);
-                userName.setText(response.body().getName());
+                userName.setText(response.body().getUser().getName());
 
                 TextView userEmail = findViewById(R.id.view_user_email);
-                userEmail.setText(response.body().getEmail());
+                userEmail.setText(response.body().getUser().getEmail());
 
                 TextView userPhone = findViewById(R.id.view_user_phone);
-                userPhone.setText(response.body().getPhonenumber());
+                userPhone.setText(response.body().getUser().getPhonenumber());
            }
 
            @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
                 call.cancel();

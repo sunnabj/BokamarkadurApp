@@ -6,6 +6,7 @@ import com.example.bokamarkadur.POJO.Review;
 import com.example.bokamarkadur.POJO.ReviewList;
 import com.example.bokamarkadur.POJO.SubjectsResponse;
 import com.example.bokamarkadur.POJO.User;
+import com.example.bokamarkadur.POJO.UserResponse;
 import com.google.gson.JsonObject;
 
 import okhttp3.MultipartBody;
@@ -69,7 +70,7 @@ interface APIInterface {
     Call<User> register(@Body JsonObject body);
 
     @GET("/viewuser/{username}")
-    Call<User> viewUser(@Path("username") String username);
+    Call<UserResponse> viewUser(@Path("username") String username);
 
 
     @POST("/writeReview/{id}")
@@ -77,6 +78,9 @@ interface APIInterface {
 
     @GET("/viewReview/{username}")
     Call<ReviewList> viewReviews(@Path("username") String username);
+
+    @GET("/myBooks")
+    Call<BookList> getMyBooks(@Header("Authorization") String authorization);
 
 
 }

@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private TextView signup;
     public static String token;
+    private static final String TAG = "LoginActivity";
 
     APIInterface apiInterface;
 
@@ -81,10 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                 //hiding progress dialog
                 progressDialog.dismiss();
                 if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "success: "+response.body(),
+                    Toast.makeText(getApplicationContext(), "success: "+response.body().getToken(),
                             Toast.LENGTH_LONG).show();
                     openMainActivity();
-                    //Log.d("login", String.valueOf(response.body()));
 
                     token = response.body().getToken();
                 }
