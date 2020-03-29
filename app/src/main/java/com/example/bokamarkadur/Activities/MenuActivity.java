@@ -3,7 +3,6 @@ package com.example.bokamarkadur.Activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,13 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -97,29 +91,10 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //apiInterface.logout();
-                //openAllBooksActivity();
 
-                Call<User> logoutUser = apiInterface.logout();
-                logoutUser.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        //hiding progress dialog
-                        progressDialog.dismiss();
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "success: " + response.body(), Toast.LENGTH_LONG).show();
-                            openAllBooksActivity();
-                            //Log.d("myTag", String.valueOf(response.body()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-
+                //breyta Token sé null þannig að eins og maður hefur ekki búinn að loggainn :D
+                LoginActivity.token = null;
+                openMainActivity();
 
             }
 
@@ -164,7 +139,10 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-
+    public void openMainActivity() {
+        Intent intent= new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
     public void openAboutusActivity() {
         Intent intent= new Intent(this, AboutusActivity.class);
         startActivity(intent);

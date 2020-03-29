@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
 import com.squareup.picasso.Picasso;
 
@@ -32,6 +33,9 @@ public class ViewBookActivity extends AppCompatActivity {
     private static final int REQ_PICK_CONTACT = 2 ;
     private EditText phoneEditText;
     private EditText messageEditText;
+
+    User user;
+    private String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +101,6 @@ public class ViewBookActivity extends AppCompatActivity {
      */
     public void sendMySMS() {
 
-        String phone = "6161350";
         String message = messageEditText.getText().toString();
 
         //Check if the phoneNumber is empty
@@ -138,6 +141,7 @@ public class ViewBookActivity extends AppCompatActivity {
             String status = getIntent().getStringExtra("bookStatus");
             String user = getIntent().getStringExtra("bookUser");
             String image = getIntent().getStringExtra("bookImage");
+            String phone = getIntent().getStringExtra("phone");
 
             if (condition == null) {
                 condition = "Unknown";
@@ -148,9 +152,11 @@ public class ViewBookActivity extends AppCompatActivity {
             }
 
             if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
-                setBookInfoFS(title, author, edition, condition, price, subject, status, user, image);
+                this.phone = phone;
+                setBookInfoFS(title, author, edition, condition, price, subject, status, user, image, phone);
             } else {
-                setBookInfoR(title, author, edition, subject, status, user, image);
+                this.phone = phone;
+                setBookInfoR(title, author, edition, subject, status, user, image, phone);
             }
 
         }
@@ -158,7 +164,7 @@ public class ViewBookActivity extends AppCompatActivity {
 
     // Set info for books that are for sale
     private void setBookInfoFS(String title, String author, int edition, String condition,
-                             int price, String subject, String status, final String user, String image){
+                             int price, String subject, String status, final String user, String image, String phone){
         Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
 
         TextView bookTitle = findViewById(R.id.view_book_title);
@@ -185,6 +191,11 @@ public class ViewBookActivity extends AppCompatActivity {
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
 
+        TextView phoneUser = findViewById(R.id.view_user_phone);
+        phoneUser.setText("Phonenr: " + phone);
+
+        Log.d("Tag", "asdasd"+phone);
+
         /**
          * Listener á nafn notanda sem setti bókina inn.
          * Opnar Activity með upplýsingum um viðkomandi notanda.
@@ -206,7 +217,7 @@ public class ViewBookActivity extends AppCompatActivity {
 
     // Set info for books that are requested
     private void setBookInfoR(String title, String author, int edition, String subject,
-                               String status, final String user, String image){
+                               String status, final String user, String image, String phone){
         Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
 
         TextView bookTitle = findViewById(R.id.view_book_title);
@@ -226,6 +237,9 @@ public class ViewBookActivity extends AppCompatActivity {
 
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
+
+        TextView phoneUser = findViewById(R.id.view_user_phone);
+        phoneUser.setText("Phonenr: " + phone);
 
         /**
          * Listener á nafn notanda sem setti bókina inn.

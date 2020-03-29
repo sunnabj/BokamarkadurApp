@@ -1,10 +1,8 @@
 package com.example.bokamarkadur.POJO;
 
-import com.example.bokamarkadur.POJO.User;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
-import java.util.List;
 
 public class Book {
 
@@ -34,10 +32,12 @@ public class Book {
 //    private Message messages;
     @SerializedName("subject")
     private String subject;
+    @SerializedName("phone")
+    private User phone;
 
     // Fjarlægt héðan í bili: List<Message> messages
     public Book(long id, String title, String author, Integer edition, String condition,
-                Integer price, String image, String status, Date date, User user, String subject) {
+                Integer price, String image, String status, Date date, User user, String subject, User phone) {
 
         this.id = id;
         this.title = title;
@@ -51,6 +51,7 @@ public class Book {
         this.user = user;
 //        this.messages = messages;
         this.subject = subject;
+        this.phone = phone;
     }
 
     public long getId() {
@@ -84,6 +85,8 @@ public class Book {
     public Date getDate() { return date; }
 
     public User getUser() { return user; }
+
+    public User getPhone() { return phone;}
 
 //    public List<Message> getMessages() {
 //        return messages;
@@ -122,6 +125,8 @@ public class Book {
     public void setDate(Date date) { this.date = date; }
 
     public void setUser(User user) { this.user = user; }
+
+    public void setPhone(User phone) { this.phone = phone; }
 
 //    public void setMessages(List<Message> messages) {
 //        this.messages = messages;
