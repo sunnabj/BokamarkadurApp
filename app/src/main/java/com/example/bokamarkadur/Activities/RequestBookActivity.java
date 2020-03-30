@@ -38,7 +38,7 @@ public class RequestBookActivity extends AppCompatActivity {
     private Button uploadImage;
     private Button submit;
     private Uri selectedImage;
-    private String imgDecodableString;
+    private String imgDecodableString = "";
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1999;
@@ -163,36 +163,69 @@ public class RequestBookActivity extends AppCompatActivity {
         // Create MultipartBody.Part using file request-body,file name and part name
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
 
-        /**
-         * A new book object is created with the values from the form.
-         */
-        Call<Book> newBookForSale = apiInterface.addBookRequested("application/json", "Bearer " + LoginActivity.token,
-                imagePart, titlePart, authorPart, editionPart, subjectPart);
-        newBookForSale.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                //hiding progress dialog
-                progressDialog.dismiss();
-                Log.d("onResponse: ", String.valueOf(response.body()));
-                if (response.isSuccessful()) {
-                    openMainActivity();
-                    Log.d("Success: ", response.body().getTitle() + " has been added.");
-                } else {
-                    try {
-                        Log.d("error", response.errorBody().string());
-                    } catch (Exception e) {
-                        Log.d("error: ", e.getMessage());
+        if (imgDecodableString.equals("")) {
+            /**
+             * A new book object is created with the values from the form - No image.
+             */
+            Call<Book> newBookForSaleNoImg = apiInterface.addBookRequestedNoImg("application/json", "Bearer " + LoginActivity.token,
+                    titlePart, authorPart, editionPart, subjectPart);
+            newBookForSaleNoImg.enqueue(new Callback<Book>() {
+                @Override
+                public void onResponse(Call<Book> call, Response<Book> response) {
+                    //hiding progress dialog
+                    progressDialog.dismiss();
+                    Log.d("onResponse: ", String.valueOf(response.body()));
+                    if (response.isSuccessful()) {
+                        openMainActivity();
+                        Log.d("Success: ", response.body().getTitle() + " has been added.");
+                    } else {
+                        try {
+                            Log.d("error", response.errorBody().string());
+                        } catch (Exception e) {
+                            Log.d("error: ", e.getMessage());
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("myTag", "HELPHLEP");
-            }
-        });
+                @Override
+                public void onFailure(Call<Book> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.d("onFailure: ", "failure");
+                }
+            });
+        } else {
+            /**
+             * A new book object is created with the values from the form.
+             */
+            Call<Book> newBookForSale = apiInterface.addBookRequested("application/json", "Bearer " + LoginActivity.token,
+                    imagePart, titlePart, authorPart, editionPart, subjectPart);
+            newBookForSale.enqueue(new Callback<Book>() {
+                @Override
+                public void onResponse(Call<Book> call, Response<Book> response) {
+                    //hiding progress dialog
+                    progressDialog.dismiss();
+                    Log.d("onResponse: ", String.valueOf(response.body()));
+                    if (response.isSuccessful()) {
+                        openMainActivity();
+                        Log.d("Success: ", response.body().getTitle() + " has been added.");
+                    } else {
+                        try {
+                            Log.d("error", response.errorBody().string());
+                        } catch (Exception e) {
+                            Log.d("error: ", e.getMessage());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Book> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.d("onFailure: ", "failure");
+                }
+            });
+        }
     }
 
     public void openMainActivity() {
