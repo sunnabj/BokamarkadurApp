@@ -1,5 +1,6 @@
 package com.example.bokamarkadur.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.bokamarkadur.POJO.User;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.bokamarkadur.R;
@@ -55,10 +57,24 @@ public class UserInfoActivity extends AppCompatActivity {
                 userName.setText(response.body().getUser().getName());
 
                 TextView userEmail = findViewById(R.id.view_user_email);
-                userEmail.setText(response.body().getUser().getEmail());
+                userEmail.setText("Email: " + response.body().getUser().getEmail());
 
                 TextView userPhone = findViewById(R.id.view_user_phone);
-                userPhone.setText(response.body().getUser().getPhonenumber());
+                userPhone.setText("Phone number: " + response.body().getUser().getPhonenumber());
+
+                Button viewReviews = findViewById(R.id.viewReviews);
+
+                final String username = response.body().getUser().getUsername();
+
+                viewReviews.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(UserInfoActivity.this, ReviewActivity.class);
+                        intent.putExtra("username", username); //þurfti að vera declared final til að vera accessible
+                        startActivity(intent);
+                    }
+                });
+
            }
 
            @Override

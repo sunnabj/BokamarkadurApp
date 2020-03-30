@@ -89,40 +89,19 @@ public class MenuActivity extends AppCompatActivity {
 
 
         /**
-         * Logout - algjörlega nýtt - testestestest - mjög mikið í vinnslu!!!
-         * Krassar eins og er!
+         * Logout - setur authorization token sem null þannig að notandi getur ekki gert
+         * neitt lengur sem krefst innskráningar.
          */
         logOut = findViewById(R.id.logout);
         logOut.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                //apiInterface.logout();
-                //openAllBooksActivity();
 
-                Call<User> logoutUser = apiInterface.logout();
-                logoutUser.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        //hiding progress dialog
-                        progressDialog.dismiss();
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "success: " + response.body(), Toast.LENGTH_LONG).show();
-                            openAllBooksActivity();
-                            //Log.d("myTag", String.valueOf(response.body()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        progressDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-
+                LoginActivity.token = null;
+                openMainActivity();
 
             }
-
 
         });
 
@@ -180,7 +159,8 @@ public class MenuActivity extends AppCompatActivity {
     public void AddbookforsaleActivity() {
         if (LoginActivity.token == null) {
             openLoginActivity();
-            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You must login to add a book for sale",
+                    Toast.LENGTH_LONG).show();
         } else {
             Intent intent= new Intent(this, AddBookForSaleActivity.class);
             startActivity(intent);
@@ -189,7 +169,8 @@ public class MenuActivity extends AppCompatActivity {
     public void openRequestBookActivity() {
         if (LoginActivity.token == null) {
             openLoginActivity();
-            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You must login to request a book",
+                    Toast.LENGTH_LONG).show();
         } else {
             Intent intent = new Intent(this, RequestBookActivity.class);
             startActivity(intent);
@@ -199,6 +180,12 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AllBooksActivity.class);
         startActivity(intent);
     }
+
+    public void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.

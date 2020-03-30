@@ -64,7 +64,7 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="186dp"
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
         android:background="@drawable/shape">
 
         <TextView
@@ -79,23 +79,40 @@
 
         <TextView
             android:id="@+id/view_user_email"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorGreyLight"
-            android:textAlignment="center"
-            android:gravity="center"/>
+            android:paddingTop="16dp"
+            android:paddingBottom="5dp"
+            android:layout_width="150dp"
+            android:layout_height="225dp"
+            android:src="@drawable/book"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"/>
 
         <TextView
             android:id="@+id/view_user_phone"
-            android:paddingTop="16dp"
+            android:paddingTop="5dp"
             android:paddingBottom="16dp"
             android:layout_width="150dp"
             android:layout_height="225dp"
             android:src="@drawable/book"
             android:layout_gravity="center"
             android:scaleType="fitXY"/>
+
+        <TextView
+            android:id="@+id/view_received_reviews"
+            android:paddingTop="5dp"
+            android:paddingBottom="16dp"
+            android:layout_width="150dp"
+            android:layout_height="225dp"
+            android:src="@drawable/book"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"/>
+
+        <Button
+            android:id="@+id/viewReviews"
+            style="@style/loginButton"
+            android:text="View Reviews"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/loginViewsMargin"/>
 
     </LinearLayout>
             </RelativeLayout>
