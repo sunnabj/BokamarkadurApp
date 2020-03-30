@@ -49,10 +49,30 @@ interface APIInterface {
                               @Part("subject") String subject);
 
     @Multipart
+    @POST("/addbookforsalenoimage")
+    Call<Book> addBookForSaleNoImg(@Header("Accept") String accept,
+                                   @Header("Authorization") String authorization,
+                                   @Part("title") String title,
+                                   @Part("author") String author,
+                                   @Part("edition") int edition,
+                                   @Part("condition") String condition,
+                                   @Part("price") int price,
+                                   @Part("subject") String subject);
+
+    @Multipart
     @POST("/addrequestbook")
     Call<Book> addBookRequested(@Header("Accept") String accept,
                                 @Header("Authorization") String authorization,
                                 @Part MultipartBody.Part file,
+                                @Part("title") String title,
+                                @Part("author") String author,
+                                @Part("edition") int edition,
+                                @Part("subject") String subject);
+
+    @Multipart
+    @POST("/addrequestbooknoimage")
+    Call<Book> addBookRequestedNoImg(@Header("Accept") String accept,
+                                @Header("Authorization") String authorization,
                                 @Part("title") String title,
                                 @Part("author") String author,
                                 @Part("edition") int edition,

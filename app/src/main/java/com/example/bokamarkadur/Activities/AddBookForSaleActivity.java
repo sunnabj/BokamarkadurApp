@@ -36,7 +36,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private Button uploadImage;
     private Button submit;
     private Uri selectedImage;
-    private String imgDecodableString;
+    private String imgDecodableString = "";
     private ImageView viewUploadedImage;
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1888;
@@ -168,39 +168,75 @@ public class AddBookForSaleActivity extends AppCompatActivity {
         MultipartBody.Part imagePart = MultipartBody.Part.createFormData(
                 "file", file.getName(), fileReqBody);
 
-        /**
-         * A new book object is created with the values from the form.
-         */
-        Call<Book> newBookForSale = apiInterface.addBookForSale("application/json", "Bearer " + LoginActivity.token,
-                imagePart, titlePart, authorPart, editionPart, conditionPart, pricePart, subjectPart);
-        newBookForSale.enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                //hiding progress dialog
-                progressDialog.dismiss();
-                Log.d("onResponse: ", String.valueOf(response.body()));
-                if (response.isSuccessful()) {
-                    openMainActivity();
-                    Toast.makeText
-                            (getApplicationContext(), "Selected : " + subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
-                            .show();
-                    Log.d("Success: ", response.body().getTitle() + " has been added.");
-                } else {
-                    try {
-                        Log.d("error", response.errorBody().string());
-                    } catch (Exception e) {
-                        Log.d("error: ", e.getMessage());
+        if (imgDecodableString.equals("")) {
+            /**
+             * A new book object is created with the values from the form - No image.
+             */
+            Call<Book> newBookForSaleNoImg = apiInterface.addBookForSaleNoImg("application/json", "Bearer " + LoginActivity.token,
+                    titlePart, authorPart, editionPart, conditionPart, pricePart, subjectPart);
+            newBookForSaleNoImg.enqueue(new Callback<Book>() {
+                @Override
+                public void onResponse(Call<Book> call, Response<Book> response) {
+                    //hiding progress dialog
+                    progressDialog.dismiss();
+                    Log.d("onResponse: ", String.valueOf(response.body()));
+                    if (response.isSuccessful()) {
+                        openMainActivity();
+                        Toast.makeText
+                                (getApplicationContext(), "Selected : " + subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
+                                .show();
+                        Log.d("Success: ", response.body().getTitle() + " has been added.");
+                    } else {
+                        try {
+                            Log.d("error", response.errorBody().string());
+                        } catch (Exception e) {
+                            Log.d("error: ", e.getMessage());
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("myTag", "HELPHLEP");
-            }
-        });
+                @Override
+                public void onFailure(Call<Book> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.d("onFailure: ", "failure");
+                }
+            });
+        } else {
+            /**
+             * A new book object is created with the values from the form.
+             */
+            Call<Book> newBookForSale = apiInterface.addBookForSale("application/json", "Bearer " + LoginActivity.token,
+                    imagePart, titlePart, authorPart, editionPart, conditionPart, pricePart, subjectPart);
+            newBookForSale.enqueue(new Callback<Book>() {
+                @Override
+                public void onResponse(Call<Book> call, Response<Book> response) {
+                    //hiding progress dialog
+                    progressDialog.dismiss();
+                    Log.d("onResponse: ", String.valueOf(response.body()));
+                    if (response.isSuccessful()) {
+                        openMainActivity();
+                        Toast.makeText
+                                (getApplicationContext(), "Selected : " + subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
+                                .show();
+                        Log.d("Success: ", response.body().getTitle() + " has been added.");
+                    } else {
+                        try {
+                            Log.d("error", response.errorBody().string());
+                        } catch (Exception e) {
+                            Log.d("error: ", e.getMessage());
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Book> call, Throwable t) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.d("onFailure: ", "failure");
+                }
+            });
+        }
     }
 
     public void openMainActivity() {
