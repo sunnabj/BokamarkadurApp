@@ -41,7 +41,9 @@
             android:theme="@style/AboutusTheme" />
         <activity
             android:name=".Activities.AddBookForSaleActivity"
-            android:theme="@style/AboutusTheme" />
+            android:theme="@style/AboutusTheme"
+            android:layout_centerVertical="true"
+            />
         <activity
             android:name=".Activities.RegisterActivity"
             android:theme="@style/AboutusTheme" />

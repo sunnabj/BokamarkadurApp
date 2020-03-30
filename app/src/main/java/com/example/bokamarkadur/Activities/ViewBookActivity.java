@@ -191,8 +191,8 @@ public class ViewBookActivity extends AppCompatActivity {
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
 
-        TextView phoneUser = findViewById(R.id.view_user_phone);
-        phoneUser.setText("Phonenr: " + phone);
+        TextView phoneUser = findViewById(R.id.view_phone);
+        phoneUser.setText("Phone number: " + phone);
 
         Log.d("Tag", "asdasd"+phone);
 
@@ -238,8 +238,10 @@ public class ViewBookActivity extends AppCompatActivity {
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
 
-        TextView phoneUser = findViewById(R.id.view_user_phone);
-        phoneUser.setText("Phonenr: " + phone);
+        TextView phoneUser = findViewById(R.id.view_phone);
+        phoneUser.setText("Phone number: "+phone);
+
+        Log.d("Tag", "asdasd"+phone);
 
         /**
          * Listener á nafn notanda sem setti bókina inn.
