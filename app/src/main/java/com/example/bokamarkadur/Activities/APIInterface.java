@@ -4,6 +4,7 @@ import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.Review;
 import com.example.bokamarkadur.POJO.ReviewList;
+import com.example.bokamarkadur.POJO.ReviewsResponse;
 import com.example.bokamarkadur.POJO.SubjectsResponse;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.POJO.UserResponse;
@@ -93,11 +94,13 @@ interface APIInterface {
     Call<UserResponse> viewUser(@Path("username") String username);
 
 
-    @POST("/writeReview/{id}")
-    Call<Review> writeReview(@Path("id") long id, @Body JsonObject body);
+    @POST("/writeReview/{username}")
+    Call<Review> writeReview(@Header("Authorization") String authorization,
+                             @Header("Accept") String accept,
+                             @Path("username") String username, @Body JsonObject body);
 
-    @GET("/viewReview/{username}")
-    Call<ReviewList> viewReviews(@Path("username") String username);
+    @GET("/viewReviews/{username}")
+    Call<ReviewsResponse> viewReviews(@Path("username") String username);
 
     @GET("/myBooks")
     Call<BookList> getMyBooks(@Header("Authorization") String authorization);

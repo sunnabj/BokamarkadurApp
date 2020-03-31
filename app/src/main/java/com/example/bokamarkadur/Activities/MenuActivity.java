@@ -83,8 +83,8 @@ public class MenuActivity extends AppCompatActivity {
 
 
         /**
-         * Logout - algjörlega nýtt - testestestest - mjög mikið í vinnslu!!!
-         * Krassar eins og er!
+         * Logout - setur authorization token sem null þannig að notandi getur ekki gert
+         * neitt lengur sem krefst innskráningar.
          */
         logOut = findViewById(R.id.logout);
         logOut.setOnClickListener(new View.OnClickListener() {
@@ -92,12 +92,11 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //breyta Token sé null þannig að eins og maður hefur ekki búinn að loggainn :D
                 LoginActivity.token = null;
                 openMainActivity();
 
-            }
 
+            }
 
         });
 
@@ -158,7 +157,8 @@ public class MenuActivity extends AppCompatActivity {
     public void AddbookforsaleActivity() {
         if (LoginActivity.token == null) {
             openLoginActivity();
-            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You must login to add a book for sale",
+                    Toast.LENGTH_LONG).show();
         } else {
             Intent intent= new Intent(this, AddBookForSaleActivity.class);
             startActivity(intent);

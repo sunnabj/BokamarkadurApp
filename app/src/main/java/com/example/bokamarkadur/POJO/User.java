@@ -28,16 +28,17 @@ public class User {
     private String token;
     @SerializedName("phonenumber")
     private String phonenumber;
-    //@SerializedName("recievedReviews")
-    //private List<Review> receivedReviews;
-    //@SerializedName("writtenReviews")
-    //private List<Review> writtenReviews;
+    @SerializedName("recievedReviews")
+    private List<Review> receivedReviews;
+    @SerializedName("writtenReviews")
+    private List<Review> writtenReviews;
 
 
     // Fjarlægt héðan í bili: List<Message> messages
     // Vanter List<Review> receivedReviews og List<Review> writtenReviews
     public User(long id, String info, String name, String username, String email, String password,
-                String retypePassword, List<Book> books, String phonenumber) {
+                String retypePassword, List<Book> books, String phonenumber,
+                List<Review> receivedReviews, List<Review> writtenReviews) {
         this.id = id;
         this.info = info;
         this.name = name;
@@ -47,6 +48,8 @@ public class User {
         this.retypePassword = retypePassword;
         this.books = books;
         this.phonenumber = phonenumber;
+        this.receivedReviews = receivedReviews;
+        this.writtenReviews = writtenReviews;
     }
 
     public User(String token) {
@@ -91,6 +94,10 @@ public class User {
 
     public String getPhonenumber() { return phonenumber; }
 
+    public List<Review> getReceivedReviews() { return receivedReviews; }
+
+    public List<Review> getWrittenReviews() { return writtenReviews; }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -128,6 +135,14 @@ public class User {
     }
 
     public void setPhonenumber(String phonenumber) { this.phonenumber = phonenumber; }
+
+    public void setReceivedReviews(List<Review> receivedReviews) {
+        this.receivedReviews = receivedReviews;
+    }
+
+    public void setWrittenReviews(List<Review> writtenReviews) {
+        this.writtenReviews = writtenReviews;
+    }
 
     @Override
     public String toString() {

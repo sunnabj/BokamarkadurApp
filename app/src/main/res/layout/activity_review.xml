@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context=".Activities.ReviewActivity">
     <ScrollView style="@style/parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="80dp">
+            android:layout_height="match_parent">
 
 
             <LinearLayout
@@ -47,7 +47,7 @@
                     style="@style/headerText"
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"
-                    android:text="All Books" />
+                    android:id="@+id/review_receiver" />
 
 
             </LinearLayout>
@@ -66,38 +66,49 @@
                     android:background="@drawable/shape"
                     android:orientation="vertical">
 
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:id="@+id/no_reviews" />
+
                     <TableLayout
-                        android:id="@+id/activity_all_books"
+                        android:id="@+id/activity_review"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp"
                         android:stretchColumns="1">
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/books_recycler_view"
+                            android:id="@+id/reviews_recycler_view"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
                     </TableLayout>
+
+                   <!-- <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="Add your own review: "
+                        android:textColor="@color/primaryTextColor" />
+
+                    <EditText
+                        android:id="@+id/edt_add_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/primaryTextColor" /> -->
+
+                    <Button
+                        android:id="@+id/add_review"
+                        style="@style/loginButton"
+                        android:text="Add your own Review"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/loginViewsMargin"/>
+
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/bottom_navigation_background"
-        android:elevation="8dp"
-        app:labelVisibilityMode="selected"
-        app:itemIconTint="@drawable/bottom_navigation_color_selector"
-        app:itemTextColor="@drawable/selector"
-        app:menu="@menu/menu_navigation"
-        app:itemHorizontalTranslationEnabled="true"
-        />
+
 </RelativeLayout>

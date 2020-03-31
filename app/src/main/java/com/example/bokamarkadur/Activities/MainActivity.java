@@ -125,7 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<SubjectsResponse> call, Response<SubjectsResponse> response) {
                     List<String> subjects = response.body().getAvailableSubjects();
-                    SubjectsrecyclerView.setAdapter(new AvailableSubjectsAdapter(subjects, R.layout.list_subjects,  getApplicationContext()));
+                    SubjectsrecyclerView.setAdapter(new AvailableSubjectsAdapter(subjects,
+                            R.layout.list_subjects,  getApplicationContext()));
 
                     // TODO: Debug virkni, má eyða síðar meir.
                     Log.d(TAG, "Number of books received: " + subjects.size());
