@@ -107,7 +107,7 @@
                         <TextView
                             style="@style/headerTextPrimary"
                             android:layout_marginTop="@dimen/loginViewsMargin"
-                            android:text="Subject" />
+                            android:text="Available Subjects" />
 
 
                         <androidx.recyclerview.widget.RecyclerView

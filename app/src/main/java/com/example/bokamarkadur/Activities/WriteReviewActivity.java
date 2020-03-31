@@ -1,8 +1,6 @@
 package com.example.bokamarkadur.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,136 +12,58 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bokamarkadur.Adapters.ReviewsAdapter;
 import com.example.bokamarkadur.POJO.Review;
-import com.example.bokamarkadur.POJO.ReviewList;
-import com.example.bokamarkadur.POJO.ReviewsResponse;
 import com.example.bokamarkadur.R;
 import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReviewActivity extends AppCompatActivity {
+public class WriteReviewActivity extends AppCompatActivity {
 
-    private static final String TAG = "ReviewActivity";
-
-    ReviewsAdapter reviewsAdapter;
+    private static final String TAG = "WriteReviewActivity";
 
     APIInterface apiInterface;
 
-    private Button addReviewBtn;
+    private Button submitReviewBtn;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review);
+        setContentView(R.layout.activity_write_review);
 
-        Log.d(TAG, "onCreate: started.");
+        Log.d(TAG, "onCreate: started");
 
         // Hide System UI for best experience
         hideSystemUI();
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-
-        final RecyclerView recyclerView = findViewById(R.id.reviews_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
-                getApplicationContext()));
-
-
         final String username = getIncomingIntent();
         Log.d(TAG, "username: " + username);
 
+        TextView user = findViewById(R.id.write_review_receiver);
+        user.setText("Write a review for " + username);
 
-        TextView user = findViewById(R.id.review_receiver);
-        user.setText("Reviews for " + username);
+        submitReviewBtn = findViewById(R.id.submit_review);
 
-
-
-        final Call<ReviewsResponse> getReviews = apiInterface.viewReviews(username);
-        getReviews.enqueue(new Callback<ReviewsResponse>() {
-            @Override
-            public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
-                Log.d(TAG, "RESPONSE BODY: " + response.body().getClass());
-
-                TextView noReviews = findViewById(R.id.no_reviews);
-
-
-                List<Review> reviews = response.body().viewReviews();
-
-                reviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
-                        getApplicationContext());
-
-                if (reviewsAdapter.getItemCount() != 0) {
-                    recyclerView.setAdapter(reviewsAdapter);
-                }
-                else {
-                    noReviews.setText("No Reviews available for " + username);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ReviewsResponse> call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-                call.cancel();
-            }
-
-        });
-
-        addReviewBtn = findViewById(R.id.add_review);
-
-        addReviewBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (LoginActivity.token != null) {
-                            Intent intent = new Intent(ReviewActivity.this, WriteReviewActivity.class);
-                            intent.putExtra("username", username); //þurfti að vera declared final til að vera accessible
-                            startActivity(intent);
-                        }
-                        else {
-                         Toast.makeText(getApplicationContext(),
-                            "You have to be logged in to write a review",
-                            Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-                });
-
-/*
-        addReviewBtn.setOnClickListener(new View.OnClickListener() {
+        submitReviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 submitData(username);
             }
         });
 
- */
-
-
     }
 
-    private String getIncomingIntent(){
-
-        String username = getIntent().getStringExtra("username");
-        return username;
-    }
-/*
-    private void submitData(String username) {
+    private void submitData(final String username) {
         EditText reviewBox = findViewById(R.id.edt_add_review);
 
         String reviewBody = reviewBox.getText().toString();
 
-        progressDialog = new ProgressDialog(ReviewActivity.this);
+        progressDialog = new ProgressDialog(WriteReviewActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.show();
 
@@ -159,7 +79,7 @@ public class ReviewActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 Log.d("onResponse: ", String.valueOf(response.body()));
                 if (response.isSuccessful()) {
-                    openReviewActivity();
+                    openReviewActivity(username);
                     Log.d("Success: ", "Your review has been added.");
                 } else {
                     try {
@@ -180,16 +100,17 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
- */
+    private String getIncomingIntent(){
 
-/*
-    public void openReviewActivity() {
-        Intent intent = new Intent(this, ReviewActivity.class);
-        startActivity(intent);
+        String username = getIntent().getStringExtra("username");
+        return username;
     }
 
- */
-
+    public void openReviewActivity(String username) {
+        Intent intent = new Intent(this, ReviewActivity.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
+    }
 
     private void hideSystemUI() {
         // Enables regular immersive mode.

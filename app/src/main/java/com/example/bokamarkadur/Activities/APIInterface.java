@@ -76,6 +76,7 @@ interface APIInterface {
 
     @POST("/writeReview/{username}")
     Call<Review> writeReview(@Header("Authorization") String authorization,
+                             @Header("Accept") String accept,
                              @Path("username") String username, @Body JsonObject body);
 
     @GET("/viewReviews/{username}")

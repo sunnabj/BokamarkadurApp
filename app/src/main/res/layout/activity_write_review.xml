@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ReviewActivity">
+    tools:context=".Activities.WriteReviewActivity">
     <ScrollView style="@style/parent">
 
         <RelativeLayout
@@ -47,7 +47,7 @@
                     style="@style/headerText"
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"
-                    android:id="@+id/review_receiver" />
+                    android:id="@+id/write_review_receiver" />
 
 
             </LinearLayout>
@@ -66,42 +66,24 @@
                     android:background="@drawable/shape"
                     android:orientation="vertical">
 
+
                     <TextView
-                        style="@style/headerTextPrimary"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:id="@+id/no_reviews" />
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginBottom="10dp"
+                         android:text="Write a review: "
+                         android:textColor="@color/primaryTextColor" />
 
-                    <TableLayout
-                        android:id="@+id/activity_review"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="8dp"
-                        android:stretchColumns="1">
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/reviews_recycler_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
-
-                    </TableLayout>
-
-                   <!-- <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Add your own review: "
-                        android:textColor="@color/primaryTextColor" />
-
-                    <EditText
-                        android:id="@+id/edt_add_review"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" /> -->
+                     <EditText
+                         android:id="@+id/edt_add_review"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:textColor="@color/primaryTextColor" />
 
                     <Button
-                        android:id="@+id/add_review"
+                        android:id="@+id/submit_review"
                         style="@style/loginButton"
-                        android:text="Add your own Review"
+                        android:text="Submit Review"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"/>
 

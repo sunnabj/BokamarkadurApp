@@ -198,7 +198,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
             public void onFailure(Call<Book> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("myTag", "HELPHLEP");
+                Log.d("myTag", "HELPHELP");
             }
         });
     }

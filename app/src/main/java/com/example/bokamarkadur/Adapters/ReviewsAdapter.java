@@ -59,7 +59,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
     @Override
     public void onBindViewHolder(ReviewViewHolder holder, final int position) {
 
-        holder.reviewWriter.setText(reviews.get(position).getReviewer().getName());
+        holder.reviewWriter.setText("Written by: " + reviews.get(position).getReviewer().getName());
         holder.reviewBody.setText(reviews.get(position).getReviewBody());
 
     }
