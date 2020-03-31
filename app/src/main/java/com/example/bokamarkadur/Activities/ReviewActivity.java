@@ -32,12 +32,11 @@ public class ReviewActivity extends AppCompatActivity {
 
     private static final String TAG = "ReviewActivity";
 
-    ReviewsAdapter reviewsAdapter;
+    ReviewsAdapter reviewsAdapter; //Allows us to look at reviews in an orderly fashion
 
     APIInterface apiInterface;
 
-    private Button addReviewBtn;
-    private ProgressDialog progressDialog;
+    private Button addReviewBtn; //Opens a view where the user can add a new review to the review list.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,43 +50,47 @@ public class ReviewActivity extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-
+        /**
+         * Sets up an orderly review list
+         */
         final RecyclerView recyclerView = findViewById(R.id.reviews_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
                 getApplicationContext()));
 
-
+        // Fetches the username of the user from UserInfoActivity.
         final String username = getIncomingIntent();
         Log.d(TAG, "username: " + username);
 
-
+        //The header tells us which user the review are about.
         TextView user = findViewById(R.id.review_receiver);
         user.setText("Reviews for " + username);
 
-
-
+        /**
+         * This function communicates with the server to get all reviews that have been written
+         * about the user with the username username. The reviews are delivered wrapped up in a
+         * convenient response.
+         */
         final Call<ReviewsResponse> getReviews = apiInterface.viewReviews(username);
         getReviews.enqueue(new Callback<ReviewsResponse>() {
             @Override
             public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
                 Log.d(TAG, "RESPONSE BODY: " + response.body().getClass());
 
-                TextView noReviews = findViewById(R.id.no_reviews);
-
-
                 List<Review> reviews = response.body().viewReviews();
 
                 reviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
                         getApplicationContext());
 
+                // If reviews exist for the user, they are shown as an orderly list.
                 if (reviewsAdapter.getItemCount() != 0) {
                     recyclerView.setAdapter(reviewsAdapter);
                 }
+                // If no reviews exist for the user, this is made clear with a message.
                 else {
+                    TextView noReviews = findViewById(R.id.no_reviews);
                     noReviews.setText("No Reviews available for " + username);
                 }
-
             }
 
             @Override
@@ -99,12 +102,15 @@ public class ReviewActivity extends AppCompatActivity {
 
         });
 
+        /* A new review for this particular user can be added by pushing this button.
+         * A new activity is opened, WriteReviewActivity.
+         */
         addReviewBtn = findViewById(R.id.add_review);
 
         addReviewBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        // A new review can only be written if a user is logged in.
                         if (LoginActivity.token != null) {
                             Intent intent = new Intent(ReviewActivity.this, WriteReviewActivity.class);
                             intent.putExtra("username", username); //þurfti að vera declared final til að vera accessible
@@ -119,76 +125,17 @@ public class ReviewActivity extends AppCompatActivity {
                     }
                 });
 
-/*
-        addReviewBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                submitData(username);
-            }
-        });
-
- */
-
-
     }
 
+    /**
+     *
+     * @return the username of the user that cane from the userinfo activity.
+     */
     private String getIncomingIntent(){
 
         String username = getIntent().getStringExtra("username");
         return username;
     }
-/*
-    private void submitData(String username) {
-        EditText reviewBox = findViewById(R.id.edt_add_review);
-
-        String reviewBody = reviewBox.getText().toString();
-
-        progressDialog = new ProgressDialog(ReviewActivity.this);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("reviewBody", reviewBody);
-
-
-        Call<Review> newReview = apiInterface.writeReview("Bearer " + LoginActivity.token,
-                "application/json", username,jsonObject);
-        newReview.enqueue(new Callback<Review>() {
-            @Override
-            public void onResponse(Call<Review> call, Response<Review> response) {
-                progressDialog.dismiss();
-                Log.d("onResponse: ", String.valueOf(response.body()));
-                if (response.isSuccessful()) {
-                    openReviewActivity();
-                    Log.d("Success: ", "Your review has been added.");
-                } else {
-                    try {
-                        Log.d("error", response.errorBody().string());
-                    } catch (Exception e) {
-                        Log.d("error: ", e.getMessage());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Review> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("myTag", "HELPHELP");
-            }
-        });
-
-    }
-
- */
-
-/*
-    public void openReviewActivity() {
-        Intent intent = new Intent(this, ReviewActivity.class);
-        startActivity(intent);
-    }
-
- */
 
 
     private void hideSystemUI() {

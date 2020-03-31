@@ -26,7 +26,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     APIInterface apiInterface;
 
-    private Button submitReviewBtn;
+    private Button submitReviewBtn; // Submits the written review and adds it to the database
     private ProgressDialog progressDialog;
 
     @Override
@@ -41,12 +41,16 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
+        // The username of the user that all the reviews from the review list in the Review activity
+        // were written about is fetched from there.
         final String username = getIncomingIntent();
         Log.d(TAG, "username: " + username);
 
+        // It is made clear what user you are about to review.
         TextView user = findViewById(R.id.write_review_receiver);
         user.setText("Write a review for " + username);
 
+        // When this button is pushed, the new review is published and saved.
         submitReviewBtn = findViewById(R.id.submit_review);
 
         submitReviewBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +62,12 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * When the submit button is pushed, a new Review is created, with the text from the text box.
+     * It is saved to the database and added to the list of reviews for the particular user.
+     * The user is redirected to the list of reviews from before.
+     * @param username: The username of the user which the review is about.
+     */
     private void submitData(final String username) {
         EditText reviewBox = findViewById(R.id.edt_add_review);
 
@@ -100,12 +110,20 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Incoming intent is fetched from the ReviewActivity.
+     * @return The username of the user about which the reviews from the review list were written.
+     */
     private String getIncomingIntent(){
 
         String username = getIntent().getStringExtra("username");
         return username;
     }
 
+    /**
+     * Opens the ReviewActivity again, with the correct username so that the correct list of reviews
+     * is shown.
+     */
     public void openReviewActivity(String username) {
         Intent intent = new Intent(this, ReviewActivity.class);
         intent.putExtra("username", username);

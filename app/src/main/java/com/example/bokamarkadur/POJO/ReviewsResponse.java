@@ -4,8 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * This class helps to wrap a Review List acquired as JSON from the backend to a format Android
+ * can easily work with.
+ */
 public class ReviewsResponse {
-
 
     @SerializedName("errors")
     private String errors;

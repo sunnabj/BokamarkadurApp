@@ -31,7 +31,6 @@ public class UserInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
 
-
         Log.d(TAG, "onCreate: started.");
 
         // Hide System UI for best experience
@@ -39,13 +38,16 @@ public class UserInfoActivity extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        //VIRKAR
+        // Get the username of the user we want to show, from viewBookActivity
         final String username = getIncomingIntent();
         Log.d(TAG, "username: " + username);
 
-
-        // String title = getIntent().getStringExtra("bookTitle");
-
+        /**
+         * A function that fetches the user with the username acquired from the intent,
+         * wrapped in an appropriate response.
+         * The user's name, email and phone number are shown, and a button redirects to a list of
+         * reviews that have been written about the user.
+         */
         final Call<UserResponse> viewUser = apiInterface.viewUser(username);
         viewUser.enqueue(new Callback<UserResponse>() {
             @Override
@@ -66,6 +68,10 @@ public class UserInfoActivity extends AppCompatActivity {
 
                 final String username = response.body().getUser().getUsername();
 
+                /**
+                 * This button opens up a new activity which shows the reviews that have been
+                 * written about the user.
+                 */
                 viewReviews.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -88,7 +94,10 @@ public class UserInfoActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     *
+     * @return the username of the user that added the book that was viewed in the ViewBookActivity.
+     */
     private String getIncomingIntent(){
 
         String username = getIntent().getStringExtra("username");

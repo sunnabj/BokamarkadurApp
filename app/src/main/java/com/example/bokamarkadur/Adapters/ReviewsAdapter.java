@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * This class helps to publish the review list in the Review Activity in an orderly fashion.
+ * It connects with list_reviews.xml
+ */
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
 
     private static final String TAG = "ReviewsAdapter";
@@ -29,9 +33,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
 
     public class ReviewViewHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout reviewsLayout;
-        TextView reviewWriter;
-        TextView reviewBody;
+        LinearLayout reviewsLayout; // The layout for the list of reviews
+        TextView reviewWriter; // The user that wrote a certain review in a list
+        TextView reviewBody; // The text of a certain review
 
         public ReviewViewHolder(View v) {
             super(v);
