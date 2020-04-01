@@ -56,7 +56,7 @@ public class ViewBookActivity extends AppCompatActivity {
          * Takki er fyrir neðan hverja bók sem hægt er að ýta á til að senda sms til þess sem setti
          * bókina inn. Þessi virkni er í vinnslu.
          */
-        messageEditText = (EditText) findViewById(R.id.message_edit_text);
+        messageEditText = findViewById(R.id.message_edit_text);
         btSMS = findViewById(R.id.bt_sms);
 
         btSMS.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +151,8 @@ public class ViewBookActivity extends AppCompatActivity {
                 image = "Noimage.jpg";
             }
 
-            if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
+            //if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
+            if (status == "For sale") {
                 this.phone = phone;
                 setBookInfoFS(title, author, edition, condition, price, subject, status, user, image, phone);
             } else {
