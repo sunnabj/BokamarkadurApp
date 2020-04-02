@@ -6,14 +6,18 @@ import android.os.Bundle;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.POJO.UserResponse;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bokamarkadur.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
 
@@ -35,6 +39,36 @@ public class UserInfoActivity extends AppCompatActivity {
 
         // Hide System UI for best experience
         hideSystemUI();
+
+        /**+
+         * Bottom navigation
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(),
+                                AllBooksActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.home:
+                        return true;
+                    case R.id.about:
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
+                        } else {
+                            startActivity(new Intent(getApplicationContext(),
+                                    MenuActivity.class));
+                            overridePendingTransition(0,0);}
+                        return true;
+                }
+                return false;
+            }
+        });
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -63,6 +97,9 @@ public class UserInfoActivity extends AppCompatActivity {
 
                 TextView userPhone = findViewById(R.id.view_user_phone);
                 userPhone.setText("Phone number: " + response.body().getUser().getPhonenumber());
+
+                TextView userInfo = findViewById(R.id.view_user_info);
+                userInfo.setText("About me: \n" + response.body().getUser().getInfo());
 
                 Button viewReviews = findViewById(R.id.viewReviews);
 
@@ -102,6 +139,11 @@ public class UserInfoActivity extends AppCompatActivity {
 
         String username = getIntent().getStringExtra("username");
         return username;
+    }
+
+    public void openLoginActivity() {
+        Intent intent= new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
 

@@ -58,14 +58,16 @@
                 android:layout_centerInParent="true"
                 android:paddingTop="170dp">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="186dp"
         android:layout_margin="5dp"
-        android:background="@drawable/shape">
+        android:background="@drawable/shape"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="300dp" >
+
 
         <TextView
             android:id="@+id/view_user_name"
@@ -82,7 +84,7 @@
             android:paddingTop="16dp"
             android:paddingBottom="5dp"
             android:layout_width="150dp"
-            android:layout_height="225dp"
+            android:layout_height="60dp"
             android:src="@drawable/book"
             android:layout_gravity="center"
             android:scaleType="fitXY"/>
@@ -92,17 +94,17 @@
             android:paddingTop="5dp"
             android:paddingBottom="16dp"
             android:layout_width="150dp"
-            android:layout_height="225dp"
+            android:layout_height="60dp"
             android:src="@drawable/book"
             android:layout_gravity="center"
             android:scaleType="fitXY"/>
 
         <TextView
-            android:id="@+id/view_received_reviews"
+            android:id="@+id/view_user_info"
             android:paddingTop="5dp"
             android:paddingBottom="16dp"
             android:layout_width="150dp"
-            android:layout_height="225dp"
+            android:layout_height="60dp"
             android:src="@drawable/book"
             android:layout_gravity="center"
             android:scaleType="fitXY"/>
@@ -118,6 +120,23 @@
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_navigation_background"
+        android:elevation="8dp"
+        app:labelVisibilityMode="selected"
+        app:itemIconTint="@drawable/bottom_navigation_color_selector"
+        app:itemTextColor="@drawable/selector"
+        app:menu="@menu/menu_navigation"
+        app:itemHorizontalTranslationEnabled="true"
+        />
 
 
 </RelativeLayout>

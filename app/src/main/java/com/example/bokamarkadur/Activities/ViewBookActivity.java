@@ -192,17 +192,19 @@ public class ViewBookActivity extends AppCompatActivity {
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
 
-        TextView phoneUser = findViewById(R.id.view_phone);
-        phoneUser.setText("Phone number: " + phone);
+        //TextView phoneUser = findViewById(R.id.view_phone);
+        //phoneUser.setText("Phone number: " + phone);
 
         Log.d("Tag", "asdasd"+phone);
 
         /**
-         * Listener á nafn notanda sem setti bókina inn.
-         * Opnar Activity með upplýsingum um viðkomandi notanda.
+         * Listener á takka sem opnar activity með upplýsingum
+         * um notandann sem setti bókina inn.
          * Username er sent þangað með intent.
          */
-        bookUser.setOnClickListener(new View.OnClickListener() {
+        Button viewUser = findViewById(R.id.bt_view_user);
+        viewUser.setText("View information about " + user);
+        viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class); //eða bara this)
@@ -239,17 +241,19 @@ public class ViewBookActivity extends AppCompatActivity {
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
 
-        TextView phoneUser = findViewById(R.id.view_phone);
-        phoneUser.setText("Phone number: "+phone);
+        //TextView phoneUser = findViewById(R.id.view_phone);
+        //phoneUser.setText("Phone number: "+phone);
 
         Log.d("Tag", "asdasd"+phone);
 
         /**
-         * Listener á nafn notanda sem setti bókina inn.
-         * Opnar Activity með upplýsingum um viðkomandi notanda.
+         * Listener á takka sem opnar activity með upplýsingum
+         * um notandann sem setti bókina inn.
          * Username er sent þangað með intent.
          */
-        bookUser.setOnClickListener(new View.OnClickListener() {
+        Button viewUser = findViewById(R.id.bt_view_user);
+        viewUser.setText("View information about " + user);
+        viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class); //eða bara this)

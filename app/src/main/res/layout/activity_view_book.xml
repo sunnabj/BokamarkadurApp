@@ -145,13 +145,18 @@
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/view_phone"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:paddingLeft="16dp"
             android:textColor="@color/colorBlack"
-            android:textSize="14sp" />
+            android:textSize="14sp" />-->
+
+        <Button
+            android:id="@+id/bt_view_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -168,7 +173,7 @@
             android:contentDescription="Message to seller"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Writer your message here" />
+            android:text="Write your message here" />
 
         <Button
             android:id="@+id/bt_sms"
