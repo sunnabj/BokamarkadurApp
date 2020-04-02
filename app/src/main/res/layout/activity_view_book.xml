@@ -150,6 +150,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="16dp"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:text="You need this book?"/>
 
         <EditText
             android:id="@+id/message_edit_text"
@@ -158,13 +165,13 @@
             android:contentDescription="Message to seller"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Message to seller(change here)" />
+            android:text="Write your message here" />
 
         <Button
             android:id="@+id/bt_sms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send request for this book" />
+            android:text="Send a request to the seller" />
 
     </LinearLayout>
             </RelativeLayout>
