@@ -52,7 +52,7 @@ public class ViewBookActivity extends AppCompatActivity {
          * Takki er fyrir neðan hverja bók sem hægt er að ýta á til að senda sms til þess sem setti
          * bókina inn. Þessi virkni er í vinnslu.
          */
-        messageEditText = (EditText) findViewById(R.id.message_edit_text);
+        messageEditText = findViewById(R.id.message_edit_text);
         btSMS = findViewById(R.id.bt_sms);
 
         btSMS.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +190,9 @@ public class ViewBookActivity extends AppCompatActivity {
          * Opnar Activity með upplýsingum um viðkomandi notanda.
          * Username er sent þangað með intent.
          */
-        bookUser.setOnClickListener(new View.OnClickListener() {
+        Button viewUser = findViewById(R.id.bt_view_user);
+        viewUser.setText("View information about " + user);
+        viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class); //eða bara this)
@@ -232,7 +234,9 @@ public class ViewBookActivity extends AppCompatActivity {
          * Opnar Activity með upplýsingum um viðkomandi notanda.
          * Username er sent þangað með intent.
          */
-        bookUser.setOnClickListener(new View.OnClickListener() {
+        Button viewUser = findViewById(R.id.bt_view_user);
+        viewUser.setText("View information about " + user);
+        viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class); //eða bara this)
