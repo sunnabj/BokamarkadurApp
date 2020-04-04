@@ -1,28 +1,24 @@
 package com.example.bokamarkadur.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.bokamarkadur.Adapters.ReviewsAdapter;
 import com.example.bokamarkadur.POJO.Review;
-import com.example.bokamarkadur.POJO.ReviewList;
 import com.example.bokamarkadur.POJO.ReviewsResponse;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +96,7 @@ public class ReviewActivity extends AppCompatActivity {
 
         //The header tells us which user the review are about.
         TextView user = findViewById(R.id.review_receiver);
-        user.setText("Reviews for " + username);
+        user.setText("Reviews for " + username + "  ");
 
         /**
          * This function communicates with the server to get all reviews that have been written

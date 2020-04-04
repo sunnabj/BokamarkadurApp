@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,12 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -205,7 +202,8 @@ public class ViewBookActivity extends AppCompatActivity {
          * Username er sent þangað með intent.
          */
         Button viewUser = findViewById(R.id.bt_view_user);
-        viewUser.setText("View information about " + user);
+        //viewUser.setText("View information about " + user);
+        viewUser.setText("  View " + user + "'s info");
         viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,7 +252,8 @@ public class ViewBookActivity extends AppCompatActivity {
          * Username er sent þangað með intent.
          */
         Button viewUser = findViewById(R.id.bt_view_user);
-        viewUser.setText("View information about " + user);
+        //viewUser.setText("View information about " + user);
+        viewUser.setText("View " + user + "'s info");
         viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -35,19 +35,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="30dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
+
 
 
                 <TextView
-                    style="@style/headerText"
+                    android:id="@+id/review_receiver"
+                    style="@style/viewParent.headerTextother"
                     android:layout_gravity="center"
-                    android:layout_marginTop="40dp"
-                    android:id="@+id/review_receiver" />
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="40dp"/>
+
+                <ImageView
+                    android:paddingTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_publish_article"
+                    android:adjustViewBounds="true" />
+
 
 
             </LinearLayout>
@@ -56,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:paddingTop="170dp"
+                android:paddingTop="190dp"
                 >
 
                 <LinearLayout
