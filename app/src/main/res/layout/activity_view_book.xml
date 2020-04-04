@@ -148,7 +148,8 @@
         <Button
             android:id="@+id/bt_view_user"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"/>
 
         <TextView
             android:layout_width="match_parent"

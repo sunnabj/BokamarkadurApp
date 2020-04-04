@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     // Takkar neðst á síðu - Verður fært í menu.
     private CardView loginbutton;
     private CardView registerbutton;
-    private CardView AddBook;
-    private CardView RequestBook;
-    private CardView AllBooksBtn;
 
     // Notað fyrir debugging
     private static final String TAG = MainActivity.class.getSimpleName();
