@@ -205,7 +205,8 @@ public class ViewBookActivity extends AppCompatActivity {
          * Username er sent þangað með intent.
          */
         Button viewUser = findViewById(R.id.bt_view_user);
-        viewUser.setText("View information about " + user);
+        //viewUser.setText("View information about " + user);
+        viewUser.setText("View " + user + "'s info");
         viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -254,7 +255,8 @@ public class ViewBookActivity extends AppCompatActivity {
          * Username er sent þangað með intent.
          */
         Button viewUser = findViewById(R.id.bt_view_user);
-        viewUser.setText("View information about " + user);
+        //viewUser.setText("View information about " + user);
+        viewUser.setText("View " + user + "'s info");
         viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
