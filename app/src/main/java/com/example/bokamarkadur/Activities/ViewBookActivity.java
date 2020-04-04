@@ -151,8 +151,7 @@ public class ViewBookActivity extends AppCompatActivity {
                 image = "Noimage.jpg";
             }
 
-            //if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
-            if (status == "For sale") {
+            if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
                 this.phone = phone;
                 setBookInfoFS(title, author, edition, condition, price, subject, status, user, image, phone);
             } else {
