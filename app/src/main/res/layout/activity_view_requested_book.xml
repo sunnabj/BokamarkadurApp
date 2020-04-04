@@ -128,13 +128,6 @@
             android:paddingLeft="16dp"
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
-        <!--<TextView
-            android:id="@+id/view_phone"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:paddingLeft="16dp"
-            android:textColor="@color/colorBlack"
-            android:textSize="14sp" />-->
 
         <Button
             android:id="@+id/bt_view_user"
@@ -143,10 +136,12 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:paddingLeft="16dp"
+            android:paddingTop="20dp"
             android:textColor="@color/colorBlack"
             android:textSize="18sp"
+            android:textStyle="bold"
             android:text="You own this book?"/>
 
         <EditText
@@ -156,13 +151,15 @@
             android:contentDescription="Message to requester"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Write your message here" />
+            android:textSize="13sp"
+            android:text="Write a message to the requester (change here)" />
 
         <Button
             android:id="@+id/bt_sms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send an offer to the requester" />
+            style="@style/loginButton"
+            android:text="Send offer" />
 
     </LinearLayout>
             </RelativeLayout>
