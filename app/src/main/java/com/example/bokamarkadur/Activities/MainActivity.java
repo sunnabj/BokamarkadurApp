@@ -30,10 +30,6 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Takkar neðst á síðu - Verður fært í menu.
-    private CardView loginbutton;
-    private CardView registerbutton;
-
     // Notað fyrir debugging
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -137,59 +133,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            // TODO: Eyða tökkum hér að neðan þegar navigation er komið.
-
-
-
-            // login button
-            loginbutton = findViewById(R.id.login);
-            loginbutton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                     openLoginActivity();
-                }
-            });
-            //register
-            registerbutton = findViewById(R.id.register);
-            registerbutton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openRegisterActivity();
-                }
-            });
-
         }
 
     public void openLoginActivity() {
             Intent intent= new Intent(this, LoginActivity.class);
             startActivity(intent);
     }
-    public void openRegisterActivity() {
-        Intent intent= new Intent(this, RegisterActivity.class);
-        startActivity(intent);
-    }
-    public void AddbookforsaleActivity() {
-        if (LoginActivity.token == null) {
-            openLoginActivity();
-            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
-        } else {
-            Intent intent= new Intent(this, AddBookForSaleActivity.class);
-            startActivity(intent);
-        }
-    }
-    public void openRequestBookActivity() {
-        if (LoginActivity.token == null) {
-            openLoginActivity();
-            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
-        } else {
-            Intent intent = new Intent(this, RequestBookActivity.class);
-            startActivity(intent);
-        }
-    }
-    public void openAllBooksActivity() {
-        Intent intent = new Intent(this, AllBooksActivity.class);
-        startActivity(intent);
-    }
+
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
