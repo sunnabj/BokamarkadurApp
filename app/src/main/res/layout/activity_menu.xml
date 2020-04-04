@@ -66,7 +66,7 @@
 
                             <TextView
                                 android:id="@+id/textViewSub1Title"
-                                android:text="All book"
+                                android:text="All books"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
                         </RelativeLayout>
@@ -90,7 +90,7 @@
 
                             <TextView
                                 android:id="@+id/textViewSub3Title"
-                                android:text="Update info"
+                                android:text="Update your profile info"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 
@@ -138,7 +138,7 @@
                             android:padding="10dp">
 
                             <TextView
-                                android:text="About \ndeleloper"
+                                android:text="About the developers"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 
@@ -175,7 +175,7 @@
 
                             <TextView
                                 android:id="@+id/textViewSub2Title"
-                                android:text="Sell book"
+                                android:text="Add a book for sale"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
@@ -199,7 +199,7 @@
 
                             <TextView
                                 android:id="@+id/textViewSub4Title"
-                                android:text="Request \nbook"
+                                android:text="Add a book request"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 
