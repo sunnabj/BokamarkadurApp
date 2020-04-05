@@ -35,19 +35,22 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="30dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
+
 
 
                 <TextView
-                    style="@style/headerText"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="40dp"
-                    android:text="View Book" />
+                    android:text="    View Book               "
+                    style="@style/viewParent.headerTextother"
+                    android:layout_gravity="bottom"/>
+
+                <ImageView
+                    android:paddingTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_book_lover"
+                    android:adjustViewBounds="true" />
+
 
 
             </LinearLayout>
@@ -147,8 +150,11 @@
 
         <Button
             android:id="@+id/bt_view_user"
-            android:layout_width="match_parent"
+            android:drawableLeft="@drawable/ic_male_avatar"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:textAllCaps="false"/>
 
         <TextView

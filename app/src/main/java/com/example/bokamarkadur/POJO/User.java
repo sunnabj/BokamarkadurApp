@@ -1,5 +1,7 @@
 package com.example.bokamarkadur.POJO;
 
+import androidx.annotation.Size;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -35,7 +37,6 @@ public class User {
 
 
     // Fjarlægt héðan í bili: List<Message> messages
-    // Vanter List<Review> receivedReviews og List<Review> writtenReviews
     public User(long id, String info, String name, String username, String email, String password,
                 String retypePassword, List<Book> books, String phonenumber,
                 List<Review> receivedReviews, List<Review> writtenReviews) {

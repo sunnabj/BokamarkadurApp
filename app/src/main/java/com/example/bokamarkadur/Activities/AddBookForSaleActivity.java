@@ -182,9 +182,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
                     Log.d("onResponse: ", String.valueOf(response.body()));
                     if (response.isSuccessful()) {
                         openMainActivity();
-                        Toast.makeText
-                                (getApplicationContext(), "Selected : " + subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
-                                .show();
+                        //Toast.makeText
+                        //        (getApplicationContext(), "Selected : " + subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
+                        //        .show();
                         Log.d("Success: ", response.body().getTitle() + " has been added.");
                     } else {
                         try {
@@ -216,9 +216,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
                     Log.d("onResponse: ", String.valueOf(response.body()));
                     if (response.isSuccessful()) {
                         openMainActivity();
-                        Toast.makeText
-                                (getApplicationContext(), "Selected : " + subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
-                                .show();
+                        //Toast.makeText
+                              //  (getApplicationContext(), "Selected : " + subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
+                             //   .show();
                         Log.d("Success: ", response.body().getTitle() + " has been added.");
                     } else {
                         try {

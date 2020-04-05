@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 //hiding progress dialog
                 progressDialog.dismiss();
                 if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "success: "+response.body().getToken(),
+                    Toast.makeText(getApplicationContext(), "You are now logged in ",
                             Toast.LENGTH_LONG).show();
                     openMainActivity();
 

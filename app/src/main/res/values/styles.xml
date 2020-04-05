@@ -82,6 +82,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="otherButton" parent="viewParent">
+        <item name="android:background">@drawable/login_button_bk</item>
+        <item name="android:textColor">@color/whiteTextColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
     <style name="parent.contentLayout">
         <item name="android:background">@color/contentBodyColor</item>
@@ -90,6 +96,12 @@
 
     <style name="viewParent.headerText">
         <item name="android:textColor">@color/contentTextColor</item>
+        <item name="android:textSize">@dimen/headerTextSize</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="viewParent.headerTextother">
+        <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">@dimen/headerTextSize</item>
         <item name="android:textStyle">bold</item>
     </style>

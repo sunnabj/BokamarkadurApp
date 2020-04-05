@@ -50,15 +50,15 @@ public class RequestBookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_book);
-        uploadImage = (Button) findViewById(R.id.btnUploadImage);
-        submit = (Button) findViewById(R.id.submit);
-        viewUploadedImage = (ImageView) findViewById(R.id.uploadImage);
+        uploadImage = findViewById(R.id.btnUploadImage);
+        submit = findViewById(R.id.submit);
+        viewUploadedImage = findViewById(R.id.uploadImage);
 
         // Hide System UI for best experience
         hideSystemUI();
 
         // Dropdown list with subjects
-        subjectSpinner = (Spinner) findViewById(R.id.edtSubject);
+        subjectSpinner = findViewById(R.id.edtSubject);
         // The dropdown list notices what the user chooses
         subjectSpinner.setOnItemSelectedListener(new SpinnerActivity());
 
