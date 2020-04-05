@@ -40,7 +40,7 @@
 
 
                 <TextView
-                    android:text="       All Book          "
+                    android:text="       All Books          "
                     style="@style/viewParent.headerTextother"
                     android:layout_gravity="bottom"/>
 

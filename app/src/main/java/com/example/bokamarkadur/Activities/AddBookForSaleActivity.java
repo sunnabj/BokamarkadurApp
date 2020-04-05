@@ -57,8 +57,6 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
         // Dropdown list with subjects
         subjectSpinner = findViewById(R.id.edtSubject);
-        // The dropdown list notices what the user chooses
-        subjectSpinner.setOnItemSelectedListener(new SpinnerActivity());
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
