@@ -64,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
                                 openLoginActivity();
                                 Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
                             } else {
-                            startActivity(new Intent(getApplicationContext(),
-                                    MenuActivity.class));
+                                String LoggedInUsername = getIntent().getStringExtra("LoggedInUser");
+                                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                                intent.putExtra("LoggedInUser", LoggedInUsername);
+                                startActivity(intent);
                             overridePendingTransition(0,0);}
                             return true;
                     }

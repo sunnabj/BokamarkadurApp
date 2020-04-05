@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:text="Besti \nBókamarkaður"
+                    android:text="@string/app_name_2"
                     style="@style/viewParent.headerText"
                     android:layout_gravity="bottom"/>
 
@@ -36,11 +36,13 @@
                     android:adjustViewBounds="true" />
             </LinearLayout>
 
+            <!--        ___________ CARDS í MENU _________________________________ -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp">
 
+                <!--            ___________ 1. LayoutColumn   ___________________________________ -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -48,8 +50,9 @@
                     android:layout_marginRight="10dp"
                     android:orientation="vertical">
 
+                    <!--                ___________   1. CARD   - (1.row / 1.column) __________________ -->
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/all_books"
+                        android:id="@+id/MenuCard1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="15dp"
@@ -65,14 +68,17 @@
 
 
                             <TextView
+                                style="@style/viewParent.headerText.HomeCardTitle"
                                 android:id="@+id/textViewSub1Title"
-                                android:text="All books"
-                                style="@style/viewParent.headerText.HomeCardTitle" />
+                                android:text="@string/menu_card_1"
+                                android:textSize="28sp" />
 
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <!--                ___________   3. CARD   - (2.row / 1.column) __________________ -->
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/setting"
+                        android:id="@+id/MenuCard3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="15dp"
@@ -90,14 +96,18 @@
 
                             <TextView
                                 android:id="@+id/textViewSub3Title"
-                                android:text="Update your profile info"
+                                android:text="@string/menu_card_3"
+                                android:textSize="28sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
                     </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
 
+
+                    <!--                ___________   5. CARD   - (3.row / 1.column) __________________ -->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/MenuCard5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="15dp"
@@ -115,13 +125,16 @@
 
                             <TextView
                                 android:id="@+id/textViewSub5Title"
-                                android:text="LAGAÐ"
+                                android:text="@string/menu_card_5"
+                                android:textSize="28sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <!--                ___________   7. CARD   - (4.row / 1.column) __________________ -->
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/about"
+                        android:id="@+id/MenuCard7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="15dp"
@@ -138,7 +151,8 @@
                             android:padding="10dp">
 
                             <TextView
-                                android:text="About the developers"
+                                android:text="@string/menu_card_7"
+                                android:textSize="22sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 
@@ -147,6 +161,7 @@
 
                 </LinearLayout>
 
+                <!--            ___________ 2. LayoutColumn   ___________________________________ -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -154,9 +169,9 @@
                     android:layout_marginLeft="10dp"
                     android:orientation="vertical">
 
-
+                    <!--                ___________   2. CARD   - (1.row / 2.column) __________________ -->
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/AddBook"
+                        android:id="@+id/MenuCard2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="15dp"
@@ -175,13 +190,16 @@
 
                             <TextView
                                 android:id="@+id/textViewSub2Title"
-                                android:text="Add a book for sale"
+                                android:text="@string/menu_card_2"
+                                android:textSize="28sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <!--                ___________   4. CARD   - (2.row / 2.column) __________________ -->
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/RequestBook"
+                        android:id="@+id/MenuCard4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="15dp"
@@ -199,13 +217,17 @@
 
                             <TextView
                                 android:id="@+id/textViewSub4Title"
-                                android:text="Add a book request"
+                                android:text="@string/menu_card_4"
+                                android:textSize="28sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <!--                ___________   6. CARD   - (3.row / 2.column) __________________ -->
                     <androidx.cardview.widget.CardView
+                        android:id="@+id/MenuCard6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="15dp"
@@ -223,13 +245,16 @@
 
                             <TextView
                                 android:id="@+id/textViewSub6Title"
-                                android:text="LAGAÐ"
+                                android:text="@string/menu_card_6"
+                                android:textSize="28sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <!--                ___________   8. CARD   - (4.row / 2.column) __________________ -->
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/logout"
+                        android:id="@+id/MenuCard8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="15dp"
@@ -246,7 +271,8 @@
                             android:padding="10dp">
 
                             <TextView
-                                android:text="Logout"
+                                android:text="@string/menu_card_8"
+                                android:textSize="28sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 

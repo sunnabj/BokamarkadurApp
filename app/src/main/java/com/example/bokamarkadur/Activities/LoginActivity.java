@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView signup;
     public static String token;
     private static final String TAG = "LoginActivity";
+    String LoggedInUsername = "";
 
     APIInterface apiInterface;
 
@@ -67,9 +68,11 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
+        LoggedInUsername = username.getText().toString();
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("username", username.getText().toString());
+        jsonObject.addProperty("username", LoggedInUsername);
         jsonObject.addProperty("password", password.getText().toString());
+
 
         /**
          * JsonObjectinn er notaður til að ákvarða hvaða notandi í gagnagrunninnum er nú
@@ -100,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void openMainActivity() {
         Intent intent= new Intent(this, MainActivity.class);
+        intent.putExtra("LoggedInUsername", LoggedInUsername);
         startActivity(intent);
     }
     public void openRegisterActivity() {

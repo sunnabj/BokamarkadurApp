@@ -5,6 +5,46 @@
     <string name="login_password_hint">Password</string>
     <string name="signup_login_hint">Already have an account? Sign In</string>
     <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
+
+    <string name="app_name">Book Market App</string>
+    <string name="app_name_2">Book \nMarket App</string>
+    <string name="register">REGISTER</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Password</string>
+    <string name="signup_login_hint">Already have an account? Sign In</string>
+    <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
+    <string name="edit_book_info">Edit Book Info</string>
+    <string name="my_books">My Books</string>
+
+    <!-- _____ "My Profile" - ViewProfileActivity   ______________________________ -->
+    <string name="_my_messages">My Messages</string>
+    <string name="my_reviews">My Reviews</string>
+
+    <string name="mp_name">Name: </string>
+    <string name="mp_about">Few words about me: </string>
+    <string name="mp_email">Email: </string>
+    <string name="mp_phone_number">Phone number: </string>
+    <string name="mp_username">Username: </string>
+    <string name="mp_password">Password: </string>
+    <string name="mp_re_password">Re-type password: </string>
+
+    <string name="mp_my_books">My Books</string>
+    <string name="mp_my_user_profile">User Profile</string>
+    <string name="mp_info">A couple of word about me</string>
+    <string name="mp_my_profile">My Profile</string>
+    <string name="mp_button_text">Update My Info</string>
+
+    <!-- _____ Menu - MenuActivity   ___________________________________________  -->
+    <string name="menu_card_1">All Books</string>
+    <string name="menu_card_2">Newest Books</string>
+    <string name="menu_card_3">Sell a Book</string>
+    <string name="menu_card_4">Request \na Book</string>
+    <string name="menu_card_5">My Profile</string>
+    <string name="menu_card_6">* ??? *</string>
+    <string name="menu_card_7">About \nDelelopers</string>
+    <string name="menu_card_8">Logout</string>
+
+
     <string-array name="subject_array">
         <item>Industrial and Mechanical Engineering</item>
         <item>Electrical Computer Engineering</item>
