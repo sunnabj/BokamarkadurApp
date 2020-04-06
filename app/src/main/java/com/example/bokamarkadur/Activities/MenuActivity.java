@@ -35,7 +35,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private static final String TAG = MenuActivity.class.getSimpleName();
     LoginActivity LOGGEDIN;
-    public String LoggedInUser;
+    public String LoggedInUsername;
 
 
     @Override
@@ -46,6 +46,7 @@ public class MenuActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
+        LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
 
         /**+
          * Bottom navigation
@@ -149,21 +150,32 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        //  Logout               ---            Card 7
-        //              --> Location in MENU:   Card 8 - Row 4 / Column 2
+        //  Logout               ---            Card 8
+        //              --> Location in MENU:   Row 4 / Column 2
         Logout = (CardView) findViewById(R.id.MenuCard8);
         Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Fara hér inní MainActivity?
+                LoginActivity.token = null;
+                openMainActivity();
             }
         });
     }
 
-
+    public void openMainActivity() {
+        Intent intent= new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     public void openAboutUsActivity() {
-        Intent intent= new Intent(this, AboutusActivity.class);
+        Log.d("login","***********************************************");
+        Log.d("login","***********************************************");
+        LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
+        Intent intent = new Intent(getApplicationContext(), AboutusActivity.class);
+        intent.putExtra("LoggedInUsername", LoggedInUsername);
+        Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         startActivity(intent);
     }
     public void openLoginActivity() {
@@ -181,7 +193,14 @@ public class MenuActivity extends AppCompatActivity {
             openLoginActivity();
             Toast.makeText(getApplicationContext(), "You must logged in to request a book", Toast.LENGTH_LONG).show();
         } else {
-            Intent intent= new Intent(this, AddBookForSaleActivity.class);
+            Log.d("login","***********************************************");
+            Log.d("login","***********************************************");
+            LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
+            Intent intent = new Intent(getApplicationContext(), AddBookForSaleActivity.class);
+            intent.putExtra("LoggedInUsername", LoggedInUsername);
+            Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
+            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             startActivity(intent);
         }
     }
@@ -190,37 +209,37 @@ public class MenuActivity extends AppCompatActivity {
             openLoginActivity();
             Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
         } else {
-            Intent intent = new Intent(this, RequestBookActivity.class);
+            Log.d("login","***********************************************");
+            Log.d("login","***********************************************");
+            Intent intent = new Intent(getApplicationContext(), RequestBookActivity.class);
+            intent.putExtra("LoggedInUsername", LoggedInUsername);
+            Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
+            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             startActivity(intent);
         }
     }
     public void openAllBooksActivity() {
-        Log.d(TAG, "BBO -->> Calling: openAllBooksActivity()");
-        Intent intent = new Intent(this, AllBooksActivity.class);
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "BBO -->> new Intent intent = " + intent);
+        Log.d("login","***********************************************");
+        Log.d("login","***********************************************");
+        Intent intent = new Intent(getApplicationContext(), AllBooksActivity.class);
+        intent.putExtra("LoggedInUsername", LoggedInUsername);
+        Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         startActivity(intent);
-        Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
     }
 
     public void openViewProfileActivity() {
 
         Log.d("login","***********************************************");
         Log.d("login","***********************************************");
-
-        String LoggedInUsername = getIntent().getStringExtra("LoggedInUser");
-
-        Intent intent = new Intent(this, ViewProfileActivity.class);
-//        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-
-        intent.putExtra("LoggedInUser", LoggedInUsername);
-
+        Intent intent = new Intent(getApplicationContext(), ViewProfileActivity.class);
+        intent.putExtra("LoggedInUsername", LoggedInUsername);
         Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
-
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         startActivity(intent);
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
     private void hideSystemUI() {

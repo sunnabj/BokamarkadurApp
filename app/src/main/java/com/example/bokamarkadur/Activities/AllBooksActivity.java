@@ -32,7 +32,7 @@ public class AllBooksActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     BooksAdapter booksAdapter;
-
+    String LoggedInUsername = "";
     APIInterface apiInterface;
 
     @Override
@@ -65,8 +65,15 @@ public class AllBooksActivity extends AppCompatActivity {
                             openLoginActivity();
                             Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
                         } else {
-                        startActivity(new Intent(getApplicationContext(),
-                                MenuActivity.class));
+                            Log.d("login","***********************************************");
+                            Log.d("login","***********************************************");
+                            LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            intent.putExtra("LoggedInUsername", LoggedInUsername);
+                            Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
+                            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                            startActivity(intent);
                         overridePendingTransition(0,0);}
                         return true;
                 }

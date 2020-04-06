@@ -43,6 +43,7 @@ public class RequestBookActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1999;
     Spinner subjectSpinner;
+    String LoggedInUsername = "";
 
     APIInterface apiInterface;
 
@@ -174,6 +175,7 @@ public class RequestBookActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     Log.d("onResponse: ", String.valueOf(response.body()));
                     if (response.isSuccessful()) {
+
                         openMainActivity();
                         Log.d("Success: ", response.body().getTitle() + " has been added.");
                     } else {
@@ -227,8 +229,14 @@ public class RequestBookActivity extends AppCompatActivity {
     }
 
     public void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        Log.d("login","***********************************************");
+        Log.d("login","***********************************************");
+        LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("LoggedInUsername", LoggedInUsername);
+        Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
     private void hideSystemUI() {
         // Enables regular immersive mode.

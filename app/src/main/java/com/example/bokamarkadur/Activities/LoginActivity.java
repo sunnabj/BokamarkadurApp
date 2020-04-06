@@ -89,6 +89,16 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                     openMainActivity();
 
+                    Log.d("login","***********************************************");
+                    Log.d("login","***********************************************");
+                    Log.d("login", "\n\n\n BBO -->> User: **" + LoggedInUsername + "** logs in \n\n\n");
+                    Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+//                    loggedInUserFromResponse = response.body().getUsername();
+                    token = response.body().getToken();
+//                    User userToLogin;
+
                     token = response.body().getToken();
                 }
             }

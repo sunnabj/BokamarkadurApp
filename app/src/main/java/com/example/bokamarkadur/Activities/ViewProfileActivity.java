@@ -1,151 +1,368 @@
 package com.example.bokamarkadur.Activities;
 
-import android.content.Context;
+import android.Manifest;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.bokamarkadur.Adapters.BooksAdapter;
 import com.example.bokamarkadur.POJO.Book;
-import com.squareup.picasso.Picasso;
+import com.example.bokamarkadur.POJO.BookList;
+import com.example.bokamarkadur.POJO.User;
+import com.example.bokamarkadur.R;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder> implements Filterable {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-    // Notað fyrir debugging
-    private static final String TAG = "BooksAdapter";
+public class ViewProfileActivity extends AppCompatActivity {
 
-    private List<Book> books;
-    private List<Book> booksListAll;
-    private int rowLayout;
-    private Context context;
+    APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+    private Button updateProfile;
+    String LoggedInUsername;
+    String TOKEN;
 
-    public class BookViewHolder extends RecyclerView.ViewHolder {
+    TextView profileName;
+    TextView profileInfo;
+    TextView profileEmail;
+    TextView profilePhonenumber;
+    TextView profileUsername;
+    TextView profilePassword;
 
-        LinearLayout booksLayout;
-        TextView bookTitle;
-        TextView bookAuthor;
-        TextView bookStatus;
-        ImageView image;
+    User UserProfile;
+    List<Book> usersBooks;
+    String LoggedInUser = "";
 
-        public BookViewHolder(View v) {
-            super(v);
-            booksLayout = (LinearLayout) v.findViewById(R.id.books_layout);
-            bookTitle = (TextView) v.findViewById(R.id.title);
-            bookAuthor = (TextView) v.findViewById(R.id.author);
-            bookStatus = (TextView) v.findViewById(R.id.status);
-            image = (ImageView) v.findViewById(R.id.image);
-        }
-    }
-
-    public BooksAdapter(List<Book> books, int rowLayout, Context context) {
-        this.books = books;
-        booksListAll = new ArrayList<>();
-        booksListAll.addAll(books);
-        this.rowLayout = rowLayout;
-        this.context = context;
-    }
+    private static final String TAG = "ViewProfileActivity";
 
     @Override
-    public BooksAdapter.BookViewHolder onCreateViewHolder(ViewGroup parent,
-                                                          int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(rowLayout, parent, false);
-        return new BookViewHolder(view);
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_profile);
 
-    // Tökum viðeigandi gildi fyrir hverja bók og tengjum við layout hluti.
-    @Override
-    public void onBindViewHolder(BookViewHolder holder, final int position) {
+        Log.d(TAG, "BBO -->> ViewProfileActivity onCreate: started.");
 
-        String image = books.get(position).getImage();
+        getUserProfile();
 
-        holder.bookTitle.setText(books.get(position).getTitle());
-        holder.bookAuthor.setText(books.get(position).getAuthor());
-        holder.bookStatus.setText(books.get(position).getStatus());
-
-        // Ef image inniheldur tóma strenginn þá skilum við Noimage.jpg.
-        if (image.equals("")) {
-            image = "Noimage.jpg";
-        }
-
-//        Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(holder.image);
-        Picasso.get().load("https://marketforbooks.herokuapp.com/" + image).into(holder.image);
-        // https://marketforbooks.herokuapp.com/
-
-        // Sendum gildi áfram á ViewBookActivity.
-        holder.booksLayout.setOnClickListener(new View.OnClickListener() {
+        updateProfile = (Button) findViewById(R.id.updateProfile);
+        updateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on: " + books.get(position));
+                Toast.makeText(getApplicationContext(), "BUTTON PUSHED", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "\n\n\n\t\t BUTTON PUSHED !!!! \n\n\n");
+                updateUserProfile();
+            }
+        });
 
-                Toast.makeText(context, books.get(position).toString(), Toast.LENGTH_LONG);
+        getAllBooks();
+//        getMyBooks();
+//        showUsersBooks();
+        // Hide System UI for best experience
+        hideSystemUI();
 
-                Intent intent = new Intent(context, ViewBookActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("bookTitle", books.get(position).getTitle());
-                intent.putExtra("bookAuthor", books.get(position).getAuthor());
-                intent.putExtra("bookEdition", books.get(position).getEdition());
-                intent.putExtra("bookCondition", books.get(position).getCondition());
-                intent.putExtra("bookPrice", books.get(position).getPrice());
-                intent.putExtra("bookSubject", books.get(position).getSubjects());
-                intent.putExtra("bookStatus", books.get(position).getStatus());
-                intent.putExtra("bookUser", books.get(position).getUser().getUsername());
-                intent.putExtra("bookImage", books.get(position).getImage());
-                context.startActivity(intent);
+        // Tengjumst API Interface sem talar við bakendann okkar.
+
+        String loginToken = LoginActivity.token;
+        //String LI_User = apiInterface.getLoggedInUser((LoginActivity.token));
+    }
+
+    /**
+     * BBO: Kóðinn hér fyrir neðan birtir prófíl fyrir viðkomandi notanda
+     * 		sem ýtti á "My Profile" og opnaði þar með þetta Activity (ViewProfileActivity).
+     */
+
+
+    // Set info for User Profile
+    private void showUserProfile(String name, String info, String email, String phonenumber, String username, String password){
+//  Eftir að undirbúa List<Book> álíka og gert í öðrum klösum, en þá verður línan fyrir ofan svona:
+//                              String password, String retypepassword, List<Book> usersBooks){
+
+        Log.d(TAG, "BBO -->> showUserProfile: setting the title and author to widgets.");
+
+        profileName = findViewById(R.id.edtName);
+        profileName.setText(name);
+
+        profileInfo = findViewById(R.id.edtInfo);
+        profileInfo.setText(info);
+
+
+        profileEmail = findViewById(R.id.edtEmail);
+        profileEmail.setText(email);
+
+        profilePhonenumber = findViewById(R.id.edtPhonenumber);
+        profilePhonenumber.setText(phonenumber);
+
+
+        profileUsername = findViewById(R.id.edtUsername);
+        profileUsername.setText(username);
+
+        profilePassword = findViewById(R.id.edtPassword);
+        profilePassword.setText(password);
+
+    }
+    private void getUserProfile() {
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d("login", "\n\n\n BBO -->> Carried Over from MenuActivity?? ");
+        LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
+        Log.d("login", "\n\n\t\t BBO -->> Username is: **" + LoggedInUsername + "** \n\n\n");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+        Call<User> getUserProfile = apiInterface.getUserProfile(LoggedInUsername);
+        getUserProfile.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                UserProfile    = response.body().getUser();
+
+                String name         = UserProfile.getName();
+                String info         = UserProfile.getInfo();
+                String email        = UserProfile.getEmail();
+                String phonenumber  = UserProfile.getPhonenumber();
+                String username     = UserProfile.getUsername();
+                String password     = UserProfile.getPassword();
+                TOKEN               = UserProfile.getToken();
+                usersBooks          = UserProfile.getBooks();
+
+                Log.d(TAG, "*****************************************");
+                Log.d(TAG, "*****************************************");
+                Log.d(TAG, "\t UserProfile:\n\n");
+
+                Log.d(TAG, "\n \t response.body(); = *" + response.body() + "*");
+                Log.d(TAG, "\n \t User UserProfile = response.body().getUser() = *" + UserProfile + "*");
+
+                Log.d(TAG, "\n \t UserProfile.getName(); = *" + UserProfile.getName() + "*");
+                Log.d(TAG, "\n \t UserProfile.getInfo(); = *" + UserProfile.getInfo() + "*");
+
+                Log.d(TAG, "\n \t UserProfile.getEmail(); = *" + UserProfile.getEmail() + "*");
+                Log.d(TAG, "\n \t UserProfile.getPhonenumber(); = *" + UserProfile.getPhonenumber() + "*");
+
+                Log.d(TAG, "\n \t UserProfile.getUsername(); = *" + UserProfile.getUsername() + "*");
+                Log.d(TAG, "\n \t UserProfile.getPassword(); = *" + UserProfile.getPassword() + "*\n");
+                String bookTitle = usersBooks.get(2).getTitle();
+//                String thisBookTitle = ThisUsersBooks.get(2).getTitle();
+                Log.d(TAG, "\n \t usersBooks = UserProfile.getBooks(); *" + usersBooks + "*\n");
+//                Log.d(TAG, "\n \t ThisUsersBooks = UserProfile.getBooks(); *" + ThisUsersBooks + "*\n");
+                Log.d(TAG, "\n \t bookTitle = usersBooks.get(2).getTitle(); = *" + bookTitle + "*\n");
+//                Log.d(TAG, "\n \t thisBookTitle = ThisUsersBooks.body.get(2).getBooks(); = *" + thisBookTitle + "*\n");
+                List<Book> responseBooks = response.body().getBooks();
+                Log.d(TAG, "\n \t responseBooks = response.body.get(2).getBooks(); = *" + responseBooks + "*\n");
+
+                Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                showUserProfile(name, info, email, phonenumber, username, password);
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                call.cancel();
             }
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return books.size();
-    }
+    private void updateUserProfile() {
 
-    @Override
-    public Filter getFilter() {
-        return filter;
-    }
+        /**
+         * Upplýsingar eru fengnar úr formi í layout og JsonObject búinn til út frá þeim
+         */
+        EditText uName              = (EditText) findViewById(R.id.edtName);
+        EditText uInfo              = (EditText) findViewById(R.id.edtInfo);
+        EditText updateEmail        = (EditText) findViewById(R.id.edtEmail);
+        EditText updatePhonenumber  = (EditText) findViewById(R.id.edtPhonenumber);
+        EditText updateUsername     = (EditText) findViewById(R.id.edtUsername);
+        EditText updatePassword     = (EditText) findViewById(R.id.edtPassword);
 
-    Filter filter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<Book> filteredList = new ArrayList<>();
-            if(constraint.toString().isEmpty()) {
-                filteredList.addAll(booksListAll);
-            } else {
-                for (Book book: booksListAll) {
-                    if(book.getTitle().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                        filteredList.add(book);
-                    }
-                    if(book.getAuthor().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                        filteredList.add(book);
-                    }
+        String updateName = uName.getText().toString();
+        String updateInfo = uInfo.getText().toString();
+
+
+        final JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("name", updateName);
+        jsonObject.addProperty("info", updateInfo);
+        jsonObject.addProperty("email", updateEmail.getText().toString());
+        jsonObject.addProperty("phonenumber", updatePhonenumber.getText().toString());
+        jsonObject.addProperty("username", updateUsername.getText().toString());
+        jsonObject.addProperty("password", updatePassword.getText().toString());
+
+        Log.d(TAG, "*****************************************");
+        Log.d(TAG, "*****************************************");
+        Log.d(TAG, "\t UpdatedInfoForProfile:\n\n");
+        Log.d(TAG, "\n\n\n \t updateName *" + updateName + "*");
+        Log.d(TAG, "\n\n\n \t updateInfo *" + updateInfo + "*");
+
+        Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        /**
+         * JsonObjectinn er svo notaður til að búa til nýjan User í gagnagrunninn.
+         */
+
+        Call<User> updateUserProfile = apiInterface.updateUserProfile(jsonObject);
+//        Call<User> updateUserProfile = apiInterface.updateUserProfile("application/json",
+//                                                                      "Bearer " + LoginActivity.token,
+//                                                                        updateName,
+//                                                                        updateInfo,
+//                                                                        updateEmail,
+//                                                                        updatePhonenumber,
+//                                                                        updateUsername,
+//                                                                        updatePassword);
+        updateUserProfile.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                //hiding progress dialog
+//                progressDialog.dismiss();
+                if (response.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Profile Updated: " + response.body(), Toast.LENGTH_LONG).show();
+
+                    getUserProfile();
+
+                    Log.d("myTag", String.valueOf(response.body()));
                 }
             }
 
-            FilterResults filterResults = new FilterResults();
-            filterResults.values = filteredList;
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+//                progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
-            return filterResults;
-        }
+    public void getAllBooks() {
+        /**
+         GET kall sem skilar lista af bókum notanda.
+         **/
+        // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
+        final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
+        UsersBooksrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        UsersBooksrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            books.clear();
-            books.addAll((Collection<? extends Book>) results.values);
-            notifyDataSetChanged();
-        }
-    };
+        Call<BookList> getBooksByUser = apiInterface.getBooks();
+        getBooksByUser.enqueue(new Callback<BookList>() {
+            @Override
+            public void onResponse(Call<BookList> call, Response<BookList> response) {
+                List<Book> books = response.body().getBooks();
+                Log.d(TAG, "***********************************************");
+                Log.d(TAG, "***********************************************");
+                Log.d(TAG, "\n\n\t\t BBO -->> allBooks: \n\n\t\t\t" + books);
+                Log.d(TAG, "\n \t allBookTitle = books.get(2).getTitle(); = *" + books.get(2).getTitle() + "*\n");
+                Log.d(TAG, "\n\n\t\t BBO -->> usersBooks: \n\n\t\t\t" + usersBooks);
+                Log.d(TAG, "\n\n\t\t BBO -->> books.size(): \n\n\t\t\t" + books.size());
+                Log.d(TAG, "\n\n\t\t BBO -->> books.get(3).getAuthor(); \n\n\t\t\t" + books.get(3).getAuthor());
+                Log.d(TAG, "\n\n\t\t BBO -->> books.size(): \n\n\t\t\t" + usersBooks.size());
+                Log.d(TAG, "\n\n\t\t BBO -->> .get(3).getAuthor(); \n\n\t\t\t" + usersBooks.get(3).getAuthor());
+//                Log.d(TAG, "\n\n\t\t BBO -->> books.size(): \n\n\t\t\t" + books.getBook());
+                Log.d("login","\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+                UsersBooksrecyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
+
+                // TODO: Debug virkni, má eyða síðar meir.
+                Log.d(TAG, "BBO -->> Number of books user has: " + books.size());
+            }
+
+            @Override
+            public void onFailure(Call<BookList> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                call.cancel();
+            }
+        });
+    }
+//
+//    public void getMyBooks() {
+//        /**
+//         GET kall sem skilar lista af bókum notanda.
+//         **/
+//        // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
+//        final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
+//        UsersBooksrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        UsersBooksrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
+//
+//        Call<BookList> getMyBooks = apiInterface.myBooks(TOKEN);
+//        getMyBooks.enqueue(new Callback<BookList>() {
+//            @Override
+//            public void onResponse(Call<BookList> call, Response<BookList> response) {
+//                List<Book> myBooks = response.body().getBooks();
+//                Log.d(TAG, "BBO -->> UsersBooks: " + myBooks);
+//                UsersBooksrecyclerView.setAdapter(new BooksAdapter(myBooks, R.layout.list_item, getApplicationContext()));
+//
+//                // TODO: Debug virkni, má eyða síðar meir.
+//                Log.d(TAG, "BBO -->> Number of books user has: " + myBooks.size());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<BookList> call, Throwable t) {
+//                // Log error here since request failed
+//                Log.e(TAG, t.toString());
+//                call.cancel();
+//            }
+//        });
+//    }
+//
+//    public void showUsersBooks() {
+//        /**
+//         GET kall sem skilar lista af bókum notanda.
+//         **/
+//        // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
+//        final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
+//        UsersBooksrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        UsersBooksrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
+//
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "\n\n\n\n \t\t\t usersBooks -> into adapter = *" + usersBooks + "*\n\n\n\n" );
+//        UsersBooksrecyclerView.setAdapter(new BooksAdapter(usersBooks, R.layout.list_item, getApplicationContext()));
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//        Log.d(TAG, "***********************************************");
+//    }
+//
+    private void hideSystemUI() {
+        // Enables regular immersive mode.
+        // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
+        // Or for "sticky immersive," replace it with SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_IMMERSIVE
+                        // Set the content to appear under the system bars so that the
+                        // content doesn't resize when the system bars hide and show.
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        // Hide the nav bar and status bar
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
 }

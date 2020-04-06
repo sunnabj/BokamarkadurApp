@@ -93,6 +93,9 @@ interface APIInterface {
     @GET("/viewuser/{username}")
     Call<UserResponse> viewUser(@Path("username") String username);
 
+    @GET("/viewuser/{username}")
+    Call<User> getUserProfile(@Path("username") String username);
+
 
     @POST("/writeReview/{username}")
     Call<Review> writeReview(@Header("Authorization") String authorization,
@@ -105,5 +108,16 @@ interface APIInterface {
     @GET("/myBooks")
     Call<BookList> getMyBooks(@Header("Authorization") String authorization);
 
+
+    @POST("/updateUserInfo")
+    Call<User> updateUserProfile(@Body JsonObject body);
+//    @POST("/updateUserInfo")
+//    Call<User> updateUserProfile(@Header("Accept") String accept,
+//                                 @Header("Authorization") String authorization,
+//                                 @Part("name") String name);
+
+
+    @GET("/loggedIn")
+    Call<User> getLoggedInUser(@Header("Authorization") String authorization);
 
 }

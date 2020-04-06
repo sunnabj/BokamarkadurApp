@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ public class AboutusActivity extends AppCompatActivity {
     private int mCurrentPage;
     String test = "Finish";
     private int clickcount;
+    String LoggedInUsername = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +150,14 @@ public class AboutusActivity extends AppCompatActivity {
     };
 
     public void openMainActivity() {
-        Intent intent= new Intent(this, MainActivity.class);
+        Log.d("login","***********************************************");
+        Log.d("login","***********************************************");
+        LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        intent.putExtra("LoggedInUsername", LoggedInUsername);
+        Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         startActivity(intent);
     }
     private void hideSystemUI() {
