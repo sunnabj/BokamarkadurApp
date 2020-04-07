@@ -93,6 +93,9 @@ interface APIInterface {
     @GET("/viewuser/{username}")
     Call<UserResponse> viewUser(@Path("username") String username);
 
+    @GET("/viewuser/{username}")
+    Call<User> getUserProfile(@Path("username") String username);
+
 
     @POST("/writeReview/{username}")
     Call<Review> writeReview(@Header("Authorization") String authorization,
@@ -102,8 +105,18 @@ interface APIInterface {
     @GET("/viewReviews/{username}")
     Call<ReviewsResponse> viewReviews(@Path("username") String username);
 
+    // Gets list of books for user from "BookController.java" in REST Backend
     @GET("/myBooks")
-    Call<BookList> getMyBooks(@Header("Authorization") String authorization);
+    Call<BookList> myBooks(@Header("Authorization") String authorization);
 
+
+    @POST("/updateUserProfile")
+    Call<User> updateUserProfile(@Body JsonObject body,
+                                 @Header("Accept") String accept,
+                                 @Header("Authorization") String authorization);
+
+
+    @GET("/loggedIn")
+    Call<User> getLoggedInUser(@Header("Authorization") String authorization);
 
 }

@@ -47,7 +47,8 @@
                     style="@style/headerText"
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"
-                    android:text="Besti Bókamarkaður" />
+                    android:text="@string/app_name"
+                    android:textSize="24sp"/>
 
 
             </LinearLayout>
@@ -72,7 +73,8 @@
 
         <TextView
             style="@style/headerTextPrimary"
-            android:text="Request Book"
+            android:text="@string/addbook_request"
+            android:textSize="34sp"
             android:layout_marginTop="@dimen/loginViewsMargin"/>
 
         <TextView
@@ -122,26 +124,46 @@
 
         <Button
             android:id="@+id/btnUploadImage"
+            android:layout_width="250dp"
             style="@style/loginButton"
             android:layout_marginTop="20dp"
+
             android:layout_gravity="center"
-            android:text="Upload Image" />
+            android:text="Upload Image"
+            android:textSize="22sp"/>
 
         <ImageView
             android:id="@+id/uploadImage"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             app:srcCompat="@drawable/book" />
 
         <Button
             android:id="@+id/submit"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center"
             style="@style/loginButton"
-            android:text="Submit"/>
+            android:text="Submit"
+            android:textSize="22sp"/>
+
+        <Button
+            android:id="@+id/backToMenu"
+            style="@style/loginButton"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="120dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/mp_button_menu"
+            android:textColor="@color/colorMoreBlack"
+            android:textSize="22sp" />
 
 
     </LinearLayout>

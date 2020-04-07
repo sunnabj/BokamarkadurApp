@@ -57,6 +57,12 @@ public class User {
         this.token = token;
     }
 
+    public User user;
+
+    public User getUser() {
+        return user;
+    }
+
     public long getId() {
         return id;
     }

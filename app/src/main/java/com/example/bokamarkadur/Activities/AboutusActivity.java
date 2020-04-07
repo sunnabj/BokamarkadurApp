@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ public class AboutusActivity extends AppCompatActivity {
     private int mCurrentPage;
     String test = "Finish";
     private int clickcount;
+    String LoggedInUsername = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class AboutusActivity extends AppCompatActivity {
 
                 if (test.equals(mNextBtn.getText())) {
                     cheer.stop();
-                    openMainActivity();
+                    openMenuActivity();
                 } else {
                     mSlidePager.setCurrentItem(mCurrentPage + 1);
                 }
@@ -148,8 +150,10 @@ public class AboutusActivity extends AppCompatActivity {
     };
 
     public void openMainActivity() {
-        Intent intent= new Intent(this, MainActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+    public void openMenuActivity() {
+        startActivity(new Intent(getApplicationContext(), MenuActivity.class));
     }
     private void hideSystemUI() {
         // Enables regular immersive mode.

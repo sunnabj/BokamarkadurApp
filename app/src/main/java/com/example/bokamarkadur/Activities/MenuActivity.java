@@ -1,8 +1,8 @@
 package com.example.bokamarkadur.Activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -12,22 +12,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private Button loginbutton;
-    private Button registerbutton;
+
+    private CardView AllBooks;
+    private CardView NewestBooks;
+
     private CardView AddBook;
     private CardView RequestBook;
-    private CardView AllBooksBtn;
-    private CardView aboutus;
-    private CardView logOut;
 
-    private ProgressDialog progressDialog;
+    private CardView MyProfile;
+    private CardView Something;
 
-    APIInterface apiInterface;
+    private CardView AboutUs;
+    private CardView Logout;
+
+    private static final String TAG = MenuActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +67,31 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        //add book 4 sale
-        AddBook = findViewById(R.id.AddBook);
+        // View All Listed Books    ---         Card 1
+        //              --> Location in MENU:   Row 1 / Column 1
+        //
+        AllBooks = (CardView) findViewById(R.id.MenuCard1);
+        AllBooks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAllBooksActivity();
+            }
+        });
+
+        // View Newest Books    ---             Card 2
+        //              --> Location in MENU:   Row 1 / Column 2
+        //
+        NewestBooks = (CardView) findViewById(R.id.MenuCard1);
+        NewestBooks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAllBooksActivity();
+            }
+        });
+
+        //  Add a Book For Sale  ---            Card 3
+        //              --> Location in MENU:   Row 2 / Column 1
+        AddBook = (CardView) findViewById(R.id.MenuCard3);
         AddBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,8 +99,10 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        //Request book
-        RequestBook = findViewById(R.id.RequestBook);
+        // Request a Book       ---             Card 4
+        //              --> Location in MENU:   Row 2 / Column 2
+        //
+        RequestBook = (CardView) findViewById(R.id.MenuCard4);
         RequestBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,59 +110,47 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-
-        /**
-         * Logout - setur authorization token sem null þannig að notandi getur ekki gert
-         * neitt lengur sem krefst innskráningar.
-         */
-        logOut = findViewById(R.id.logout);
-        logOut.setOnClickListener(new View.OnClickListener() {
-
+        //  My Profile          ---             Card 5
+        //              --> Location in MENU:   Row 3 / Column 1
+        //
+        MyProfile = (CardView) findViewById(R.id.MenuCard5);
+        MyProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                openViewProfileActivity();
+            }
+        });
 
+        //  Something           ---             Card 6
+        //              --> Location in MENU:   Row 3 / Column 2
+        //
+        Something = (CardView) findViewById(R.id.MenuCard6);
+        Something.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // openActivity(); fyrir hvað sem hér kemur.
+            }
+        });
+
+        //  About Us            ---             Card 7
+        //              --> Location in MENU:   Row 4 / Column 1
+        //
+        AboutUs = (CardView) findViewById(R.id.MenuCard7);
+        AboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAboutUsActivity();
+            }
+        });
+
+        //  Logout               ---            Card 8
+        //              --> Location in MENU:   Row 4 / Column 2
+        Logout = (CardView) findViewById(R.id.MenuCard8);
+        Logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 LoginActivity.token = null;
                 openMainActivity();
-
-
-            }
-
-        });
-
-/*
-        // login button
-        loginbutton = (Button) findViewById(R.id.login);
-        loginbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openLoginActivity();
-            }
-        });
-        //register
-        registerbutton = (Button) findViewById(R.id.register);
-        registerbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openRegisterActivity();
-            }
-        });
-
-
- */
-        //Aboutus
-        aboutus = findViewById(R.id.about);
-        aboutus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAboutusActivity();
-            }
-        });
-        // Förum yfir í AllBooksActivity þar sem allar bækur eru birtar.
-        AllBooksBtn = findViewById(R.id.all_books);
-        AllBooksBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openAllBooksActivity();
             }
         });
     }
@@ -142,26 +159,21 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-    public void openAboutusActivity() {
-        Intent intent= new Intent(this, AboutusActivity.class);
-        startActivity(intent);
+
+    public void openAboutUsActivity() {
+        startActivity(new Intent(getApplicationContext(), AboutusActivity.class));
     }
     public void openLoginActivity() {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
-    public void openRegisterActivity() {
-        Intent intent= new Intent(this, RegisterActivity.class);
-        startActivity(intent);
-    }
+
     public void AddbookforsaleActivity() {
         if (LoginActivity.token == null) {
             openLoginActivity();
-            Toast.makeText(getApplicationContext(), "You must login to add a book for sale",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You must logged in to request a book", Toast.LENGTH_LONG).show();
         } else {
-            Intent intent= new Intent(this, AddBookForSaleActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), AddBookForSaleActivity.class));
         }
     }
     public void openRequestBookActivity() {
@@ -169,14 +181,17 @@ public class MenuActivity extends AppCompatActivity {
             openLoginActivity();
             Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
         } else {
-            Intent intent = new Intent(this, RequestBookActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), RequestBookActivity.class));
         }
     }
     public void openAllBooksActivity() {
-        Intent intent = new Intent(this, AllBooksActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), AllBooksActivity.class));
     }
+
+    public void openViewProfileActivity() {
+        startActivity(new Intent(getApplicationContext(), ViewProfileActivity.class));
+    }
+
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.

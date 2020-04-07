@@ -32,7 +32,6 @@ public class AllBooksActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     BooksAdapter booksAdapter;
-
     APIInterface apiInterface;
 
     @Override
@@ -65,8 +64,8 @@ public class AllBooksActivity extends AppCompatActivity {
                             openLoginActivity();
                             Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
                         } else {
-                        startActivity(new Intent(getApplicationContext(),
-                                MenuActivity.class));
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
                         overridePendingTransition(0,0);}
                         return true;
                 }

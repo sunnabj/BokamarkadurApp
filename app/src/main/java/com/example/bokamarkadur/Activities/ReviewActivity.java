@@ -36,6 +36,7 @@ public class ReviewActivity extends AppCompatActivity {
     APIInterface apiInterface;
 
     private Button addReviewBtn; //Opens a view where the user can add a new review to the review list.
+    private Button backToMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +147,14 @@ public class ReviewActivity extends AppCompatActivity {
                 intent.putExtra("username", username); //þurfti að vera declared final til að vera accessible
                 startActivity(intent);
 
+            }
+        });
+
+        backToMenu = (Button) findViewById(R.id.backToMenu);
+        backToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
             }
         });
 

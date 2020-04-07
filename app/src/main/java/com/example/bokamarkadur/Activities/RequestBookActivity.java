@@ -174,6 +174,7 @@ public class RequestBookActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     Log.d("onResponse: ", String.valueOf(response.body()));
                     if (response.isSuccessful()) {
+
                         openMainActivity();
                         Log.d("Success: ", response.body().getTitle() + " has been added.");
                     } else {
@@ -227,7 +228,7 @@ public class RequestBookActivity extends AppCompatActivity {
     }
 
     public void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     }
     private void hideSystemUI() {

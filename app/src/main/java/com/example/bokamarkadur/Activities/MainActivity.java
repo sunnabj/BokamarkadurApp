@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     APIInterface apiInterface;
+    String LoggedInUsername = "";
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
                                 openLoginActivity();
                                 Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
                             } else {
-                            startActivity(new Intent(getApplicationContext(),
-                                    MenuActivity.class));
+                                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+
                             overridePendingTransition(0,0);}
                             return true;
                     }

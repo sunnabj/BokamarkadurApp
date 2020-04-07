@@ -81,6 +81,19 @@
                             android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
                     </TableLayout>
+
+                    <Button
+                        android:id="@+id/backToMenu"
+                        style="@style/loginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/mp_button_menu"
+                        android:textColor="@color/colorMoreBlack"
+                        android:textSize="22sp" />
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

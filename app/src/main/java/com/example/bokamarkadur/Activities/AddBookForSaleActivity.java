@@ -41,6 +41,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1888;
     Spinner subjectSpinner;
+    String LoggedInUsername = "";
 
     APIInterface apiInterface;
 
@@ -179,11 +180,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
                     progressDialog.dismiss();
                     Log.d("onResponse: ", String.valueOf(response.body()));
                     if (response.isSuccessful()) {
+
                         openMainActivity();
-                        //Toast.makeText
-                        //        (getApplicationContext(), "Selected : " + subjectSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT)
-                        //        .show();
-                        Log.d("Success: ", response.body().getTitle() + " has been added.");
+
                     } else {
                         try {
                             Log.d("error", response.errorBody().string());
@@ -238,8 +237,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     }
 
     public void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
     }
     private void hideSystemUI() {
         // Enables regular immersive mode.
