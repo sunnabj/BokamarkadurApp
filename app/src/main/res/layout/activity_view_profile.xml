@@ -129,7 +129,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/mp_username"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/cardColorOrange"
+                        android:backgroundTint="@color/cardColorOrange" />
 
 
                     <EditText
@@ -142,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/mp_password"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/cardColorOrange" />
 
                     <EditText
                         android:id="@+id/edtPassword"
@@ -192,30 +193,7 @@
                         </TableLayout>
 
                     </LinearLayout>
-                    <!--
-                    <Button
-                        android:id="@+id/myBooks"
-                        style="@style/loginButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:textSize="22dp"
-                        android:text="@string/my_books" />
-                    <Button
-                        android:id="@+id/myMessages"
-                        style="@style/loginButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_alignParentBottom="true"
-                        android:textSize="22dp"
-                        android:text="@string/my_messages" />
--->
+
                     <Button
                         android:id="@+id/myReviews"
                         style="@style/loginButton"
@@ -226,6 +204,19 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginBottom="20dp"
                         android:text="@string/my_reviews"
+                        android:textSize="22sp" />
+
+                    <Button
+                        android:id="@+id/backToMenu"
+                        style="@style/loginButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginBottom="20dp"
+                        android:text="@string/mp_button_menu"
+                        android:textColor="@color/colorMoreBlack"
                         android:textSize="22sp" />
 
                 </LinearLayout>

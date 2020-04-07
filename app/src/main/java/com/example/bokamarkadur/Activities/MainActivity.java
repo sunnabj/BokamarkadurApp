@@ -65,15 +65,7 @@ public class MainActivity extends AppCompatActivity {
                                 openLoginActivity();
                                 Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
                             } else {
-                                Log.d("login","***********************************************");
-                                Log.d("login","***********************************************");
-                                LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
-                                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                                intent.putExtra("LoggedInUsername", LoggedInUsername);
-                                Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
-                                Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                                Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                                startActivity(intent);
+                                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
 
                             overridePendingTransition(0,0);}
                             return true;

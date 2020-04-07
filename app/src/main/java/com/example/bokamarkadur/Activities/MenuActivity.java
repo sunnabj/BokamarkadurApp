@@ -12,14 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.example.bokamarkadur.R;
 
+import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private Button loginbutton;
-    private Button registerbutton;
 
     private CardView AllBooks;
     private CardView NewestBooks;
@@ -34,9 +32,6 @@ public class MenuActivity extends AppCompatActivity {
     private CardView Logout;
 
     private static final String TAG = MenuActivity.class.getSimpleName();
-    LoginActivity LOGGEDIN;
-    public String LoggedInUsername;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +40,6 @@ public class MenuActivity extends AppCompatActivity {
 
         // Hide System UI for best experience
         hideSystemUI();
-
-        LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
 
         /**+
          * Bottom navigation
@@ -131,8 +124,8 @@ public class MenuActivity extends AppCompatActivity {
         //  Something           ---             Card 6
         //              --> Location in MENU:   Row 3 / Column 2
         //
-        AboutUs = (CardView) findViewById(R.id.MenuCard6);
-        AboutUs.setOnClickListener(new View.OnClickListener() {
+        Something = (CardView) findViewById(R.id.MenuCard6);
+        Something.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // openActivity(); fyrir hvað sem hér kemur.
@@ -168,23 +161,10 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void openAboutUsActivity() {
-        Log.d("login","***********************************************");
-        Log.d("login","***********************************************");
-        LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
-        Intent intent = new Intent(getApplicationContext(), AboutusActivity.class);
-        intent.putExtra("LoggedInUsername", LoggedInUsername);
-        Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), AboutusActivity.class));
     }
     public void openLoginActivity() {
         Intent intent= new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-    public void openRegisterActivity() {
-        Intent intent= new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
@@ -193,15 +173,7 @@ public class MenuActivity extends AppCompatActivity {
             openLoginActivity();
             Toast.makeText(getApplicationContext(), "You must logged in to request a book", Toast.LENGTH_LONG).show();
         } else {
-            Log.d("login","***********************************************");
-            Log.d("login","***********************************************");
-            LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
-            Intent intent = new Intent(getApplicationContext(), AddBookForSaleActivity.class);
-            intent.putExtra("LoggedInUsername", LoggedInUsername);
-            Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
-            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), AddBookForSaleActivity.class));
         }
     }
     public void openRequestBookActivity() {
@@ -209,37 +181,15 @@ public class MenuActivity extends AppCompatActivity {
             openLoginActivity();
             Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
         } else {
-            Log.d("login","***********************************************");
-            Log.d("login","***********************************************");
-            Intent intent = new Intent(getApplicationContext(), RequestBookActivity.class);
-            intent.putExtra("LoggedInUsername", LoggedInUsername);
-            Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
-            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            startActivity(intent);
+            startActivity(new Intent(getApplicationContext(), RequestBookActivity.class));
         }
     }
     public void openAllBooksActivity() {
-        Log.d("login","***********************************************");
-        Log.d("login","***********************************************");
-        Intent intent = new Intent(getApplicationContext(), AllBooksActivity.class);
-        intent.putExtra("LoggedInUsername", LoggedInUsername);
-        Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), AllBooksActivity.class));
     }
 
     public void openViewProfileActivity() {
-
-        Log.d("login","***********************************************");
-        Log.d("login","***********************************************");
-        Intent intent = new Intent(getApplicationContext(), ViewProfileActivity.class);
-        intent.putExtra("LoggedInUsername", LoggedInUsername);
-        Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), ViewProfileActivity.class));
     }
 
     private void hideSystemUI() {

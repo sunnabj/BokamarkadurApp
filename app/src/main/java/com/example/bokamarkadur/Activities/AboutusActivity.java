@@ -70,7 +70,7 @@ public class AboutusActivity extends AppCompatActivity {
 
                 if (test.equals(mNextBtn.getText())) {
                     cheer.stop();
-                    openMainActivity();
+                    openMenuActivity();
                 } else {
                     mSlidePager.setCurrentItem(mCurrentPage + 1);
                 }
@@ -150,15 +150,10 @@ public class AboutusActivity extends AppCompatActivity {
     };
 
     public void openMainActivity() {
-        Log.d("login","***********************************************");
-        Log.d("login","***********************************************");
-        LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
-        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-        intent.putExtra("LoggedInUsername", LoggedInUsername);
-        Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+    public void openMenuActivity() {
+        startActivity(new Intent(getApplicationContext(), MenuActivity.class));
     }
     private void hideSystemUI() {
         // Enables regular immersive mode.

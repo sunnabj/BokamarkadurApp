@@ -237,14 +237,9 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     }
 
     public void openMainActivity() {
-        Log.d("login","***********************************************");
-        Log.d("login","***********************************************");
-        LoggedInUsername = getIntent().getStringExtra("LoggedInUsername");
+
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("LoggedInUsername", LoggedInUsername);
-        Log.d("login", "\n\n\n BBO -->> Logged in Username is: **" + LoggedInUsername + "** \n\n\n");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
     }
     private void hideSystemUI() {
         // Enables regular immersive mode.

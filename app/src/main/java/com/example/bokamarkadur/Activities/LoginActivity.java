@@ -87,17 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "You are now logged in ",
                             Toast.LENGTH_LONG).show();
-                    openMainActivity();
-
-                    Log.d("login","***********************************************");
-                    Log.d("login","***********************************************");
-                    Log.d("login", "\n\n\n BBO -->> User: **" + LoggedInUsername + "** logs in \n\n\n");
-                    Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-//                    loggedInUserFromResponse = response.body().getUsername();
-                    token = response.body().getToken();
-//                    User userToLogin;
+                    openMenuActivity();
 
                     token = response.body().getToken();
                 }
@@ -111,9 +101,8 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void openMainActivity() {
-        Intent intent= new Intent(this, MainActivity.class);
-        intent.putExtra("LoggedInUsername", LoggedInUsername);
+    public void openMenuActivity() {
+        Intent intent= new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
     public void openRegisterActivity() {

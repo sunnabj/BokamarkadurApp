@@ -105,16 +105,15 @@ interface APIInterface {
     @GET("/viewReviews/{username}")
     Call<ReviewsResponse> viewReviews(@Path("username") String username);
 
+    // Gets list of books for user from "BookController.java" in REST Backend
     @GET("/myBooks")
-    Call<BookList> getMyBooks(@Header("Authorization") String authorization);
+    Call<BookList> myBooks(@Header("Authorization") String authorization);
 
 
-    @POST("/updateUserInfo")
-    Call<User> updateUserProfile(@Body JsonObject body);
-//    @POST("/updateUserInfo")
-//    Call<User> updateUserProfile(@Header("Accept") String accept,
-//                                 @Header("Authorization") String authorization,
-//                                 @Part("name") String name);
+    @POST("/updateUserProfile")
+    Call<User> updateUserProfile(@Body JsonObject body,
+                                 @Header("Accept") String accept,
+                                 @Header("Authorization") String authorization);
 
 
     @GET("/loggedIn")
