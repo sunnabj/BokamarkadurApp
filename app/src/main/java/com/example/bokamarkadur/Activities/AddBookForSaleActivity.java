@@ -35,6 +35,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
     private Button uploadImage;
     private Button submit;
+    private Button backToMenu;
     private Uri selectedImage;
     private String imgDecodableString = "";
     private ImageView viewUploadedImage;
@@ -81,6 +82,14 @@ public class AddBookForSaleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 submitData();
+            }
+        });
+
+        backToMenu = (Button) findViewById(R.id.backToMenu);
+        backToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
             }
         });
     }

@@ -37,6 +37,7 @@ public class RequestBookActivity extends AppCompatActivity {
 
     private Button uploadImage;
     private Button submit;
+    private Button backToMenu;
     private Uri selectedImage;
     private String imgDecodableString = "";
     private ImageView viewUploadedImage;
@@ -59,6 +60,14 @@ public class RequestBookActivity extends AppCompatActivity {
 
         // Dropdown list with subjects
         subjectSpinner = findViewById(R.id.edtSubject);
+
+        backToMenu = (Button) findViewById(R.id.backToMenu);
+        backToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+            }
+        });
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ public class AllBooksActivity extends AppCompatActivity {
 
     BooksAdapter booksAdapter;
     APIInterface apiInterface;
+    private Button backToMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,13 @@ public class AllBooksActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
+        backToMenu = (Button) findViewById(R.id.backToMenu);
+        backToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+            }
+        });
 
         /**+
          *  Bottom navigation

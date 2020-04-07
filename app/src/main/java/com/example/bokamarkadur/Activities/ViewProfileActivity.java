@@ -69,8 +69,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         updateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "BUTTON PUSHED", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "\n\n\n\t\t BUTTON PUSHED !!!! \n\n\n");
+                Toast.makeText(getApplicationContext(), "Profile Updated!", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "\n\n\n\t\t Profile Updated !!!! \n\n\n");
                 updateUserProfile();
             }
         });
