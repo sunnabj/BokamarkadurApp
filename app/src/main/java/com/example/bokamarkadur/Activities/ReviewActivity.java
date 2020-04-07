@@ -140,22 +140,14 @@ public class ReviewActivity extends AppCompatActivity {
         addReviewBtn = findViewById(R.id.add_review);
 
         addReviewBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // A new review can only be written if a user is logged in.
-                        if (LoginActivity.token != null) {
-                            Intent intent = new Intent(ReviewActivity.this, WriteReviewActivity.class);
-                            intent.putExtra("username", username); //þurfti að vera declared final til að vera accessible
-                            startActivity(intent);
-                        }
-                        else {
-                         Toast.makeText(getApplicationContext(),
-                            "You have to be logged in to write a review",
-                            Toast.LENGTH_LONG).show();
-                        }
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReviewActivity.this, WriteReviewActivity.class);
+                intent.putExtra("username", username); //þurfti að vera declared final til að vera accessible
+                startActivity(intent);
 
-                    }
-                });
+            }
+        });
 
     }
 

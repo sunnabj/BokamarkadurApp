@@ -45,11 +45,11 @@ public class AboutusActivity extends AppCompatActivity {
         final MediaPlayer cheer = MediaPlayer.create(AboutusActivity.this, R.raw.about);
         cheer.start();
 
-        mSlidePager = (ViewPager) findViewById(R.id.slideViewPager);
-        mDotLayout = (LinearLayout) findViewById(R.id.dots);
+        mSlidePager = findViewById(R.id.slideViewPager);
+        mDotLayout = findViewById(R.id.dots);
 
-        mNextBtn = (Button) findViewById(R.id.nextBtn);
-        mBackBtn = (Button) findViewById(R.id.preBtn);
+        mNextBtn = findViewById(R.id.nextBtn);
+        mBackBtn = findViewById(R.id.preBtn);
 
         sliderAdapter = new SliderAdapter(this);
         sliderAdapter.notifyDataSetChanged();
@@ -61,7 +61,7 @@ public class AboutusActivity extends AppCompatActivity {
 
 
 
-        // Setja listener fyrir takkan
+        // Setja listener fyrir takkann
         mNextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

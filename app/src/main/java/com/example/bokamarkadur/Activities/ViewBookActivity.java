@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,10 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -33,8 +36,6 @@ public class ViewBookActivity extends AppCompatActivity {
     private static final int REQ_PICK_CONTACT = 2 ;
     private EditText phoneEditText;
     private EditText messageEditText;
-
-    User user;
     private String phone;
 
     @Override
@@ -53,8 +54,9 @@ public class ViewBookActivity extends AppCompatActivity {
         getIncomingIntent();
 
         /**
-         * Takki er fyrir neðan hverja bók sem hægt er að ýta á til að senda sms til þess sem setti
-         * bókina inn. Þessi virkni er í vinnslu.
+         * A text can be written and a button then pushed at the bottom of the page which sends
+         * the text as an SMS to the person that added the book.
+         * This is only possible if the user is logged in.
          */
         messageEditText = findViewById(R.id.message_edit_text);
         btSMS = findViewById(R.id.bt_sms);
@@ -67,7 +69,8 @@ public class ViewBookActivity extends AppCompatActivity {
                     int hasSMSPermission = checkSelfPermission(Manifest.permission.SEND_SMS);
                     if (hasSMSPermission != PackageManager.PERMISSION_GRANTED) {
                         if (!shouldShowRequestPermissionRationale(Manifest.permission.SEND_SMS)) {
-                            showMessageOKCancel("You need to allow access to Send SMS",
+                            showMessageOKCancel("Will you let this app access your SMS text" +
+                                            "messenger?",
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
@@ -103,11 +106,7 @@ public class ViewBookActivity extends AppCompatActivity {
 
         String message = messageEditText.getText().toString();
 
-        //Check if the phoneNumber is empty
-        if (phone.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Please Enter a Valid Phone Number", Toast.LENGTH_SHORT).show();
-        } else {
-
+        if (LoginActivity.token != null) {
             SmsManager sms = SmsManager.getDefault();
             // if message length is too long messages are divided
             List<String> messages = sms.divideMessage(message);
@@ -119,6 +118,10 @@ public class ViewBookActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Message sent to " + phone, Toast.LENGTH_SHORT).show();
 
             }
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "You have to be logged in to send a message",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -198,19 +201,27 @@ public class ViewBookActivity extends AppCompatActivity {
         Log.d("Tag", "asdasd"+phone);
 
         /**
-         * Listener á takka sem opnar activity með upplýsingum
-         * um notandann sem setti bókina inn.
-         * Username er sent þangað með intent.
+         * Listener on a button that opens an activity with information
+         * about the user that added the book.
+         * Username is sent there by an intent.
+         * A user has to be logged in to be able to see the user's info.
          */
         Button viewUser = findViewById(R.id.bt_view_user);
-        //viewUser.setText("View information about " + user);
         viewUser.setText("  View " + user + "'s info");
         viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class); //eða bara this)
-                intent.putExtra("username", user); //þurfti að vera declared final til að vera accessible
-                startActivity(intent);
+
+                if (LoginActivity.token != null) {
+                    Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class);
+                    intent.putExtra("username", user); //þurfti að vera declared final til að vera accessible
+                    startActivity(intent);
+                }
+                else {
+                 Toast.makeText(getApplicationContext(),
+                    "You have to be logged in to get information about or contact the user",
+                    Toast.LENGTH_LONG).show();
+                }
             }
         });
 
