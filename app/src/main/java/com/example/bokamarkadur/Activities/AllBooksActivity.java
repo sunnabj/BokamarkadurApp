@@ -34,7 +34,7 @@ public class AllBooksActivity extends AppCompatActivity {
 
     BooksAdapter booksAdapter;
     APIInterface apiInterface;
-    private Button backToMenu;
+    //private Button backToMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class AllBooksActivity extends AppCompatActivity {
 
         // Hide System UI for best experience
         hideSystemUI();
-
+        /*
         backToMenu = (Button) findViewById(R.id.backToMenu);
         backToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +51,8 @@ public class AllBooksActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MenuActivity.class));
             }
         });
+
+         */
 
         /**+
          *  Bottom navigation

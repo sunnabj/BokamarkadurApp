@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bokamarkadur.Adapters.ReviewsAdapter;
 import com.example.bokamarkadur.POJO.Review;
 import com.example.bokamarkadur.POJO.ReviewsResponse;
+import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,7 +37,8 @@ public class ReviewActivity extends AppCompatActivity {
     APIInterface apiInterface;
 
     private Button addReviewBtn; //Opens a view where the user can add a new review to the review list.
-    private Button backToMenu;
+    //private Button backToMenu;
+    public String loggedInUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,26 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
+
+
+        Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
+        getLoggedInUser.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                // This is the username of the currently logged in user.
+                loggedInUsername = response.body().getUsername();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                call.cancel();
+            }
+
+        });
+
 
         /**
          * Sets up an orderly review list
@@ -143,13 +165,21 @@ public class ReviewActivity extends AppCompatActivity {
         addReviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ReviewActivity.this, WriteReviewActivity.class);
-                intent.putExtra("username", username); //þurfti að vera declared final til að vera accessible
-                startActivity(intent);
+                if (loggedInUsername.equals(username)) {
+                    Toast.makeText(getApplicationContext(),
+                            "You cannot review yourself.",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent intent = new Intent(ReviewActivity.this, WriteReviewActivity.class);
+                    intent.putExtra("username", username); //þurfti að vera declared final til að vera accessible
+                    startActivity(intent);
+                }
+
 
             }
         });
-
+/*
         backToMenu = (Button) findViewById(R.id.backToMenu);
         backToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +187,7 @@ public class ReviewActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), MenuActivity.class));
             }
         });
-
+*/
     }
 
     /**

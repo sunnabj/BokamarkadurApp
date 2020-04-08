@@ -110,7 +110,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"/>
 
-                    <Button
+ <!--                   <Button
                         android:id="@+id/backToMenu"
                         style="@style/loginButton"
                         android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                         android:text="@string/mp_button_menu"
                         android:textColor="@color/colorMoreBlack"
                         android:textSize="22sp" />
-
+-->
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

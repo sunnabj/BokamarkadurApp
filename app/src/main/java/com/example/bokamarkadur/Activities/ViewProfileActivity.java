@@ -79,7 +79,12 @@ public class ViewProfileActivity extends AppCompatActivity {
         myReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ReviewActivity.class));
+
+                Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
+                intent.putExtra("username", ProfileUsername);
+                startActivity(intent);
+
+                //startActivity(new Intent(getApplicationContext(), ReviewActivity.class));
             }
         });
 
