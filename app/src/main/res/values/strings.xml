@@ -23,7 +23,7 @@
     <string name="mp_about">Few words about me: </string>
     <string name="mp_email">Email: </string>
     <string name="mp_phone_number">Phone number: </string>
-    <string name="mp_username">\n(Can\'t be changed)\nUsername: </string>
+    <string name="mp_username">Username:\t\t\t\t (Can not be changed) </string>
     <string name="mp_password">Password (Only input if you want to change): </string>
     <string name="mp_re_password">Re-type password: </string>
 

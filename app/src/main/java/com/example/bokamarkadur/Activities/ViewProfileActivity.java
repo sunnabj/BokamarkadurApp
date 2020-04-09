@@ -38,7 +38,6 @@ public class ViewProfileActivity extends AppCompatActivity {
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     private Button updateProfile;
     private Button myReviews;
-    private Button backToMenu;
 
     String pUsername;
     public String ProfileUsername;
@@ -66,14 +65,14 @@ public class ViewProfileActivity extends AppCompatActivity {
         // where user can make changes to his information.
         getLoggedInUser();
 
-
         // This fetches all of user's books and displays them in a list.
         getMyBooks();
-
 
         // This connects buttons for activity.
         connectButtons();
 
+        // This function sets up and displays the bottom navigation.
+        setBottomNavigation();
 
         // Hide System UI for best experience
         hideSystemUI();
@@ -145,9 +144,8 @@ public class ViewProfileActivity extends AppCompatActivity {
 
 
     // Buttons for
-    //      "Update My Info",
-    //      "My Reviews" and
-    //      "Back To Menu"
+    //      "Update My Info" and
+    //      "My Reviews"
     // connected to appropriate activities.
     private void connectButtons() {
 
@@ -170,14 +168,6 @@ public class ViewProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
                 intent.putExtra("username", ProfileUsername);
                 startActivity(intent);
-            }
-        });
-
-        backToMenu = (Button) findViewById(R.id.backToMenu);
-        backToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
             }
         });
     }
@@ -306,7 +296,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     // GET CALL to backend that fetches all books that
     // this user has added for sale or made requests for.
-    public void getMyBooks() {
+    private void getMyBooks() {
 
         /**
          @GET call that returns list of Books this (logged in) user has requested or put up for sale.
@@ -320,9 +310,18 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<BookList> call, Response<BookList> response) {
                 List<Book> myBooks = response.body().getBooks();
-                Log.d(TAG, "BBO -->> UsersBooks: " + myBooks);
-                UsersBooksrecyclerView.setAdapter(new BooksAdapter(myBooks, R.layout.list_item, getApplicationContext()));
+                int numberOfBooks = myBooks.size();
 
+                if (numberOfBooks > 0) {
+                    UsersBooksrecyclerView.setAdapter(new BooksAdapter(myBooks, R.layout.list_item, getApplicationContext()));
+                }
+                else {
+                    // Set the header for BookListView = "All Books".
+                    TextView noBooks = findViewById(R.id.no_books);
+                    noBooks.setText("You have not added\n any books...\n\n ...YET...");
+                }
+
+                Log.d(TAG, "BBO -->> UsersBooks: " + myBooks);
                 // TODO: Debug virkni, má eyða síðar meir.
                 Log.d(TAG, "BBO -->> Number of books user has: " + myBooks.size());
             }
@@ -334,6 +333,11 @@ public class ViewProfileActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+    }
+
+    private void showMyBooks() {
+
+
     }
 
 
@@ -366,6 +370,47 @@ public class ViewProfileActivity extends AppCompatActivity {
         Log.d(TAG, "***********************************************");
     }
 
+
+    // Take user to the LoginActivity.
+    private void openLoginActivity() {
+        Intent intent= new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+
+    // This function sets up connections to other activities
+    // and displays the bottom navigation.
+    private void setBottomNavigation() {
+        /**+
+         *  Bottom navigation
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.dashboard);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.about:
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(0,0);}
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
 
     private void hideSystemUI() {
         // Enables regular immersive mode.
