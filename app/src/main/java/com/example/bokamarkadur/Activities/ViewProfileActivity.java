@@ -42,7 +42,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private Button updateProfile;
     private Button myReviews;
     private Button backToMenu;
-    String LoggedInUsername;
+
     String pUsername;
     public String ProfileUsername;
     String TOKEN;
@@ -150,21 +150,13 @@ public class ViewProfileActivity extends AppCompatActivity {
 
 
     private void getLoggedInUser() {
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d("login", "\n\n\n BBO -->> Carried Over from MenuActivity?? ");
-        LoggedInUsername = getIntent().getStringExtra("LoggedInUser");
-        Log.d("login", "\n\n\t\t BBO -->> Username is: **" + LoggedInUsername + "** \n\n\n");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
 
         Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
         getLoggedInUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
 
-                pUsername   = response.body().getUsername();
+                pUsername   = response.body().getUser().getUsername();
                 Log.d(TAG, "*****************************************");
                 Log.d(TAG, "*****************************************");
                 Log.d(TAG, "\n\n\n\t onResponse:" +
@@ -207,9 +199,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         Log.d(TAG, "\n***********************************************");
         Log.d(TAG, "***********************************************");
         Log.d("login", "\n\n\n BBO -->> Carried Over from MenuActivity?? ");
-        LoggedInUsername = getIntent().getStringExtra("LoggedInUser");
-        Log.d("login", "\n\n\t\t BBO -->> LoggedInUsername: **"   + LoggedInUsername + "**" +
-                "\n\t\t BBO -->> ProfileUsername:  **"   + ProfileUsername + "**\n\n\n");
+
+        Log.d("login", "\n\n\t\t BBO -->> ProfileUsername:  **"   + ProfileUsername + "**\n\n\n");
         Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
@@ -277,14 +268,32 @@ public class ViewProfileActivity extends AppCompatActivity {
         String updateUsername       = uUsername.getText().toString();
         String updatePassword       = uPassword.getText().toString();
 
-        final JsonObject jsonObject = new JsonObject();
+        final JsonObject JSONupdatedProfile = new JsonObject();
 
-        jsonObject.addProperty("name", updateName);
-        jsonObject.addProperty("info", updateInfo);
-        jsonObject.addProperty("email", updateEmail);
-        jsonObject.addProperty("phonenumber", updatePhonenumber);
-        jsonObject.addProperty("username", updateUsername);
-        jsonObject.addProperty("password", updatePassword);
+        JSONupdatedProfile.addProperty("name", updateName);
+        JSONupdatedProfile.addProperty("info", updateInfo);
+        JSONupdatedProfile.addProperty("email", updateEmail);
+        JSONupdatedProfile.addProperty("phonenumber", updatePhonenumber);
+        JSONupdatedProfile.addProperty("username", updateUsername);
+        if (!updatePassword.isEmpty() ) {
+            JSONupdatedProfile.addProperty("password", updatePassword);
+
+            Log.d(TAG, "\n*****************************************");
+            Log.d(TAG, "*****************************************");
+            Log.d(TAG, "\n\n\n\t Password was added to the JSON file !! \n\n");
+            Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+        }
+        else {
+
+            Log.d(TAG, "\n*****************************************");
+            Log.d(TAG, "*****************************************");
+            Log.d(TAG, "\n\n\n\t Password \n\twas \n\tNOT \n\tadded to the JSON file !! \n\n");
+            Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+        }
 
         Log.d(TAG, "\n*****************************************");
         Log.d(TAG, "*****************************************");
@@ -303,7 +312,7 @@ public class ViewProfileActivity extends AppCompatActivity {
          */
 
 //        Call<User> updateUserProfile = apiInterface.updateUserProfile(jsonObject);
-        Call<User> updateUserProfile = apiInterface.updateUserProfile(jsonObject,
+        Call<User> updateUserProfile = apiInterface.updateUserProfile(JSONupdatedProfile,
                 "application/json",
                 "Bearer " + LoginActivity.token
         );
@@ -315,15 +324,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Profile Updated: " + response.body(), Toast.LENGTH_LONG).show();
 
-                    Log.d(TAG, "\n*****************************************");
-                    Log.d(TAG, "*****************************************");
-                    Log.d(TAG, "\n\n\n\t updateUserPRofile CALL seems to have been\n" +
-                            "SUCCESSFUL ::::::)))))) :\n\n");
-
-                    Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                    Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     getLoggedInUser();
-
                 }
             }
 
@@ -331,15 +332,6 @@ public class ViewProfileActivity extends AppCompatActivity {
             public void onFailure(Call<User> call, Throwable t) {
 //                progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-
-                Log.d(TAG, "\n*****************************************");
-                Log.d(TAG, "*****************************************");
-                Log.d(TAG, "\n\n\n\t updateUserPRofile CALL was\n" +
-                        "******NNNOOOOTTT  SUCCESSFUL aaaaaarrrrgggggg :\n\n");
-
-                Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                getLoggedInUser();
             }
         });
     }
