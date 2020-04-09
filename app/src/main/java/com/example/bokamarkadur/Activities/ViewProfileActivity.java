@@ -1,21 +1,27 @@
 package com.example.bokamarkadur.Activities;
 
-
+import android.Manifest;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.bokamarkadur.Activities.APIClient;
-import com.example.bokamarkadur.Activities.APIInterface;
 import com.example.bokamarkadur.Adapters.BooksAdapter;
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
@@ -32,14 +38,14 @@ import retrofit2.Response;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
-    // Tengjumst API Interface sem talar við bakendann okkar.
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     private Button updateProfile;
     private Button myReviews;
     private Button backToMenu;
-
+    String LoggedInUsername;
     String pUsername;
     public String ProfileUsername;
+    String TOKEN;
 
     TextView profileName;
     TextView profileInfo;
@@ -50,6 +56,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     User UserProfile;
     List<Book> usersBooks;
+    String LoggedInUser = "";
 
     private static final String TAG = "ViewProfileActivity";
 
@@ -60,7 +67,11 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         Log.d(TAG, "BBO -->> ViewProfileActivity onCreate: started.");
 
+//        getLoggedInUser();
         getLoggedInUser();
+//        getUserProfile();
+//        getAllBooks();
+//        getUsersBooks();
 
         getMyBooks();
 //        showUsersBooks();
@@ -69,8 +80,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         updateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Profile Updated!", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "\n\n\n\t\t Profile Updated !!!! \n\n\n");
+                Toast.makeText(getApplicationContext(), "BUTTON PUSHED", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "\n\n\n\t\t BUTTON PUSHED !!!! \n\n\n");
                 updateUserProfile();
             }
         });
@@ -79,7 +90,9 @@ public class ViewProfileActivity extends AppCompatActivity {
         myReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ReviewActivity.class));
+                Toast.makeText(getApplicationContext(), "Open My Reviews Activity", Toast.LENGTH_LONG).show();
+                Log.d(TAG, "\n\n\n\t\t Open My Reviews Activity !!!! \n\n\n");
+                updateUserProfile();
             }
         });
 
@@ -94,13 +107,19 @@ public class ViewProfileActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
+        // Tengjumst API Interface sem talar við bakendann okkar.
+
+        String loginToken = LoginActivity.token;
+        //String LI_User = apiInterface.getLoggedInUser((LoginActivity.token));
     }
 
     /**
      * BBO: Kóðinn hér fyrir neðan birtir prófíl fyrir viðkomandi notanda
      * 		sem ýtti á "My Profile" og opnaði þar með þetta Activity (ViewProfileActivity).
      */
-    // Show User's Profile Info
+
+
+    // Set info for User Profile
     private void showUserProfile(String name, String info, String email, String phonenumber, String username, String password){
 //  Eftir að undirbúa List<Book> álíka og gert í öðrum klösum, en þá verður línan fyrir ofan svona:
 //                              String password, String retypepassword, List<Book> usersBooks){
@@ -130,19 +149,32 @@ public class ViewProfileActivity extends AppCompatActivity {
     }
 
 
-    // Get currently logged in user.
     private void getLoggedInUser() {
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d("login", "\n\n\n BBO -->> Carried Over from MenuActivity?? ");
+        LoggedInUsername = getIntent().getStringExtra("LoggedInUser");
+        Log.d("login", "\n\n\t\t BBO -->> Username is: **" + LoggedInUsername + "** \n\n\n");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
 
         Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
         getLoggedInUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
 
-                // This is the username of the currently logged in user.
                 pUsername   = response.body().getUsername();
+                Log.d(TAG, "*****************************************");
+                Log.d(TAG, "*****************************************");
+                Log.d(TAG, "\n\n\n\t onResponse:" +
+                        "\n\n\t\t pUsername = response.body().getUsername(); *" + pUsername + "*\n\n");
+                Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-                // Fetch profile info for this logged in user.
                 getUserProfile(pUsername);
+                setLoggedInUsername(pUsername);
+
             }
 
             @Override
@@ -153,12 +185,34 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
 
         });
+        Log.d(TAG, "\n*****************************************");
+        Log.d(TAG, "*****************************************");
+        Log.d(TAG, "\n\n\n\t getLoggedInUser.enqueue(new Callback<User>():" +
+                "\n\n\t\t pUsername = response.body().getUsername(); *" + pUsername + "*\n\n");
+        Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
-
-    // Users' Profile is fetched from REST Backend.
+    private void setLoggedInUsername(String profileusername) {
+        ProfileUsername = profileusername;
+        Log.d(TAG, "\n*****************************************");
+        Log.d(TAG, "*****************************************");
+        Log.d(TAG, "\n\n\n\t setLoggedInUsername(String profileusername):" +
+                "\n\n\t\t pUsername = response.body().getUsername(); *" + ProfileUsername + "*\n\n");
+        Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    }
     private void getUserProfile(String profileusername) {
         ProfileUsername = profileusername;
+        Log.d(TAG, "\n***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d("login", "\n\n\n BBO -->> Carried Over from MenuActivity?? ");
+        LoggedInUsername = getIntent().getStringExtra("LoggedInUser");
+        Log.d("login", "\n\n\t\t BBO -->> LoggedInUsername: **"   + LoggedInUsername + "**" +
+                "\n\t\t BBO -->> ProfileUsername:  **"   + ProfileUsername + "**\n\n\n");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d("login","!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
 
         Call<User> getUserProfile = apiInterface.getUserProfile(ProfileUsername);
         getUserProfile.enqueue(new Callback<User>() {
@@ -172,6 +226,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                 String phonenumber  = UserProfile.getPhonenumber();
                 String username     = UserProfile.getUsername();
                 String password     = UserProfile.getPassword();
+                TOKEN               = UserProfile.getToken();
                 usersBooks          = UserProfile.getBooks();
 
                 Log.d(TAG, "\n*****************************************");
@@ -203,9 +258,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
     }
 
-    // If user pushes the "Update my info" button a @POST call is made to Backend
-    // to update user's profile information.
     private void updateUserProfile() {
+
         /**
          * Upplýsingar eru fengnar úr formi í layout og JsonObject búinn til út frá þeim
          */
@@ -223,15 +277,14 @@ public class ViewProfileActivity extends AppCompatActivity {
         String updateUsername       = uUsername.getText().toString();
         String updatePassword       = uPassword.getText().toString();
 
-        // Updated info in JSON form.
-        final JsonObject JSONupdatedProfile = new JsonObject();
+        final JsonObject jsonObject = new JsonObject();
 
-        JSONupdatedProfile.addProperty("name", updateName);
-        JSONupdatedProfile.addProperty("info", updateInfo);
-        JSONupdatedProfile.addProperty("email", updateEmail);
-        JSONupdatedProfile.addProperty("phonenumber", updatePhonenumber);
-        JSONupdatedProfile.addProperty("username", updateUsername);
-        JSONupdatedProfile.addProperty("password", updatePassword);
+        jsonObject.addProperty("name", updateName);
+        jsonObject.addProperty("info", updateInfo);
+        jsonObject.addProperty("email", updateEmail);
+        jsonObject.addProperty("phonenumber", updatePhonenumber);
+        jsonObject.addProperty("username", updateUsername);
+        jsonObject.addProperty("password", updatePassword);
 
         Log.d(TAG, "\n*****************************************");
         Log.d(TAG, "*****************************************");
@@ -245,19 +298,32 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        /**
+         * JsonObjectinn er svo notaður til að búa til nýjan User í gagnagrunninn.
+         */
 
-        // A call is made to update backend
-        Call<User> updateUserProfile = apiInterface.updateUserProfile(JSONupdatedProfile,
+//        Call<User> updateUserProfile = apiInterface.updateUserProfile(jsonObject);
+        Call<User> updateUserProfile = apiInterface.updateUserProfile(jsonObject,
                 "application/json",
-                "Bearer " + LoginActivity.token);
+                "Bearer " + LoginActivity.token
+        );
         updateUserProfile.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-
+                //hiding progress dialog
+//                progressDialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "Profile Updated: " + response.body(), Toast.LENGTH_LONG).show();
 
+                    Log.d(TAG, "\n*****************************************");
+                    Log.d(TAG, "*****************************************");
+                    Log.d(TAG, "\n\n\n\t updateUserPRofile CALL seems to have been\n" +
+                            "SUCCESSFUL ::::::)))))) :\n\n");
+
+                    Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     getLoggedInUser();
+
                 }
             }
 
@@ -265,14 +331,28 @@ public class ViewProfileActivity extends AppCompatActivity {
             public void onFailure(Call<User> call, Throwable t) {
 //                progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+
+                Log.d(TAG, "\n*****************************************");
+                Log.d(TAG, "*****************************************");
+                Log.d(TAG, "\n\n\n\t updateUserPRofile CALL was\n" +
+                        "******NNNOOOOTTT  SUCCESSFUL aaaaaarrrrgggggg :\n\n");
+
+                Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                getLoggedInUser();
             }
         });
     }
 
     public void getMyBooks() {
-
+        Log.d(TAG, "\n\n*****************************************");
+        Log.d(TAG, "*****************************************");
+        Log.d(TAG, "\n\n\n\t getMyBooks():" +
+                "\n\n\t\t pUsername = response.body().getUsername(); ******" + ProfileUsername + "*****\n\n");
+        Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Log.d(TAG, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n");
         /**
-         @GET call that returns list of Books this (logged in) user has requested or put up for sale.
+         GET kall sem skilar lista af bókum notanda.
          **/
         // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
         final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
@@ -302,13 +382,27 @@ public class ViewProfileActivity extends AppCompatActivity {
 
     public void showUsersBooks() {
         /**
-         Reynt að setja bækur í BooksAdapter útfrá User.getBooks() en það virkar ekki enn sem komið er.
+         GET kall sem skilar lista af bókum notanda.
          **/
         // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
         final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
         UsersBooksrecyclerView.setLayoutManager(new LinearLayoutManager(this));
         UsersBooksrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "\n\n\n\n \t\t\t usersBooks -> into adapter = *" + usersBooks + "*\n\n\n\n" );
+        UsersBooksrecyclerView.setAdapter(new BooksAdapter(usersBooks, R.layout.list_item, getApplicationContext()));
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
+        Log.d(TAG, "***********************************************");
     }
 
     private void hideSystemUI() {
