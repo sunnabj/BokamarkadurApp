@@ -83,7 +83,9 @@
                         android:id="@+id/edtName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:hint="@string/name"
+                        android:inputType="textPersonName"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -95,7 +97,9 @@
                         android:id="@+id/edtEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -107,7 +111,9 @@
                         android:id="@+id/edtPhone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:hint="@string/phone"
+                        android:inputType="phone" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -119,7 +125,9 @@
                         android:id="@+id/edtUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:hint="@string/username"
+                        android:inputType="textPersonName" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -131,21 +139,23 @@
                         android:id="@+id/edtPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:hint="@string/password"
+                        android:inputType="textPassword" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Re-Type Password: "
+                        android:text="Confirm Password: "
                         android:textColor="@color/primaryTextColor" />
 
                     <EditText
                         android:id="@+id/edtReTypepassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:hint="@string/confirm_password"
+                        android:inputType="textPassword" />
 
 
                     <Button
