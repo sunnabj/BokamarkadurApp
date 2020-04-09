@@ -76,9 +76,12 @@ public class ViewProfileActivity extends AppCompatActivity {
         myReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Open My Reviews Activity", Toast.LENGTH_LONG).show();
-                Log.d(TAG, "\n\n\n\t\t Open My Reviews Activity !!!! \n\n\n");
-                updateUserProfile();
+
+                Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
+                intent.putExtra("username", ProfileUsername);
+                startActivity(intent);
+
+                //startActivity(new Intent(getApplicationContext(), ReviewActivity.class));
             }
         });
 

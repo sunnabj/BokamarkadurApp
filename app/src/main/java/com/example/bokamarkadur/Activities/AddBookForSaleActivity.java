@@ -248,6 +248,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     public void openMainActivity() {
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
 
     }
     private void hideSystemUI() {
