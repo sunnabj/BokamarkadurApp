@@ -12,6 +12,8 @@
 
     <string name="edit_book_info">Edit Book Info</string>
     <string name="my_books">My Books</string>
+    <string name="newest_books">Newest Books</string>
+    <string name="book_list">Book List</string>
 
     <!-- _____ "My Profile" - ViewProfileActivity   ______________________________ -->
     <string name="_my_messages">My Messages</string>

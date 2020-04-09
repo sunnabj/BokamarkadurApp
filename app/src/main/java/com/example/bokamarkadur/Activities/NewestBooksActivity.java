@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,68 +21,59 @@ import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AllBooksActivity extends AppCompatActivity {
+public class NewestBooksActivity extends AppCompatActivity {
 
-    // Used for debugging
+    // Notað fyrir debugging
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    // Adapter to display list of books.
     BooksAdapter booksAdapter;
-
-    // Connection to backend created.
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+    //private Button backToMenu;
 
-    // Connection to layout.
-    // Header text set to match list type.
-    // Call function that displays book list.
-    // Bottom navigation setup.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_books);
 
-        // Set the header for BookListView = "All Books".
         TextView bookListView = findViewById(R.id.view_book_list);
-        bookListView.setText("All Books:");
+        bookListView.setText("Newest Books:");
 
         // Hide System UI for best experience
         hideSystemUI();
 
-        // This function creates a RecyclerView to display the book list.
-        ViewAllBooks();
+        ViewNewestBooks();
 
-        // This function sets up and displays the bottom navigation.
         setBottomNavigation();
 
     }
 
-    // Set up a RecyclerView and makes a Get Call to backend
-    // to fetch all listed books.
-    public void ViewAllBooks() {
+    public void ViewNewestBooks() {
         final RecyclerView recyclerView = findViewById(R.id.books_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
         /**
-         GET call that returns list of all listed books.
+         GET kall sem skilar lista með 10 nýjustu bókunum.
          **/
-        Call<BookList> getAllBooks = apiInterface.getBooks();
-        getAllBooks.enqueue(new Callback<BookList>() {
+        Call<BookList> getNewestBooks = apiInterface.getNewestBooks();
+        getNewestBooks.enqueue(new Callback<BookList>() {
             @Override
             public void onResponse(Call<BookList> call, Response<BookList> response) {
-                List<Book> books = response.body().getBooks();
+                List<Book> NewestBooks = response.body().getNewestBooks();
 
-                booksAdapter = new BooksAdapter(books, R.layout.list_item, getApplicationContext());
+                booksAdapter = new BooksAdapter(NewestBooks, R.layout.list_item, getApplicationContext());
 
                 recyclerView.setAdapter(booksAdapter);
 
                 // TODO: Debug virkni, má eyða síðar meir.
-                Log.d(TAG, "Number of books received: " + books.size());
+                Log.d(TAG, "Number of newest books received: " + NewestBooks.size());
             }
 
             @Override
@@ -93,14 +85,15 @@ public class AllBooksActivity extends AppCompatActivity {
         });
     }
 
-    // Take user to the LoginActivity.
     public void openLoginActivity() {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
-    // Create a search bar in top navigation.
-    // @param menu
+    /**
+     * Leitin í all books, birtist efst á skjá (Top Nav).
+     * @param menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -122,8 +115,6 @@ public class AllBooksActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    // This function sets up connections to other activities
-    // and displays the bottom navigation.
     public void setBottomNavigation() {
         /**+
          *  Bottom navigation
