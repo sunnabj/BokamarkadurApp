@@ -4,12 +4,14 @@ package com.example.bokamarkadur.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +22,7 @@ import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -31,7 +34,7 @@ import retrofit2.Response;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
-    // Tengjumst API Interface sem talar við bakendann okkar.
+    // Connection to backend created.
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     private Button updateProfile;
     private Button myReviews;
@@ -57,53 +60,36 @@ public class ViewProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
 
-        Log.d(TAG, "BBO -->> ViewProfileActivity onCreate: started.");
 
+        // Function that fetches the logged in user from backend
+        // and nested function that retrieves User's info and displays it
+        // where user can make changes to his information.
         getLoggedInUser();
 
+
+        // This fetches all of user's books and displays them in a list.
         getMyBooks();
-//        showUsersBooks();
 
-        updateProfile = (Button) findViewById(R.id.updateProfile);
-        updateProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateUserProfile();
-            }
-        });
 
-        myReviews = (Button) findViewById(R.id.myReviews);
-        myReviews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        // This connects buttons for activity.
+        connectButtons();
 
-                Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
-                intent.putExtra("username", ProfileUsername);
-                startActivity(intent);
-
-                //startActivity(new Intent(getApplicationContext(), ReviewActivity.class));
-            }
-        });
-
-        backToMenu = (Button) findViewById(R.id.backToMenu);
-        backToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
-            }
-        });
 
         // Hide System UI for best experience
         hideSystemUI();
 
+//        // Unused, non-working function (see description by
+//        // function's definition.
+//        showUsersBooks();
     }
 
-    /**
-     * BBO: Kóðinn hér fyrir neðan birtir prófíl fyrir viðkomandi notanda
-     * 		sem ýtti á "My Profile" og opnaði þar með þetta Activity (ViewProfileActivity).
-     */
     // Show User's Profile Info
-    private void showUserProfile(String name, String info, String email, String phonenumber, String username, String password){
+    private void showUserProfile(String name,
+                                 String info,
+                                 String email,
+                                 String phonenumber,
+                                 String username,
+                                 String password){
 //  Eftir að undirbúa List<Book> álíka og gert í öðrum klösum, en þá verður línan fyrir ofan svona:
 //                              String password, String retypepassword, List<Book> usersBooks){
 
@@ -158,6 +144,45 @@ public class ViewProfileActivity extends AppCompatActivity {
     }
 
 
+    // Buttons for
+    //      "Update My Info",
+    //      "My Reviews" and
+    //      "Back To Menu"
+    // connected to appropriate activities.
+    private void connectButtons() {
+
+        // When user pushes "Update My Info" button
+        // updateUsersProfile() is called.
+        updateProfile = (Button) findViewById(R.id.updateProfile);
+        updateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUserProfile();
+            }
+        });
+
+        // When user pushes "My Review" button
+        // user is taken to MyReviewsActivity.
+        myReviews = (Button) findViewById(R.id.myReviews);
+        myReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
+                intent.putExtra("username", ProfileUsername);
+                startActivity(intent);
+            }
+        });
+
+        backToMenu = (Button) findViewById(R.id.backToMenu);
+        backToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+            }
+        });
+    }
+
+
     // Users' Profile is fetched from REST Backend.
     private void getUserProfile(String profileusername) {
         ProfileUsername = profileusername;
@@ -201,6 +226,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
     }
+
 
     // If user pushes the "Update my info" button a @POST call is made to Backend
     // to update user's profile information.
@@ -277,12 +303,14 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
     }
 
+
+    // GET CALL to backend that fetches all books that
+    // this user has added for sale or made requests for.
     public void getMyBooks() {
 
         /**
          @GET call that returns list of Books this (logged in) user has requested or put up for sale.
          **/
-        // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
         final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
         UsersBooksrecyclerView.setLayoutManager(new LinearLayoutManager(this));
         UsersBooksrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
@@ -308,7 +336,12 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
     }
 
-    public void showUsersBooks() {
+
+    // An unused function that is supposed to get users books
+    // by setting UsersBooks = response.body().getUser().getBooks()
+    // when fetching logged in user in getLoggedInUser() and
+    // getUserProfile() functions, but it is not working.
+    private void showUsersBooks() {
         /**
          Reynt að setja bækur í BooksAdapter útfrá User.getBooks() en það virkar ekki enn sem komið er.
          **/
@@ -332,6 +365,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         Log.d(TAG, "***********************************************");
         Log.d(TAG, "***********************************************");
     }
+
 
     private void hideSystemUI() {
         // Enables regular immersive mode.

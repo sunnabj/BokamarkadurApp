@@ -2,10 +2,10 @@ package com.example.bokamarkadur.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,7 +53,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     // Connections made for menu cards to appropriate actvities.
-    public void connectMenuCards() {
+    private void connectMenuCards() {
         // View All Listed Books    ---         Card 1
         //              --> Location in MENU:   Row 1 / Column 1
         //
@@ -143,26 +143,26 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     // Go back to homescreen.
-    public void openMainActivity() {
+    private void openMainActivity() {
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
     // Open AboutUsActivity where the user
     // can read about the developers.
-    public void openAboutUsActivity() {
+    private void openAboutUsActivity() {
         startActivity(new Intent(getApplicationContext(), AboutusActivity.class));
     }
 
     // Take user to the LoginActivity.
-    public void openLoginActivity() {
+    private void openLoginActivity() {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
     // Take user AddBookforsaleActivity where he
     // can add books that he wants to sell.
-    public void AddbookforsaleActivity() {
+    private void AddbookforsaleActivity() {
         if (LoginActivity.token == null) {
             openLoginActivity();
             Toast.makeText(getApplicationContext(), "You must logged in to request a book", Toast.LENGTH_LONG).show();
@@ -173,7 +173,7 @@ public class MenuActivity extends AppCompatActivity {
 
     // Take user RequestBookActivity where he
     // can request books that he wants.
-    public void openRequestBookActivity() {
+    private void openRequestBookActivity() {
         if (LoginActivity.token == null) {
             openLoginActivity();
             Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
@@ -183,23 +183,23 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     // Take user to a list of all listed books.
-    public void openAllBooksActivity() {
-        startActivity(new Intent(getApplicationContext(), AllBooksActivity.class));
+    private void openAllBooksActivity() {
+        startActivity(new Intent(getApplicationContext(), ViewBookListActivity.class));
     }
 
     // Take user to a list of the newest books.
-    public void openNewestBooksActivity() {
+    private void openNewestBooksActivity() {
         startActivity(new Intent(getApplicationContext(), NewestBooksActivity.class));
     }
 
     // Take user to view his profile.
-    public void openViewProfileActivity() {
+    private void openViewProfileActivity() {
         startActivity(new Intent(getApplicationContext(), ViewProfileActivity.class));
     }
 
     // This function sets up connections to other activities
     // and displays the bottom navigation.
-    public void setBottomNavigation() {
+    private void setBottomNavigation() {
         /**+
          *  Bottom navigation
          */

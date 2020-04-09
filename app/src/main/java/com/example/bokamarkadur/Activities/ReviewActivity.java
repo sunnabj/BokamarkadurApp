@@ -61,7 +61,7 @@ public class ReviewActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()){
                     case R.id.dashboard:
                         startActivity(new Intent(getApplicationContext(),
-                                AllBooksActivity.class));
+                                ViewBookListActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.home:

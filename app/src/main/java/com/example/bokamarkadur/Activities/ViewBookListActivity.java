@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AllBooksActivity extends AppCompatActivity {
+public class ViewBookListActivity extends AppCompatActivity {
 
     // Used for debugging
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -44,7 +44,7 @@ public class AllBooksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_books);
+        setContentView(R.layout.activity_view_book_list);
 
         // Set the header for BookListView = "All Books".
         TextView bookListView = findViewById(R.id.view_book_list);
@@ -63,7 +63,7 @@ public class AllBooksActivity extends AppCompatActivity {
 
     // Set up a RecyclerView and makes a Get Call to backend
     // to fetch all listed books.
-    public void ViewAllBooks() {
+    private void ViewAllBooks() {
         final RecyclerView recyclerView = findViewById(R.id.books_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -94,7 +94,7 @@ public class AllBooksActivity extends AppCompatActivity {
     }
 
     // Take user to the LoginActivity.
-    public void openLoginActivity() {
+    private void openLoginActivity() {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
@@ -124,7 +124,7 @@ public class AllBooksActivity extends AppCompatActivity {
 
     // This function sets up connections to other activities
     // and displays the bottom navigation.
-    public void setBottomNavigation() {
+    private void setBottomNavigation() {
         /**+
          *  Bottom navigation
          */

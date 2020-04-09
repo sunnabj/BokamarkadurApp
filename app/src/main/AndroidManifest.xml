@@ -38,7 +38,7 @@
             android:name=".Activities.ViewBookActivity"
             android:theme="@style/AboutusTheme" />
         <activity
-            android:name=".Activities.AllBooksActivity"
+            android:name=".Activities.ViewBookListActivity"
             android:theme="@style/AllBookTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity

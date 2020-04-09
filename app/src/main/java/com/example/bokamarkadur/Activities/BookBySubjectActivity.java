@@ -40,7 +40,7 @@ public class BookBySubjectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_books);
+        setContentView(R.layout.activity_view_book_list);
 
         // Hide System UI for best experience
         hideSystemUI();
@@ -101,7 +101,7 @@ public class BookBySubjectActivity extends AppCompatActivity {
 
     // This function sets up connections to other activities
     // and displays the bottom navigation.
-    public void setBottomNavigation() {
+    private void setBottomNavigation() {
         /**+
          *  Bottom navigation
          */

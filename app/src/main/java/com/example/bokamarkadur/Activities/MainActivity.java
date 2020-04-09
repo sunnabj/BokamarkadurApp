@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     switch (menuItem.getItemId()){
                         case R.id.dashboard:
                             startActivity(new Intent(getApplicationContext(),
-                                    AllBooksActivity.class));
+                                    ViewBookListActivity.class));
                             overridePendingTransition(0,0);
                             return true;
                         case R.id.home:

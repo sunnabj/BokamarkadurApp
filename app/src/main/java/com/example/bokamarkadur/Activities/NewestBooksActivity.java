@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +39,7 @@ public class NewestBooksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_books);
+        setContentView(R.layout.activity_view_book_list);
 
         TextView bookListView = findViewById(R.id.view_book_list);
         bookListView.setText("Newest Books:");
