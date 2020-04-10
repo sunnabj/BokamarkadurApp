@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,14 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.User;
-import com.example.bokamarkadur.POJO.UserResponse;
 import com.example.bokamarkadur.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -58,45 +54,11 @@ public class ViewBookActivity extends AppCompatActivity {
         }
         Log.d(TAG, "onCreate: started.");
 
-        apiInterface = APIClient.getClient().create(APIInterface.class);
-
-        /**
-         * Ná í username fyrir loggaðan inn user til að geta borið saman við notandann sem á
-         * bókina og þannig vita hvort við eigum að birta Delete book hnappinn
-         * TODO: Aldrei farið inn í onResponse eða onFailure!
-         */
-        if (LoginActivity.token != null) {
-            Log.d(TAG, "Token er ekki null");
-            Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
-
-            getLoggedInUser.enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    Log.d(TAG, "Við fórum í onResponse");
-                    // This is the username of the currently logged in user.
-                    loggedInUsername = response.body().getUsername();
-                    Log.d(TAG, "Loggedin user í kallinu: " + loggedInUsername);
-                }
-
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    // Log error here since request failed
-                    Log.d(TAG, "Við fórum í onFailure");
-                    Log.e(TAG, t.toString());
-                    call.cancel();
-                }
-
-            });
-        } else {
-            loggedInUsername = null;
-        }
-
-        Log.d(TAG, "Loggedin user í onCreate: " + loggedInUsername);
-
         // Hide System UI for best experience
         hideSystemUI();
 
-        getIncomingIntent();
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+
 
         /**
          * A text can be written and a button then pushed at the bottom of the page which sends
@@ -135,7 +97,38 @@ public class ViewBookActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        /**
+         * Retrieves the username of the currently logged in user, so we can compare it to the
+         * username of the user that added the book we are viewing, so we can know if we're
+         * supposed to show the Delete book button.
+         */
+        if (LoginActivity.token != null) {
+            Log.d(TAG, "Token er ekki null");
+            Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
+
+            getLoggedInUser.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    // This is the username of the currently logged in user.
+                    loggedInUsername = response.body().getUsername();
+                    getIncomingIntent(loggedInUsername);
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e(TAG, t.toString());
+                    call.cancel();
+                }
+            });
+        }
+        else {
+            getIncomingIntent(loggedInUsername);
+        }
     }
+
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(ViewBookActivity.this)
                 .setMessage(message)
@@ -145,7 +138,7 @@ public class ViewBookActivity extends AppCompatActivity {
                 .show();
     }
     /**
-    * Sms-ið er sent til þess sem á/biður um bókina.
+    * The SMS is sent to the person that is selling or requesting the book.
      */
     public void sendMySMS() {
 
@@ -171,10 +164,10 @@ public class ViewBookActivity extends AppCompatActivity {
     }
 
     /**
-     * Kóðinn hér fyrir neðan birtir þá bók sem notandi ýtti á til að komast inn í þetta Activity.
+     * Retrieves information about the book the user pushed to get into this Activity.
      */
 
-    private void getIncomingIntent(){
+    private void getIncomingIntent(String loggedInUsername){
 
         // TODO: Fá NoImage til að birtast.
 
@@ -191,7 +184,6 @@ public class ViewBookActivity extends AppCompatActivity {
             String user = getIntent().getStringExtra("bookUser");
             String image = getIntent().getStringExtra("bookImage");
             String phone = getIntent().getStringExtra("phone");
-            // Id komið inn
             long id = getIntent().getLongExtra("id", 0);
 
             if (condition == null) {
@@ -204,10 +196,12 @@ public class ViewBookActivity extends AppCompatActivity {
 
             if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
                 this.phone = phone;
-                setBookInfoFS(title, author, edition, condition, price, subject, status, user, image, phone, id);
+                setBookInfoFS(title, author, edition, condition, price, subject, status, user,
+                        image, phone, id, loggedInUsername);
             } else {
                 this.phone = phone;
-                setBookInfoR(title, author, edition, subject, status, user, image, phone, id);
+                setBookInfoR(title, author, edition, subject, status, user, image, phone, id,
+                        loggedInUsername);
             }
 
         }
@@ -216,7 +210,7 @@ public class ViewBookActivity extends AppCompatActivity {
     // Set info for books that are for sale
     private void setBookInfoFS(String title, String author, int edition, String condition,
                              int price, String subject, String status, final String user,
-                               String image, String phone, final long id){
+                               String image, String phone, final long id, String loggedInUsername){
         Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
 
         TextView bookTitle = findViewById(R.id.view_book_title);
@@ -269,14 +263,10 @@ public class ViewBookActivity extends AppCompatActivity {
             }
         });
 
-        Log.d(TAG, "Loggedin user: " + loggedInUsername);
-
         /**
-         * Ef notandi er loggaður inn og hann er sá sami og á bókina sem er verið að skoða,
-         * birtist takki sem er hægt að ýta á til að eyða bók.
-         * TODO: Veit ekkert hvort þetta virki því að loggedInUser er alltaf null :/
+         * If a user is logged in and he is looking at a book that he himself added for sale or
+         * requested, a button appears that when pushed allows the user to delete that book.
          */
-
         if (LoginActivity.token != null && user.equals(loggedInUsername)) {
             Button deleteBook = findViewById(R.id.bt_delete_book);
             deleteBook.setText("Delete this book");
@@ -319,7 +309,7 @@ public class ViewBookActivity extends AppCompatActivity {
     // Set info for books that are requested
     private void setBookInfoR(String title, String author, int edition, String subject,
                                String status, final String user, String image, String phone,
-                              final long id){
+                              final long id, String loggedInUsername){
         Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
 
         TextView bookTitle = findViewById(R.id.view_book_title);
@@ -366,7 +356,9 @@ public class ViewBookActivity extends AppCompatActivity {
             }
         });
 
-        if (LoginActivity.token != null && loggedInUsername.equals(user)) {
+        Log.d(TAG, "Loggedin user í requested: " + loggedInUsername);
+
+        if (LoginActivity.token != null && user.equals(loggedInUsername)) {
             Button deleteBook = findViewById(R.id.bt_delete_book);
             deleteBook.setText("Delete this book");
             deleteBook.setOnClickListener(new View.OnClickListener() {

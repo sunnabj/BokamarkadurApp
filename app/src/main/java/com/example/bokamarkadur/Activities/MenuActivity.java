@@ -204,12 +204,15 @@ public class MenuActivity extends AppCompatActivity {
          *  Bottom navigation
          */
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.dashboard);
+        bottomNavigationView.setSelectedItemId(R.id.about);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(),
+                                AllBooksActivity.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(),

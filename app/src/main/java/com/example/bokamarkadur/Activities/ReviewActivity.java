@@ -180,20 +180,12 @@ public class ReviewActivity extends AppCompatActivity {
 
             }
         });
-/*
-        backToMenu = (Button) findViewById(R.id.backToMenu);
-        backToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
-            }
-        });
-*/
+
     }
 
     /**
      *
-     * @return the username of the user that cane from the userinfo activity.
+     * @return the username of the user that came from the userinfo activity.
      */
     private String getIncomingIntent(){
 
