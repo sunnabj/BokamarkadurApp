@@ -33,6 +33,8 @@
     <string name="mp_my_profile">My Profile</string>
     <string name="mp_button_text">Update My Info</string>
     <string name="mp_button_menu">Back To Menu</string>
+    <string name="mr_received_reviews">Received Reviews</string>
+    <string name="mr_written_reviews">Written Reviews</string>
 
     <!-- _____ Menu - MenuActivity   ___________________________________________  -->
     <string name="menu_card_1">All Books</string>

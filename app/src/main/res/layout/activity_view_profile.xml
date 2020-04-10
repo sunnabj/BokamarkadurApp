@@ -145,9 +145,7 @@
                             style="@style/headerTextPrimary"
                             android:text="@string/my_books"
                             android:textSize="30sp" />
-                        <!--                            android:layout_marginTop="@dimen/loginViewsMargin"/>-->
 
-                        <!--                        Showing list of users Books:     -->
                         <TextView
                             android:id="@+id/no_books"
                             style="@style/headerTextPrimary"
@@ -168,7 +166,9 @@
 
                         </TableLayout>
 
+
                     </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"

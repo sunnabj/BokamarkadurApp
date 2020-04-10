@@ -165,7 +165,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         myReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
+                Intent intent = new Intent(ViewProfileActivity.this, ViewMyReviewsActivity.class);
                 intent.putExtra("username", ProfileUsername);
                 startActivity(intent);
             }
