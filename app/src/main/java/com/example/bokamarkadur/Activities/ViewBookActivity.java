@@ -74,7 +74,7 @@ public class ViewBookActivity extends AppCompatActivity {
                 public void onResponse(Call<User> call, Response<User> response) {
                     Log.d(TAG, "Við fórum í onResponse");
                     // This is the username of the currently logged in user.
-                    loggedInUsername = response.body().getUser().getUsername();
+                    loggedInUsername = response.body().getUsername();
                     Log.d(TAG, "Loggedin user í kallinu: " + loggedInUsername);
                 }
 
@@ -277,7 +277,7 @@ public class ViewBookActivity extends AppCompatActivity {
          * TODO: Veit ekkert hvort þetta virki því að loggedInUser er alltaf null :/
          */
 
-        if (LoginActivity.token != null && loggedInUsername.equals(user)) {
+        if (LoginActivity.token != null && user.equals(loggedInUsername)) {
             Button deleteBook = findViewById(R.id.bt_delete_book);
             deleteBook.setText("Delete this book");
             deleteBook.setOnClickListener(new View.OnClickListener() {
