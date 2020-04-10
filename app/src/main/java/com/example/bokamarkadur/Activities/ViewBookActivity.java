@@ -21,12 +21,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ViewBookActivity extends AppCompatActivity {
 
@@ -37,6 +42,10 @@ public class ViewBookActivity extends AppCompatActivity {
     private EditText phoneEditText;
     private EditText messageEditText;
     private String phone;
+    public String loggedInUsername;
+
+    APIInterface apiInterface;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +56,35 @@ public class ViewBookActivity extends AppCompatActivity {
             setContentView(R.layout.activity_view_requested_book);
         }
         Log.d(TAG, "onCreate: started.");
+
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+
+        if (LoginActivity.token != null) {
+            Log.d(TAG, "Token er ekki null");
+            Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
+            getLoggedInUser.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    Log.d(TAG, "Við fórum í onResponse");
+                    // This is the username of the currently logged in user.
+                    loggedInUsername = response.body().getUsername();
+                    Log.d(TAG, "Loggedin user í kallinu: " + loggedInUsername);
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.d(TAG, "Við fórum í onFailure");
+                    Log.e(TAG, t.toString());
+                    call.cancel();
+                }
+
+            });
+        } else {
+            loggedInUsername = null;
+        }
+
+        Log.d(TAG, "Loggedin user í onCreate: " + loggedInUsername);
 
         // Hide System UI for best experience
         hideSystemUI();
@@ -146,6 +184,7 @@ public class ViewBookActivity extends AppCompatActivity {
             String user = getIntent().getStringExtra("bookUser");
             String image = getIntent().getStringExtra("bookImage");
             String phone = getIntent().getStringExtra("phone");
+            long id = getIntent().getLongExtra("id", 0);
 
             if (condition == null) {
                 condition = "Unknown";
@@ -157,10 +196,10 @@ public class ViewBookActivity extends AppCompatActivity {
 
             if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
                 this.phone = phone;
-                setBookInfoFS(title, author, edition, condition, price, subject, status, user, image, phone);
+                setBookInfoFS(title, author, edition, condition, price, subject, status, user, image, phone, id);
             } else {
                 this.phone = phone;
-                setBookInfoR(title, author, edition, subject, status, user, image, phone);
+                setBookInfoR(title, author, edition, subject, status, user, image, phone, id);
             }
 
         }
@@ -168,7 +207,8 @@ public class ViewBookActivity extends AppCompatActivity {
 
     // Set info for books that are for sale
     private void setBookInfoFS(String title, String author, int edition, String condition,
-                             int price, String subject, String status, final String user, String image, String phone){
+                             int price, String subject, String status, final String user,
+                               String image, String phone, final long id){
         Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
 
         TextView bookTitle = findViewById(R.id.view_book_title);
@@ -195,10 +235,6 @@ public class ViewBookActivity extends AppCompatActivity {
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
 
-        //TextView phoneUser = findViewById(R.id.view_phone);
-        //phoneUser.setText("Phone number: " + phone);
-
-        Log.d("Tag", "asdasd"+phone);
 
         /**
          * Listener on a button that opens an activity with information
@@ -225,6 +261,42 @@ public class ViewBookActivity extends AppCompatActivity {
             }
         });
 
+        Log.d(TAG, "Loggedin user: " + loggedInUsername);
+
+        if (LoginActivity.token != null && loggedInUsername.equals(user)) {
+            Button deleteBook = findViewById(R.id.bt_delete_book);
+            deleteBook.setText("Delete this book");
+            deleteBook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Call<Book> deleteBook = apiInterface.deleteBook(id, "Bearer " +
+                            LoginActivity.token);
+                    deleteBook.enqueue(new Callback<Book>() {
+                        @Override
+                        public void onResponse(Call<Book> call, Response<Book> response) {
+
+                            Log.d("onResponse: ", String.valueOf(response.body()));
+                            if (response.isSuccessful()) {
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                Log.d("Success: ", "The book has been removed from the Book Market.");
+                            } else {
+                                try {
+                                    Log.d("error", response.errorBody().string());
+                                } catch (Exception e) {
+                                    Log.d("error: ", e.getMessage());
+                                }
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Book> call, Throwable t) {
+                            Log.e(TAG, t.toString());
+                            call.cancel();
+                        }
+                    });
+                }
+            });
+        }
+
 
         ImageView bookImage = findViewById(R.id.view_book_image);
         Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(bookImage);
@@ -232,7 +304,8 @@ public class ViewBookActivity extends AppCompatActivity {
 
     // Set info for books that are requested
     private void setBookInfoR(String title, String author, int edition, String subject,
-                               String status, final String user, String image, String phone){
+                               String status, final String user, String image, String phone,
+                              final long id){
         Log.d(TAG, "setBookInfo: setting the title and author to widgets.");
 
         TextView bookTitle = findViewById(R.id.view_book_title);
@@ -253,10 +326,6 @@ public class ViewBookActivity extends AppCompatActivity {
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
 
-        //TextView phoneUser = findViewById(R.id.view_phone);
-        //phoneUser.setText("Phone number: "+phone);
-
-        Log.d("Tag", "asdasd"+phone);
 
         /**
          * Listener á takka sem opnar activity með upplýsingum
@@ -274,6 +343,40 @@ public class ViewBookActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if (LoginActivity.token != null && loggedInUsername.equals(user)) {
+            Button deleteBook = findViewById(R.id.bt_delete_book);
+            deleteBook.setText("Delete this book");
+            deleteBook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Call<Book> deleteBook = apiInterface.deleteBook(id, "Bearer " +
+                            LoginActivity.token);
+                    deleteBook.enqueue(new Callback<Book>() {
+                        @Override
+                        public void onResponse(Call<Book> call, Response<Book> response) {
+
+                            Log.d("onResponse: ", String.valueOf(response.body()));
+                            if (response.isSuccessful()) {
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                Log.d("Success: ", "The book has been removed from the Book Market.");
+                            } else {
+                                try {
+                                    Log.d("error", response.errorBody().string());
+                                } catch (Exception e) {
+                                    Log.d("error: ", e.getMessage());
+                                }
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Book> call, Throwable t) {
+                            Log.e(TAG, t.toString());
+                            call.cancel();
+                        }
+                    });
+                }
+            });
+        }
 
         ImageView bookImage = findViewById(R.id.view_book_image);
         Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(bookImage);

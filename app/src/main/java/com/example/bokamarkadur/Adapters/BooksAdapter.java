@@ -107,6 +107,7 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHold
                 intent.putExtra("bookUser", books.get(position).getUser().getUsername());
                 intent.putExtra("bookImage", books.get(position).getImage());
                 intent.putExtra("phone", books.get(position).getUser().getPhonenumber());
+                intent.putExtra("id", books.get(position).getId());
                 context.startActivity(intent);
             }
         });
