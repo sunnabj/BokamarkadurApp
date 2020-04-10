@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,14 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.User;
-import com.example.bokamarkadur.POJO.UserResponse;
 import com.example.bokamarkadur.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -74,7 +70,7 @@ public class ViewBookActivity extends AppCompatActivity {
                 public void onResponse(Call<User> call, Response<User> response) {
                     Log.d(TAG, "Við fórum í onResponse");
                     // This is the username of the currently logged in user.
-                    loggedInUsername = response.body().getUser().getUsername();
+                    loggedInUsername = response.body().getUsername();
                     Log.d(TAG, "Loggedin user í kallinu: " + loggedInUsername);
                 }
 
@@ -277,7 +273,7 @@ public class ViewBookActivity extends AppCompatActivity {
          * TODO: Veit ekkert hvort þetta virki því að loggedInUser er alltaf null :/
          */
 
-        if (LoginActivity.token != null && loggedInUsername.equals(user)) {
+        if (LoginActivity.token != null && user.equals(loggedInUsername)) { // virka ekki með loggedInUsername.equals(user) :D
             Button deleteBook = findViewById(R.id.bt_delete_book);
             deleteBook.setText("Delete this book");
             deleteBook.setOnClickListener(new View.OnClickListener() {
