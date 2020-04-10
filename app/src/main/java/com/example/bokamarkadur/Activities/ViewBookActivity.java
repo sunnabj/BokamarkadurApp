@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.User;
+import com.example.bokamarkadur.POJO.UserResponse;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
@@ -59,15 +60,21 @@ public class ViewBookActivity extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
+        /**
+         * Ná í username fyrir loggaðan inn user til að geta borið saman við notandann sem á
+         * bókina og þannig vita hvort við eigum að birta Delete book hnappinn
+         * TODO: Aldrei farið inn í onResponse eða onFailure!
+         */
         if (LoginActivity.token != null) {
             Log.d(TAG, "Token er ekki null");
             Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
+
             getLoggedInUser.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     Log.d(TAG, "Við fórum í onResponse");
                     // This is the username of the currently logged in user.
-                    loggedInUsername = response.body().getUsername();
+                    loggedInUsername = response.body().getUser().getUsername();
                     Log.d(TAG, "Loggedin user í kallinu: " + loggedInUsername);
                 }
 
@@ -184,6 +191,7 @@ public class ViewBookActivity extends AppCompatActivity {
             String user = getIntent().getStringExtra("bookUser");
             String image = getIntent().getStringExtra("bookImage");
             String phone = getIntent().getStringExtra("phone");
+            // Id komið inn
             long id = getIntent().getLongExtra("id", 0);
 
             if (condition == null) {
@@ -263,6 +271,12 @@ public class ViewBookActivity extends AppCompatActivity {
 
         Log.d(TAG, "Loggedin user: " + loggedInUsername);
 
+        /**
+         * Ef notandi er loggaður inn og hann er sá sami og á bókina sem er verið að skoða,
+         * birtist takki sem er hægt að ýta á til að eyða bók.
+         * TODO: Veit ekkert hvort þetta virki því að loggedInUser er alltaf null :/
+         */
+
         if (LoginActivity.token != null && loggedInUsername.equals(user)) {
             Button deleteBook = findViewById(R.id.bt_delete_book);
             deleteBook.setText("Delete this book");
@@ -328,19 +342,27 @@ public class ViewBookActivity extends AppCompatActivity {
 
 
         /**
-         * Listener á takka sem opnar activity með upplýsingum
-         * um notandann sem setti bókina inn.
-         * Username er sent þangað með intent.
+         * Listener on a button that opens an activity with information
+         * about the user that added the book.
+         * Username is sent there by an intent.
+         * A user has to be logged in to be able to see the user's info.
          */
         Button viewUser = findViewById(R.id.bt_view_user);
-        //viewUser.setText("View information about " + user);
-        viewUser.setText("View " + user + "'s info");
+        viewUser.setText("  View " + user + "'s info");
         viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class); //eða bara this)
-                intent.putExtra("username", user); //þurfti að vera declared final til að vera accessible
-                startActivity(intent);
+
+                if (LoginActivity.token != null) {
+                    Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class);
+                    intent.putExtra("username", user); //þurfti að vera declared final til að vera accessible
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),
+                            "You have to be logged in to get information about or contact the user",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
 

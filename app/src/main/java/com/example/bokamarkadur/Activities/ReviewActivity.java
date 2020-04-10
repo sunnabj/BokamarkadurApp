@@ -18,6 +18,7 @@ import com.example.bokamarkadur.Adapters.ReviewsAdapter;
 import com.example.bokamarkadur.POJO.Review;
 import com.example.bokamarkadur.POJO.ReviewsResponse;
 import com.example.bokamarkadur.POJO.User;
+import com.example.bokamarkadur.POJO.UserResponse;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
