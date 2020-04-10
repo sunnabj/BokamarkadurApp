@@ -82,6 +82,13 @@ public class LoginActivity extends AppCompatActivity {
         loginUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+
+                Log.d("LoginResponse", String.valueOf(response.code()));
+                if (String.valueOf(response.code()).equals("401")) {
+                    Toast.makeText(getApplicationContext(), "Username or password incorrect",
+                            Toast.LENGTH_LONG).show();
+                }
+
                 //hiding progress dialog
                 progressDialog.dismiss();
                 if(response.isSuccessful()){
