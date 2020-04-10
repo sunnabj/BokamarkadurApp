@@ -90,7 +90,7 @@ public class ReviewActivity extends AppCompatActivity {
         getLoggedInUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-
+                Log.d(TAG, "Við fórum í onResponse");
                 // This is the username of the currently logged in user.
                 loggedInUsername = response.body().getUsername();
             }
@@ -98,6 +98,7 @@ public class ReviewActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 // Log error here since request failed
+                Log.d(TAG, "Við fórum í onFailure");
                 Log.e(TAG, t.toString());
                 call.cancel();
             }

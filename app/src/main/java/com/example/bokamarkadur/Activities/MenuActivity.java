@@ -2,13 +2,16 @@ package com.example.bokamarkadur.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
 
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -30,6 +33,9 @@ public class MenuActivity extends AppCompatActivity {
 
     private static final String TAG = MenuActivity.class.getSimpleName();
 
+    // Connection to layout.
+    // Call function that connects menu options to activities.
+    // Bottom navigation setup.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,32 +44,16 @@ public class MenuActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
-        /**+
-         * Bottom navigation
-         */
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.about);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.dashboard:
-                        startActivity(new Intent(getApplicationContext(),
-                                AllBooksActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(),
-                                MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.about:
-                        return true;
-                }
-                return false;
-            }
-        });
+        // This functions makes the appropriate connections
+        // from menu cards to activities.
+        connectMenuCards();
 
+        // This function sets up and displays the bottom navigation.
+        setBottomNavigation();
+    }
+
+    // Connections made for menu cards to appropriate actvities.
+    private void connectMenuCards() {
         // View All Listed Books    ---         Card 1
         //              --> Location in MENU:   Row 1 / Column 1
         //
@@ -78,11 +68,11 @@ public class MenuActivity extends AppCompatActivity {
         // View Newest Books    ---             Card 2
         //              --> Location in MENU:   Row 1 / Column 2
         //
-        NewestBooks = (CardView) findViewById(R.id.MenuCard1);
+        NewestBooks = (CardView) findViewById(R.id.MenuCard2);
         NewestBooks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openAllBooksActivity();
+                openNewestBooksActivity();
             }
         });
 
@@ -121,6 +111,13 @@ public class MenuActivity extends AppCompatActivity {
         //  Something           ---             Card 6
         //              --> Location in MENU:   Row 3 / Column 2
         //
+        Something = (CardView) findViewById(R.id.MenuCard6);
+        Something.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // openActivity(); fyrir hvað sem hér kemur.
+            }
+        });
 
         //  About Us            ---             Card 7
         //              --> Location in MENU:   Row 4 / Column 1
@@ -145,20 +142,27 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-    public void openMainActivity() {
+    // Go back to homescreen.
+    private void openMainActivity() {
         Intent intent= new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void openAboutUsActivity() {
+    // Open AboutUsActivity where the user
+    // can read about the developers.
+    private void openAboutUsActivity() {
         startActivity(new Intent(getApplicationContext(), AboutusActivity.class));
     }
-    public void openLoginActivity() {
+
+    // Take user to the LoginActivity.
+    private void openLoginActivity() {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
-    public void AddbookforsaleActivity() {
+    // Take user AddBookforsaleActivity where he
+    // can add books that he wants to sell.
+    private void AddbookforsaleActivity() {
         if (LoginActivity.token == null) {
             openLoginActivity();
             Toast.makeText(getApplicationContext(), "You must logged in to request a book", Toast.LENGTH_LONG).show();
@@ -166,7 +170,10 @@ public class MenuActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), AddBookForSaleActivity.class));
         }
     }
-    public void openRequestBookActivity() {
+
+    // Take user RequestBookActivity where he
+    // can request books that he wants.
+    private void openRequestBookActivity() {
         if (LoginActivity.token == null) {
             openLoginActivity();
             Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
@@ -174,12 +181,59 @@ public class MenuActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), RequestBookActivity.class));
         }
     }
-    public void openAllBooksActivity() {
+
+    // Take user to a list of all listed books.
+    private void openAllBooksActivity() {
         startActivity(new Intent(getApplicationContext(), AllBooksActivity.class));
     }
 
-    public void openViewProfileActivity() {
+    // Take user to a list of the newest books.
+    private void openNewestBooksActivity() {
+        startActivity(new Intent(getApplicationContext(), NewestBooksActivity.class));
+    }
+
+    // Take user to view his profile.
+    private void openViewProfileActivity() {
         startActivity(new Intent(getApplicationContext(), ViewProfileActivity.class));
+    }
+
+    // This function sets up connections to other activities
+    // and displays the bottom navigation.
+    private void setBottomNavigation() {
+        /**+
+         *  Bottom navigation
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.about);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(),
+                                AllBooksActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.about:
+                        // If user is not logged in and attempts to open the Menu,
+                        // the user is taken to the LoginActivity.
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(0,0);}
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void hideSystemUI() {

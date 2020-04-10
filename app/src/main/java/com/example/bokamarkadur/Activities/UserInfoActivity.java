@@ -3,7 +3,6 @@ package com.example.bokamarkadur.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.POJO.UserResponse;
 
 import androidx.annotation.NonNull;
@@ -18,8 +17,6 @@ import android.widget.Toast;
 
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;

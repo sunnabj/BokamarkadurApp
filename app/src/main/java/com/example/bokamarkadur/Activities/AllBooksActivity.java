@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,7 +20,6 @@ import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,70 +28,47 @@ import retrofit2.Response;
 
 public class AllBooksActivity extends AppCompatActivity {
 
-    // Notað fyrir debugging
+    // Used for debugging
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    // Adapter to display list of books.
     BooksAdapter booksAdapter;
-    APIInterface apiInterface;
-    //private Button backToMenu;
 
+    // Connection to backend created.
+    APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+
+    // Connection to layout.
+    // Header text set to match list type.
+    // Call function that displays book list.
+    // Bottom navigation setup.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_books);
+        setContentView(R.layout.activity_view_book_list);
+
+        // Set the header for BookListView = "All Books".
+        TextView bookListView = findViewById(R.id.view_book_list);
+        bookListView.setText("All Books:");
 
         // Hide System UI for best experience
         hideSystemUI();
-        /*
-        backToMenu = (Button) findViewById(R.id.backToMenu);
-        backToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
-            }
-        });
 
-         */
+        // This function creates a RecyclerView to display the book list.
+        ViewAllBooks();
 
-        /**+
-         *  Bottom navigation
-         */
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.dashboard);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.dashboard:
-                        return true;
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(),
-                                MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.about:
-                        if (LoginActivity.token == null) {
-                            openLoginActivity();
-                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
-                        } else {
-                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                            startActivity(intent);
-                        overridePendingTransition(0,0);}
-                        return true;
-                }
-                return false;
-            }
-        });
+        // This function sets up and displays the bottom navigation.
+        setBottomNavigation();
 
+    }
 
-        apiInterface = APIClient.getClient().create(APIInterface.class);
-
+    // Set up a RecyclerView and makes a Get Call to backend
+    // to fetch all listed books.
+    private void ViewAllBooks() {
         final RecyclerView recyclerView = findViewById(R.id.books_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
         /**
-         GET kall sem skilar lista af öllum bókum.
+         GET call that returns list of all listed books.
          **/
         Call<BookList> getAllBooks = apiInterface.getBooks();
         getAllBooks.enqueue(new Callback<BookList>() {
@@ -117,15 +93,14 @@ public class AllBooksActivity extends AppCompatActivity {
         });
     }
 
-    public void openLoginActivity() {
+    // Take user to the LoginActivity.
+    private void openLoginActivity() {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
-    /**
-     * Leitin í all books, birtist efst á skjá (Top Nav).
-     * @param menu
-     */
+    // Create a search bar in top navigation.
+    // @param menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -146,6 +121,41 @@ public class AllBooksActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+
+    // This function sets up connections to other activities
+    // and displays the bottom navigation.
+    private void setBottomNavigation() {
+        /**+
+         *  Bottom navigation
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.dashboard);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.about:
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(0,0);}
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.

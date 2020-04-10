@@ -43,6 +43,10 @@
             android:theme="@style/AllBookTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".Activities.NewestBooksActivity"
+            android:theme="@style/AllBookTheme"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".Activities.RequestBookActivity"
             android:theme="@style/AboutusTheme" />
         <activity

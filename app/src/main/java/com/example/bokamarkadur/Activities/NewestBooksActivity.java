@@ -3,6 +3,7 @@ package com.example.bokamarkadur.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -19,69 +20,59 @@ import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BookBySubjectActivity extends AppCompatActivity {
+public class NewestBooksActivity extends AppCompatActivity {
 
-    // Used for debugging
-    private static final String TAG = "BookBySubjectAct";
+    // Notað fyrir debugging
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    // Connection to backend created.
+    BooksAdapter booksAdapter;
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+    //private Button backToMenu;
 
-    // Connection to layout.
-    // Header text set to match list type.
-    // Call function that displays book list.
-    // Bottom navigation setup.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_book_list);
 
+        TextView bookListView = findViewById(R.id.view_book_list);
+        bookListView.setText("Newest Books:");
+
         // Hide System UI for best experience
         hideSystemUI();
 
-        // Subject was selected in MainActivity.
-        final String subject = getIncomingIntent();
+        ViewNewestBooks();
 
-        // Set the header for BookListView = *selected subject*
-        TextView bookListView = findViewById(R.id.view_book_list);
-        bookListView.setText(subject);
-
-        // This function creates a RecyclerView to display the book list.
-        viewBooksBySubject(subject);
-
-        // This function sets up and displays the bottom navigation.
         setBottomNavigation();
+
     }
 
-    // Fetch selected subject from mainActivity.
-    private String getIncomingIntent(){
-        String subject = getIntent().getStringExtra("viewSubject");
-        return subject;
-    }
-
-    // Sets up a RecyclerView and makes a Get Call to backend
-    // to fetch books for selected subject.
-    private void viewBooksBySubject(String subject) {
-        // RecyclerView - for displaying all books for selected subject.
-        // Notum sama layout list layout og all-books.
+    public void ViewNewestBooks() {
         final RecyclerView recyclerView = findViewById(R.id.books_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
         /**
-         GET call that returns list of books for selected subject.
+         GET kall sem skilar lista með 10 nýjustu bókunum.
          **/
-        Call<BookList> getBooksBySubject = apiInterface.getBooksBySubject(subject);
-        getBooksBySubject.enqueue(new Callback<BookList>() {
+        Call<BookList> getNewestBooks = apiInterface.getNewestBooks();
+        getNewestBooks.enqueue(new Callback<BookList>() {
             @Override
             public void onResponse(Call<BookList> call, Response<BookList> response) {
-                List<Book> books = response.body().getBooksBySubject();
-                recyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
+                List<Book> NewestBooks = response.body().getNewestBooks();
+
+                booksAdapter = new BooksAdapter(NewestBooks, R.layout.list_item, getApplicationContext());
+
+                recyclerView.setAdapter(booksAdapter);
+
+                // TODO: Debug virkni, má eyða síðar meir.
+                Log.d(TAG, "Number of newest books received: " + NewestBooks.size());
             }
 
             @Override
@@ -93,15 +84,37 @@ public class BookBySubjectActivity extends AppCompatActivity {
         });
     }
 
-    // Take user to the LoginActivity.
     public void openLoginActivity() {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
-    // This function sets up connections to other activities
-    // and displays the bottom navigation.
-    private void setBottomNavigation() {
+    /**
+     * Leitin í all books, birtist efst á skjá (Top Nav).
+     * @param menu
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) menuItem.getActionView();
+        searchView.setOnQueryTextListener((new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                booksAdapter.getFilter().filter(newText);
+                return false;
+            }
+        }));
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public void setBottomNavigation() {
         /**+
          *  Bottom navigation
          */
@@ -119,8 +132,6 @@ public class BookBySubjectActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.about:
-                        // If user is not logged in and attempts to open the Menu,
-                        // the user is taken to the LoginActivity.
                         if (LoginActivity.token == null) {
                             openLoginActivity();
                             Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
@@ -144,8 +155,6 @@ public class BookBySubjectActivity extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_IMMERSIVE
                         // Set the content to appear under the system bars so that the
                         // content doesn't resize when the system bars hide and show.
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         // Hide the nav bar and status bar
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION

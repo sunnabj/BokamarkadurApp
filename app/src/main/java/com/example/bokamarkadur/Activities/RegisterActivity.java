@@ -105,6 +105,12 @@ public class RegisterActivity extends AppCompatActivity implements com.mobsandge
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
+    public void openLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
@@ -159,7 +165,7 @@ public class RegisterActivity extends AppCompatActivity implements com.mobsandge
                 progressDialog.dismiss();
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), "success: " + response.body(), Toast.LENGTH_LONG).show();
-                    openMainActivity();
+                    openLoginActivity();
                     Log.d("myTag", String.valueOf(response.body()));
                 }
             }

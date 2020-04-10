@@ -105,6 +105,11 @@ interface APIInterface {
     @GET("/viewReviews/{username}")
     Call<ReviewsResponse> viewReviews(@Path("username") String username);
 
+
+    @GET("/viewWrittenReviews/{username}")
+    Call<ReviewsResponse> viewWrittenReviews(@Path("username") String username);
+
+
     // Gets list of books for user from "BookController.java" in REST Backend
     @GET("/myBooks")
     Call<BookList> myBooks(@Header("Authorization") String authorization);

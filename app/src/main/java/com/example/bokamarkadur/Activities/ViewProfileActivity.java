@@ -4,12 +4,14 @@ package com.example.bokamarkadur.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +22,7 @@ import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
@@ -31,11 +34,10 @@ import retrofit2.Response;
 
 public class ViewProfileActivity extends AppCompatActivity {
 
-    // Tengjumst API Interface sem talar við bakendann okkar.
+    // Connection to backend created.
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
     private Button updateProfile;
     private Button myReviews;
-    private Button backToMenu;
 
     String pUsername;
     public String ProfileUsername;
@@ -57,53 +59,33 @@ public class ViewProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
 
-        Log.d(TAG, "BBO -->> ViewProfileActivity onCreate: started.");
 
+        // Function that fetches the logged in user from backend
+        // and nested function that retrieves User's info and displays it
+        // where user can make changes to his information.
         getLoggedInUser();
 
+        // This fetches all of user's books and displays them in a list.
         getMyBooks();
-//        showUsersBooks();
 
-        updateProfile = (Button) findViewById(R.id.updateProfile);
-        updateProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                updateUserProfile();
-            }
-        });
-
-        myReviews = (Button) findViewById(R.id.myReviews);
-        myReviews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
-                intent.putExtra("username", ProfileUsername);
-                startActivity(intent);
-
-                //startActivity(new Intent(getApplicationContext(), ReviewActivity.class));
-            }
-        });
-
-        backToMenu = (Button) findViewById(R.id.backToMenu);
-        backToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
-            }
-        });
+        // This function sets up and displays the bottom navigation.
+        setBottomNavigation();
 
         // Hide System UI for best experience
         hideSystemUI();
 
+//        // Unused, non-working function (see description by
+//        // function's definition.
+//        showUsersBooks();
     }
 
-    /**
-     * BBO: Kóðinn hér fyrir neðan birtir prófíl fyrir viðkomandi notanda
-     * 		sem ýtti á "My Profile" og opnaði þar með þetta Activity (ViewProfileActivity).
-     */
     // Show User's Profile Info
-    private void showUserProfile(String name, String info, String email, String phonenumber, String username, String password){
+    private void showUserProfile(String name,
+                                 String info,
+                                 String email,
+                                 String phonenumber,
+                                 String username,
+                                 String password){
 //  Eftir að undirbúa List<Book> álíka og gert í öðrum klösum, en þá verður línan fyrir ofan svona:
 //                              String password, String retypepassword, List<Book> usersBooks){
 
@@ -143,6 +125,9 @@ public class ViewProfileActivity extends AppCompatActivity {
                 // This is the username of the currently logged in user.
                 pUsername   = response.body().getUsername();
 
+                // This connects buttons for activity.
+                connectButtons(pUsername);
+
                 // Fetch profile info for this logged in user.
                 getUserProfile(pUsername);
             }
@@ -154,6 +139,43 @@ public class ViewProfileActivity extends AppCompatActivity {
                 call.cancel();
             }
 
+        });
+    }
+
+
+    // Buttons for
+    //      "Update My Info" and
+    //      "My Reviews"
+    // connected to appropriate activities.
+    private void connectButtons(String username) {
+
+        final String profileUsername = username;
+        // When user pushes "Update My Info" button
+        // updateUsersProfile() is called.
+        updateProfile = (Button) findViewById(R.id.updateProfile);
+        updateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateUserProfile();
+            }
+        });
+
+        // When user pushes "My Review" button
+        // user is taken to ReviewActivity.
+        myReviews = (Button) findViewById(R.id.myReviews);
+        myReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "\n*****************************************");
+                Log.d(TAG, "\n*****************************************");
+                Log.d(TAG, "\n\t\t final String profileUsername = username;" + profileUsername);
+                Log.d(TAG, "\n\t\t ProfileUsername;" + ProfileUsername);
+                Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
+                intent.putExtra("username", profileUsername);
+                startActivity(intent);
+            }
         });
     }
 
@@ -201,6 +223,7 @@ public class ViewProfileActivity extends AppCompatActivity {
             }
         });
     }
+
 
     // If user pushes the "Update my info" button a @POST call is made to Backend
     // to update user's profile information.
@@ -277,12 +300,14 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
     }
 
-    public void getMyBooks() {
+
+    // GET CALL to backend that fetches all books that
+    // this user has added for sale or made requests for.
+    private void getMyBooks() {
 
         /**
          @GET call that returns list of Books this (logged in) user has requested or put up for sale.
          **/
-        // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
         final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
         UsersBooksrecyclerView.setLayoutManager(new LinearLayoutManager(this));
         UsersBooksrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
@@ -292,9 +317,18 @@ public class ViewProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<BookList> call, Response<BookList> response) {
                 List<Book> myBooks = response.body().getBooks();
-                Log.d(TAG, "BBO -->> UsersBooks: " + myBooks);
-                UsersBooksrecyclerView.setAdapter(new BooksAdapter(myBooks, R.layout.list_item, getApplicationContext()));
+                int numberOfBooks = myBooks.size();
 
+                if (numberOfBooks > 0) {
+                    UsersBooksrecyclerView.setAdapter(new BooksAdapter(myBooks, R.layout.list_item, getApplicationContext()));
+                }
+                else {
+                    // Set the header for BookListView = "All Books".
+                    TextView noBooks = findViewById(R.id.no_books);
+                    noBooks.setText("You have not added\n any books...\n\n ...YET...");
+                }
+
+                Log.d(TAG, "BBO -->> UsersBooks: " + myBooks);
                 // TODO: Debug virkni, má eyða síðar meir.
                 Log.d(TAG, "BBO -->> Number of books user has: " + myBooks.size());
             }
@@ -308,7 +342,17 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
     }
 
-    public void showUsersBooks() {
+    private void showMyBooks() {
+
+
+    }
+
+
+    // An unused function that is supposed to get users books
+    // by setting UsersBooks = response.body().getUser().getBooks()
+    // when fetching logged in user in getLoggedInUser() and
+    // getUserProfile() functions, but it is not working.
+    private void showUsersBooks() {
         /**
          Reynt að setja bækur í BooksAdapter útfrá User.getBooks() en það virkar ekki enn sem komið er.
          **/
@@ -331,6 +375,48 @@ public class ViewProfileActivity extends AppCompatActivity {
         Log.d(TAG, "***********************************************");
         Log.d(TAG, "***********************************************");
         Log.d(TAG, "***********************************************");
+    }
+
+
+    // Take user to the LoginActivity.
+    private void openLoginActivity() {
+        Intent intent= new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+
+    // This function sets up connections to other activities
+    // and displays the bottom navigation.
+    private void setBottomNavigation() {
+        /**+
+         *  Bottom navigation
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.dashboard);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.about:
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(0,0);}
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void hideSystemUI() {
