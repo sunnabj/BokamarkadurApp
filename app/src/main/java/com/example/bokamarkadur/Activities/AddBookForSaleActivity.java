@@ -42,7 +42,6 @@ public class AddBookForSaleActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private static final int GALLERY_REQUEST_CODE = 1888;
     Spinner subjectSpinner;
-    String LoggedInUsername = "";
 
     APIInterface apiInterface;
 

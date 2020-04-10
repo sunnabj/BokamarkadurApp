@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     APIInterface apiInterface;
-    String LoggedInUsername = "";
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -137,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
     public void openLoginActivity() {
-            Intent intent= new Intent(this, LoginActivity.class);
-            startActivity(intent);
+        Intent intent= new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void hideSystemUI() {
