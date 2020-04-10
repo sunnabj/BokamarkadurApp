@@ -59,7 +59,6 @@ public class ViewBookActivity extends AppCompatActivity {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-
         /**
          * A text can be written and a button then pushed at the bottom of the page which sends
          * the text as an SMS to the person that added the book.
@@ -98,14 +97,14 @@ public class ViewBookActivity extends AppCompatActivity {
             }
         });
 
-
         /**
-         * Retrieves the username of the currently logged in user, so we can compare it to the
-         * username of the user that added the book we are viewing, so we can know if we're
-         * supposed to show the Delete book button.
+         * Retrieves the username of the currently logged in user, so it can be compared to the
+         * username of the user that added the book that is currently being viewed, so it can be
+         * determined if the Delete Book button should be shown or not.
+         * From here, the incoming intent is also retrieved, so the information about the book
+         * that was clicked are shown. This is done whether the user is logged in or not.
          */
         if (LoginActivity.token != null) {
-            Log.d(TAG, "Token er ekki null");
             Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
 
             getLoggedInUser.enqueue(new Callback<User>() {
@@ -166,10 +165,7 @@ public class ViewBookActivity extends AppCompatActivity {
     /**
      * Retrieves information about the book the user pushed to get into this Activity.
      */
-
     private void getIncomingIntent(String loggedInUsername){
-
-        // TODO: Fá NoImage til að birtast.
 
         if(getIntent().hasExtra("bookTitle") && getIntent().hasExtra("bookAuthor")){
             Log.d(TAG, "getIncomingIntent: found intent extras.");
@@ -194,6 +190,10 @@ public class ViewBookActivity extends AppCompatActivity {
                 image = "Noimage.jpg";
             }
 
+            /*
+             * Information about the book are set up, there is a small difference between books
+             * that are for sale and book that are requested.
+             */
             if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
                 this.phone = phone;
                 setBookInfoFS(title, author, edition, condition, price, subject, status, user,
@@ -207,7 +207,7 @@ public class ViewBookActivity extends AppCompatActivity {
         }
     }
 
-    // Set info for books that are for sale
+    // Sets info for books that are for sale
     private void setBookInfoFS(String title, String author, int edition, String condition,
                              int price, String subject, String status, final String user,
                                String image, String phone, final long id, String loggedInUsername){
@@ -239,68 +239,18 @@ public class ViewBookActivity extends AppCompatActivity {
 
 
         /**
-         * Listener on a button that opens an activity with information
-         * about the user that added the book.
-         * Username is sent there by an intent.
-         * A user has to be logged in to be able to see the user's info.
+         * Sets up a button that can be used to view information about the user that added
+         * the book that is currently being viewed.
          */
-        Button viewUser = findViewById(R.id.bt_view_user);
-        viewUser.setText("  View " + user + "'s info");
-        viewUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (LoginActivity.token != null) {
-                    Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class);
-                    intent.putExtra("username", user); //þurfti að vera declared final til að vera accessible
-                    startActivity(intent);
-                }
-                else {
-                 Toast.makeText(getApplicationContext(),
-                    "You have to be logged in to get information about or contact the user",
-                    Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        setViewUserButton(user);
 
         /**
          * If a user is logged in and he is looking at a book that he himself added for sale or
          * requested, a button appears that when pushed allows the user to delete that book.
          */
         if (LoginActivity.token != null && user.equals(loggedInUsername)) {
-            Button deleteBook = findViewById(R.id.bt_delete_book);
-            deleteBook.setText("Delete this book");
-            deleteBook.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Call<Book> deleteBook = apiInterface.deleteBook(id, "Bearer " +
-                            LoginActivity.token);
-                    deleteBook.enqueue(new Callback<Book>() {
-                        @Override
-                        public void onResponse(Call<Book> call, Response<Book> response) {
-
-                            Log.d("onResponse: ", String.valueOf(response.body()));
-                            if (response.isSuccessful()) {
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                Log.d("Success: ", "The book has been removed from the Book Market.");
-                            } else {
-                                try {
-                                    Log.d("error", response.errorBody().string());
-                                } catch (Exception e) {
-                                    Log.d("error: ", e.getMessage());
-                                }
-                            }
-                        }
-                        @Override
-                        public void onFailure(Call<Book> call, Throwable t) {
-                            Log.e(TAG, t.toString());
-                            call.cancel();
-                        }
-                    });
-                }
-            });
+            setDeleteButton(id);
         }
-
 
         ImageView bookImage = findViewById(R.id.view_book_image);
         Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(bookImage);
@@ -332,11 +282,31 @@ public class ViewBookActivity extends AppCompatActivity {
 
 
         /**
-         * Listener on a button that opens an activity with information
-         * about the user that added the book.
-         * Username is sent there by an intent.
-         * A user has to be logged in to be able to see the user's info.
+         * Sets up a button that can be used to view information about the user that added
+         * the book that is currently being viewed.
          */
+        setViewUserButton(user);
+
+
+        /**
+         * If a user is logged in and he is looking at a book that he himself added for sale or
+         * requested, a button appears that when pushed allows the user to delete that book.
+         */
+        if (LoginActivity.token != null && user.equals(loggedInUsername)) {
+            setDeleteButton(id);
+        }
+
+        ImageView bookImage = findViewById(R.id.view_book_image);
+        Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(bookImage);
+    }
+
+    /**
+     * Sets up a button with a listener that opens an activity with information
+     * about the user that added the current book.
+     * Username is sent there by an intent.
+     * A user has to be logged in to be able to see the user's info.
+     */
+    private void setViewUserButton(final String user) {
         Button viewUser = findViewById(R.id.bt_view_user);
         viewUser.setText("  View " + user + "'s info");
         viewUser.setOnClickListener(new View.OnClickListener() {
@@ -355,46 +325,49 @@ public class ViewBookActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        Log.d(TAG, "Loggedin user í requested: " + loggedInUsername);
+    /**
+     * Sets up and activates a listener for a button that when pushed will delete the
+     * book that is being viewed.
+     * @param id: The id of the book that is being viewed, and will be deleted
+     *          if the button is pushed.
+     */
+    private void setDeleteButton(final long id) {
+        Button deleteBook = findViewById(R.id.bt_delete_book);
+        deleteBook.setText("Delete this book");
+        deleteBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Call<Book> deleteBook = apiInterface.deleteBook(id, "Bearer " +
+                        LoginActivity.token);
+                deleteBook.enqueue(new Callback<Book>() {
+                    @Override
+                    public void onResponse(Call<Book> call, Response<Book> response) {
 
-        if (LoginActivity.token != null && user.equals(loggedInUsername)) {
-            Button deleteBook = findViewById(R.id.bt_delete_book);
-            deleteBook.setText("Delete this book");
-            deleteBook.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Call<Book> deleteBook = apiInterface.deleteBook(id, "Bearer " +
-                            LoginActivity.token);
-                    deleteBook.enqueue(new Callback<Book>() {
-                        @Override
-                        public void onResponse(Call<Book> call, Response<Book> response) {
-
-                            Log.d("onResponse: ", String.valueOf(response.body()));
-                            if (response.isSuccessful()) {
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                Log.d("Success: ", "The book has been removed from the Book Market.");
-                            } else {
-                                try {
-                                    Log.d("error", response.errorBody().string());
-                                } catch (Exception e) {
-                                    Log.d("error: ", e.getMessage());
-                                }
+                        Log.d("onResponse: ", String.valueOf(response.body()));
+                        if (response.isSuccessful()) {
+                            Log.d("Success: ", "The book has been removed from the Book Market.");
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        } else {
+                            try {
+                                Log.d("error", response.errorBody().string());
+                            } catch (Exception e) {
+                                Log.d("error: ", e.getMessage());
                             }
                         }
-                        @Override
-                        public void onFailure(Call<Book> call, Throwable t) {
-                            Log.e(TAG, t.toString());
-                            call.cancel();
-                        }
-                    });
-                }
-            });
-        }
-
-        ImageView bookImage = findViewById(R.id.view_book_image);
-        Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(bookImage);
+                    }
+                    @Override
+                    public void onFailure(Call<Book> call, Throwable t) {
+                        Log.e(TAG, t.toString());
+                        call.cancel();
+                    }
+                });
+            }
+        });
     }
+
+
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
