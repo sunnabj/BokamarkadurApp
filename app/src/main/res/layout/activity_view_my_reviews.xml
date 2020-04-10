@@ -69,31 +69,31 @@
                     android:background="@drawable/shape"
                     android:orientation="vertical">
 
-<!--                    <TextView-->
-<!--                        style="@style/headerTextPrimary"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_marginTop="40dp"-->
-<!--                        android:text="@string/mr_received_reviews" />-->
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:text="@string/mr_received_reviews" />
 
-<!--                    <TextView-->
-<!--                        style="@style/headerTextPrimary"-->
-<!--                        android:id="@+id/received_reviews_message"-->
-<!--                        android:layout_gravity="center"-->
-<!--                        android:layout_marginTop="40dp" />-->
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:id="@+id/received_reviews_message"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp" />
 
-<!--                    <TableLayout-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:padding="8dp"-->
-<!--                        android:stretchColumns="1">-->
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:stretchColumns="1">
 
-<!--                        <androidx.recyclerview.widget.RecyclerView-->
-<!--                            android:id="@+id/received_reviews_recycler_view"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="match_parent">-->
-<!--                        </androidx.recyclerview.widget.RecyclerView>-->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/received_reviews_recycler_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+                        </androidx.recyclerview.widget.RecyclerView>
 
-<!--                    </TableLayout>-->
+                    </TableLayout>
 
                     <TextView
                         style="@style/headerTextPrimary"

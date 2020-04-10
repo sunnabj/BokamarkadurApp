@@ -161,7 +161,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
 
         // When user pushes "My Review" button
-        // user is taken to MyReviewsActivity.
+        // user is taken to ReviewActivity.
         myReviews = (Button) findViewById(R.id.myReviews);
         myReviews.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -67,7 +67,7 @@ public class ViewMyReviewsActivity extends AppCompatActivity {
                 TextView user = findViewById(R.id.review_receiver);
                 user.setText("Reviews for " + loggedInUsername + "  ");
 
-//                getReceivedReviews(loggedInUsername);
+                getReceivedReviews(loggedInUsername);
                 getWrittenReviews(loggedInUsername);
             }
 
@@ -85,59 +85,13 @@ public class ViewMyReviewsActivity extends AppCompatActivity {
         setBottomNavigation();
     }
 
-//    private void getReceivedReviews(String username) {
-//        /**
-//         * Sets up an orderly review list
-//         */
-//        final RecyclerView ReceivedReviews_RecyclerView = findViewById(R.id.received_reviews_recycler_view);
-//        ReceivedReviews_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        ReceivedReviews_RecyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
-//                getApplicationContext()));
-//
-//        /**
-//         * This function communicates with the server to get all reviews that have been written
-//         * about the user with the username username. The reviews are delivered wrapped up in a
-//         * convenient response.
-//         */
-//        final Call<ReviewsResponse> getReviews = apiInterface.viewReviews(username);
-//        getReviews.enqueue(new Callback<ReviewsResponse>() {
-//            @Override
-//            public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
-//                Log.d(TAG, "RESPONSE BODY: " + response.body().getClass());
-//
-//                List<Review> reviews = response.body().viewReviews();
-//
-//                receivedReviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
-//                        getApplicationContext());
-//
-//                // If reviews exist for the user, they are shown as an orderly list.
-//                if (receivedReviewsAdapter.getItemCount() != 0) {
-//                    ReceivedReviews_RecyclerView.setAdapter(receivedReviewsAdapter);
-//                }
-//                // If no reviews exist for the user, this is made clear with a message.
-//                else {
-//                    receivedReviewsMessage = findViewById(R.id.received_reviews_message);
-//                    receivedReviewsMessage.setText("You have received no Reviews");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ReviewsResponse> call, Throwable t) {
-//                // Log error here since request failed
-//                Log.e(TAG, t.toString());
-//                call.cancel();
-//            }
-//        });
-//    }
-//
-
-    private void getWrittenReviews(String username) {
+    private void getReceivedReviews(String username) {
         /**
          * Sets up an orderly review list
          */
-        final RecyclerView WrittenReviews_RecyclerView = findViewById(R.id.written_reviews_recycler_view);
-        WrittenReviews_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        WrittenReviews_RecyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
+        final RecyclerView ReceivedReviews_RecyclerView = findViewById(R.id.received_reviews_recycler_view);
+        ReceivedReviews_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ReceivedReviews_RecyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
                 getApplicationContext()));
 
         /**
@@ -146,6 +100,54 @@ public class ViewMyReviewsActivity extends AppCompatActivity {
          * convenient response.
          */
         final Call<ReviewsResponse> getReviews = apiInterface.viewReviews(username);
+        getReviews.enqueue(new Callback<ReviewsResponse>() {
+            @Override
+            public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+                Log.d(TAG, "RESPONSE BODY: " + response.body().getClass());
+
+                List<Review> reviews = response.body().viewReviews();
+
+                receivedReviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
+                        getApplicationContext());
+
+                // If reviews exist for the user, they are shown as an orderly list.
+                if (receivedReviewsAdapter.getItemCount() != 0) {
+                    ReceivedReviews_RecyclerView.setAdapter(receivedReviewsAdapter);
+                }
+                // If no reviews exist for the user, this is made clear with a message.
+                else {
+                    receivedReviewsMessage = findViewById(R.id.received_reviews_message);
+                    receivedReviewsMessage.setText("You have received no Reviews");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                call.cancel();
+            }
+        });
+    }
+
+
+    private void getWrittenReviews(String LoggedInUsername) {
+
+        final String loggedInUsername = LoggedInUsername;
+        /**
+         * Sets up an orderly review list
+         */
+        final RecyclerView WrittenReviews_RecyclerView = findViewById(R.id.written_reviews_recycler_view);
+        WrittenReviews_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        WrittenReviews_RecyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_written_reviews,
+                getApplicationContext()));
+
+        /**
+         * This function communicates with the server to get all reviews that have been written
+         * about the user with the username username. The reviews are delivered wrapped up in a
+         * convenient response.
+         */
+        final Call<ReviewsResponse> getReviews = apiInterface.viewReviews(loggedInUsername);
         getReviews.enqueue(new Callback<ReviewsResponse>() {
             @Override
             public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
