@@ -184,7 +184,7 @@ public class MenuActivity extends AppCompatActivity {
 
     // Take user to a list of all listed books.
     private void openAllBooksActivity() {
-        startActivity(new Intent(getApplicationContext(), ViewBookListActivity.class));
+        startActivity(new Intent(getApplicationContext(), AllBooksActivity.class));
     }
 
     // Take user to a list of the newest books.

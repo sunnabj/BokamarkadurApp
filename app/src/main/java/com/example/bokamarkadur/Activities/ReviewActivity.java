@@ -34,11 +34,11 @@ public class ReviewActivity extends AppCompatActivity {
 
     ReviewsAdapter reviewsAdapter; //Allows us to look at reviews in an orderly fashion
 
-    APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+    APIInterface apiInterface;
 
     private Button addReviewBtn; //Opens a view where the user can add a new review to the review list.
     //private Button backToMenu;
-//    public String loggedInUsername;
+    public String loggedInUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,38 +50,76 @@ public class ReviewActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
-        // This function fetches the username of logged in user from the backend.
-        // And then in turn starts
-        getLoggedInUsername();
+        /**+
+         * Bottom navigation
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(),
+                                AllBooksActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.about:
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
+                        } else {
+                            startActivity(new Intent(getApplicationContext(),
+                                    MenuActivity.class));
+                            overridePendingTransition(0,0);}
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        apiInterface = APIClient.getClient().create(APIInterface.class);
+
+
+        Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
+        getLoggedInUser.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+
+                // This is the username of the currently logged in user.
+                loggedInUsername = response.body().getUsername();
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                call.cancel();
+            }
+
+        });
 
 
         /**
          * Sets up an orderly review list
          */
-
-        // This function sets up and displays the bottom navigation.
-        setBottomNavigation();
-    }
-
-    /**
-     *
-     * @return the username of the user that cane from the userinfo activity.
-     */
-    private String getIncomingIntent(){
-
-        String username = getIntent().getStringExtra("username");
-        return username;
-    }
-
-
-    private void getReviews(String Username) {
-
-        final String username = Username;
-
         final RecyclerView recyclerView = findViewById(R.id.reviews_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
                 getApplicationContext()));
+
+        // Fetches the username of the user from UserInfoActivity.
+        final String username = getIncomingIntent();
+        Log.d(TAG, "username: " + username);
+
+        //The header tells us which user the review are about.
+        TextView user = findViewById(R.id.review_receiver);
+        user.setText("Reviews for " + username + "  ");
 
         /**
          * This function communicates with the server to get all reviews that have been written
@@ -118,12 +156,7 @@ public class ReviewActivity extends AppCompatActivity {
             }
 
         });
-    }
 
-    private void connectAddReviewButton(String LoggedInUsername, String Username) {
-
-        final String loggedInUsername = LoggedInUsername;
-        final String username = Username;
         /* A new review for this particular user can be added by pushing this button.
          * A new activity is opened, WriteReviewActivity.
          */
@@ -143,79 +176,33 @@ public class ReviewActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
 
+
             }
         });
-    }
-
-    private void getLoggedInUsername() {
-
-        Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
-        getLoggedInUser.enqueue(new Callback<User>() {
+/*
+        backToMenu = (Button) findViewById(R.id.backToMenu);
+        backToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-
-                // This is the username of the currently logged in user.
-                String LoggedInUsername = response.body().getUsername();
-
-                // Fetches the username of the user from UserInfoActivity.
-                final String Username = getIncomingIntent();
-                Log.d(TAG, "username: " + Username);
-
-                //The header tells us which user the review are about.
-                TextView user = findViewById(R.id.review_receiver);
-                user.setText("Reviews for " + Username + "  ");
-
-                connectAddReviewButton(LoggedInUsername, Username);
-                getReviews(Username);
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-                call.cancel();
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
             }
         });
-
+*/
     }
+
+    /**
+     *
+     * @return the username of the user that cane from the userinfo activity.
+     */
+    private String getIncomingIntent(){
+
+        String username = getIntent().getStringExtra("username");
+        return username;
+    }
+
     public void openLoginActivity() {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
-    }
-
-
-    // This function sets up connections to other activities
-    // and displays the bottom navigation.
-    private void setBottomNavigation() {
-        /**+
-         *  Bottom navigation
-         */
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.dashboard);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.dashboard:
-                        return true;
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(),
-                                MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.about:
-                        if (LoginActivity.token == null) {
-                            openLoginActivity();
-                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
-                        } else {
-                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                            startActivity(intent);
-                            overridePendingTransition(0,0);}
-                        return true;
-                }
-                return false;
-            }
-        });
     }
 
 

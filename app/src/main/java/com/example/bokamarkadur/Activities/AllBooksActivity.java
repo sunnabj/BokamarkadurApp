@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ViewBookListActivity extends AppCompatActivity {
+public class AllBooksActivity extends AppCompatActivity {
 
     // Used for debugging
     private static final String TAG = MainActivity.class.getSimpleName();
