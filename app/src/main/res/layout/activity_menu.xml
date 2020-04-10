@@ -64,7 +64,8 @@
                             android:layout_height="match_parent"
                             android:minHeight="100dp"
                             android:background="@drawable/home_gradient_maths"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:gravity="center_vertical|center_horizontal" >
 
 
                             <TextView
@@ -92,7 +93,8 @@
                             gl:end_color="@color/gradientLightYellow2"
                             gl:start_color="@color/gradientLightOrange2"
                             gl:orientation="LEFT_RIGHT"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:gravity="center_vertical|center_horizontal" >
 
                             <TextView
                                 android:id="@+id/textViewSub3Title"
@@ -121,7 +123,8 @@
                             gl:start_color="@color/gradientViolet"
                             gl:end_color="@color/gradientLightBlue"
                             gl:orientation="LEFT_RIGHT"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:gravity="center_vertical|center_horizontal" >
 
                             <TextView
                                 android:id="@+id/textViewSub5Title"
@@ -161,7 +164,8 @@
                             gl:start_color="@color/gradientLightYellow"
                             gl:end_color="@color/gradientOrange"
                             gl:orientation="LEFT_RIGHT"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:gravity="center_vertical|center_horizontal" >
 
 
                             <TextView
@@ -189,12 +193,13 @@
                             gl:start_color="@color/gradientLightOrange2"
                             gl:end_color="@color/gradientOrange3"
                             gl:orientation="LEFT_RIGHT"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:gravity="center_vertical|center_horizontal" >
 
                             <TextView
                                 android:id="@+id/textViewSub4Title"
                                 android:text="@string/menu_card_4"
-                                android:textSize="20sp"
+                                android:gravity="center"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 
@@ -217,10 +222,12 @@
                             gl:start_color="@color/gradientLightGreen"
                             gl:end_color="@color/gradientLightBlue"
                             gl:orientation="LEFT_RIGHT"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            android:gravity="center_vertical|center_horizontal" >
 
                             <TextView
                                 android:text="@string/menu_card_7"
+                                android:gravity="center"
                                 android:textSize="20sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 

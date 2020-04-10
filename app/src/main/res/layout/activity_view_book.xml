@@ -184,7 +184,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="13sp"
-            android:text="Write a message to the seller (change here)" />
+            android:text="Write a message to the seller" />
 
         <Button
             android:id="@+id/bt_sms"
