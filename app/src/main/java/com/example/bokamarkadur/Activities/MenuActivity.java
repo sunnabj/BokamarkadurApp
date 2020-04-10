@@ -108,17 +108,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        //  Something           ---             Card 6
-        //              --> Location in MENU:   Row 3 / Column 2
-        //
-        Something = (CardView) findViewById(R.id.MenuCard6);
-        Something.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // openActivity(); fyrir hvað sem hér kemur.
-            }
-        });
-
         //  About Us            ---             Card 7
         //              --> Location in MENU:   Row 4 / Column 1
         //
