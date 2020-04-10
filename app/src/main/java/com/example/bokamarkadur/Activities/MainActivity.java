@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     APIInterface apiInterface;
-    String LoggedInUsername = "";
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
