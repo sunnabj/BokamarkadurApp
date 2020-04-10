@@ -253,25 +253,29 @@ public class ViewBookActivity extends AppCompatActivity {
         TextView bookUser = findViewById(R.id.view_book_user);
         bookUser.setText("Posted by: " + user);
 
-        //TextView phoneUser = findViewById(R.id.view_phone);
-        //phoneUser.setText("Phone number: "+phone);
-
-        Log.d("Tag", "asdasd"+phone);
 
         /**
-         * Listener á takka sem opnar activity með upplýsingum
-         * um notandann sem setti bókina inn.
-         * Username er sent þangað með intent.
+         * Listener on a button that opens an activity with information
+         * about the user that added the book.
+         * Username is sent there by an intent.
+         * A user has to be logged in to be able to see the user's info.
          */
         Button viewUser = findViewById(R.id.bt_view_user);
-        //viewUser.setText("View information about " + user);
-        viewUser.setText("View " + user + "'s info");
+        viewUser.setText("  View " + user + "'s info");
         viewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class); //eða bara this)
-                intent.putExtra("username", user); //þurfti að vera declared final til að vera accessible
-                startActivity(intent);
+
+                if (LoginActivity.token != null) {
+                    Intent intent = new Intent(ViewBookActivity.this, UserInfoActivity.class);
+                    intent.putExtra("username", user); //þurfti að vera declared final til að vera accessible
+                    startActivity(intent);
+                }
+                else {
+                    Toast.makeText(getApplicationContext(),
+                            "You have to be logged in to get information about or contact the user",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
 
