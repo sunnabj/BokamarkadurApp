@@ -16,7 +16,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustResize">
         <activity android:name=".Activities.WriteReviewActivity"></activity>
         <activity android:name=".Activities.ReviewActivity" />
         <activity
@@ -51,7 +52,8 @@
             />
         <activity
             android:name=".Activities.RegisterActivity"
-            android:theme="@style/AboutusTheme" />
+            android:theme="@style/AboutusTheme"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/AboutusTheme" />

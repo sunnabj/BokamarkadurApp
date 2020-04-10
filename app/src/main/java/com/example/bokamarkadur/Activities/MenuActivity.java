@@ -2,16 +2,13 @@ package com.example.bokamarkadur.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
 
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -124,13 +121,6 @@ public class MenuActivity extends AppCompatActivity {
         //  Something           ---             Card 6
         //              --> Location in MENU:   Row 3 / Column 2
         //
-        Something = (CardView) findViewById(R.id.MenuCard6);
-        Something.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // openActivity(); fyrir hvað sem hér kemur.
-            }
-        });
 
         //  About Us            ---             Card 7
         //              --> Location in MENU:   Row 4 / Column 1

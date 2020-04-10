@@ -71,7 +71,7 @@
                                 style="@style/viewParent.headerText.HomeCardTitle"
                                 android:id="@+id/textViewSub1Title"
                                 android:text="@string/menu_card_1"
-                                android:textSize="28sp" />
+                                android:textSize="20sp" />
 
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
@@ -97,7 +97,7 @@
                             <TextView
                                 android:id="@+id/textViewSub3Title"
                                 android:text="@string/menu_card_3"
-                                android:textSize="28sp"
+                                android:textSize="20sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 
@@ -126,38 +126,14 @@
                             <TextView
                                 android:id="@+id/textViewSub5Title"
                                 android:text="@string/menu_card_5"
-                                android:textSize="28sp"
+                                android:textSize="20sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
                     </androidx.cardview.widget.CardView>
 
                     <!--                ___________   7. CARD   - (4.row / 1.column) __________________ -->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/MenuCard7"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="15dp"
-                        app:cardPreventCornerOverlap="true"
-                        android:layout_marginTop="10dp">
 
-                        <net.colindodd.gradientlayout.GradientRelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:minHeight="100dp"
-                            gl:end_color="@color/gradientLightYellow2"
-                            gl:start_color="@color/gradientLightOrange2"
-                            gl:orientation="LEFT_RIGHT"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:text="@string/menu_card_7"
-                                android:textSize="22sp"
-                                style="@style/viewParent.headerText.HomeCardTitle" />
-
-
-                        </net.colindodd.gradientlayout.GradientRelativeLayout>
-                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
@@ -191,7 +167,7 @@
                             <TextView
                                 android:id="@+id/textViewSub2Title"
                                 android:text="@string/menu_card_2"
-                                android:textSize="28sp"
+                                android:textSize="20sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
@@ -218,7 +194,7 @@
                             <TextView
                                 android:id="@+id/textViewSub4Title"
                                 android:text="@string/menu_card_4"
-                                android:textSize="28sp"
+                                android:textSize="20sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
 
 
@@ -227,7 +203,7 @@
 
                     <!--                ___________   6. CARD   - (3.row / 2.column) __________________ -->
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/MenuCard6"
+                        android:id="@+id/MenuCard7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:cardCornerRadius="15dp"
@@ -244,43 +220,44 @@
                             android:padding="10dp">
 
                             <TextView
-                                android:id="@+id/textViewSub6Title"
-                                android:text="@string/menu_card_6"
-                                android:textSize="28sp"
+                                android:text="@string/menu_card_7"
+                                android:textSize="20sp"
                                 style="@style/viewParent.headerText.HomeCardTitle" />
+
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>
                     </androidx.cardview.widget.CardView>
 
                     <!--                ___________   8. CARD   - (4.row / 2.column) __________________ -->
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/MenuCard8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="15dp"
-                        app:cardPreventCornerOverlap="true"
-                        android:layout_marginTop="10dp">
 
-                        <net.colindodd.gradientlayout.GradientRelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:minHeight="100dp"
-                            gl:start_color="@color/gradientLightOrange2"
-                            gl:end_color="@color/gradientOrange3"
-                            gl:orientation="LEFT_RIGHT"
-                            android:padding="10dp">
-
-                            <TextView
-                                android:text="@string/menu_card_8"
-                                android:textSize="28sp"
-                                style="@style/viewParent.headerText.HomeCardTitle" />
-
-
-                        </net.colindodd.gradientlayout.GradientRelativeLayout>
-                    </androidx.cardview.widget.CardView>
                 </LinearLayout>
             </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/MenuCard8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="true"
+                android:layout_marginTop="10dp">
 
+                <net.colindodd.gradientlayout.GradientRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="80dp"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    gl:end_color="@color/gradientOrange3"
+                    gl:orientation="LEFT_RIGHT"
+                    gl:start_color="@color/gradientLightOrange2">
+
+                    <TextView
+                        style="@style/viewParent.headerText.HomeCardTitle"
+                        android:text="@string/menu_card_8"
+                        android:textSize="20sp" />
+
+
+                </net.colindodd.gradientlayout.GradientRelativeLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <com.google.android.material.bottomnavigation.BottomNavigationView

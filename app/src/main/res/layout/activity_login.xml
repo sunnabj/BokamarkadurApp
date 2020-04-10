@@ -39,14 +39,14 @@
 
 
                 <TextView
-                    android:text="    Login                     "
+                    android:text="    Login                                 "
                     style="@style/viewParent.headerTextother"
                     android:layout_gravity="bottom"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_welcome"
+                    android:src="@drawable/ic_login"
                     android:adjustViewBounds="true" />
 
 
@@ -64,7 +64,9 @@
                     android:layout_height="match_parent"
                     android:layout_margin="15dp"
                     android:orientation="vertical"
-                    android:background="@drawable/shape">
+                    android:background="@drawable/shape"
+                    android:layout_alignParentBottom="true"
+                    android:fitsSystemWindows="true">
 
                     <TextView
                         style="@style/headerTextPrimary"
