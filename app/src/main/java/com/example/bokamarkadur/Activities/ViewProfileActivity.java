@@ -68,9 +68,6 @@ public class ViewProfileActivity extends AppCompatActivity {
         // This fetches all of user's books and displays them in a list.
         getMyBooks();
 
-        // This connects buttons for activity.
-        connectButtons();
-
         // This function sets up and displays the bottom navigation.
         setBottomNavigation();
 
@@ -128,6 +125,9 @@ public class ViewProfileActivity extends AppCompatActivity {
                 // This is the username of the currently logged in user.
                 pUsername   = response.body().getUsername();
 
+                // This connects buttons for activity.
+                connectButtons(pUsername);
+
                 // Fetch profile info for this logged in user.
                 getUserProfile(pUsername);
             }
@@ -147,8 +147,9 @@ public class ViewProfileActivity extends AppCompatActivity {
     //      "Update My Info" and
     //      "My Reviews"
     // connected to appropriate activities.
-    private void connectButtons() {
+    private void connectButtons(String username) {
 
+        final String profileUsername = username;
         // When user pushes "Update My Info" button
         // updateUsersProfile() is called.
         updateProfile = (Button) findViewById(R.id.updateProfile);
@@ -165,8 +166,14 @@ public class ViewProfileActivity extends AppCompatActivity {
         myReviews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewProfileActivity.this, ViewMyReviewsActivity.class);
-                intent.putExtra("username", ProfileUsername);
+                Log.d(TAG, "\n*****************************************");
+                Log.d(TAG, "\n*****************************************");
+                Log.d(TAG, "\n\t\t final String profileUsername = username;" + profileUsername);
+                Log.d(TAG, "\n\t\t ProfileUsername;" + ProfileUsername);
+                Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
+                intent.putExtra("username", profileUsername);
                 startActivity(intent);
             }
         });

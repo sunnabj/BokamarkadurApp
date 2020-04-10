@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.WriteReviewActivity"></activity>
         <activity android:name=".Activities.ReviewActivity" />
+        <activity android:name=".Activities.ViewMyReviewsActivity" />
         <activity
             android:name=".Activities.UserInfoActivity"
             android:label="@string/title_activity_user_info"

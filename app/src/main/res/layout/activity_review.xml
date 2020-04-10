@@ -77,7 +77,7 @@
                         android:id="@+id/no_reviews" />
 
                     <TableLayout
-                       
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp"
@@ -89,19 +89,6 @@
                             android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
                     </TableLayout>
-
-                   <!-- <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Add your own review: "
-                        android:textColor="@color/primaryTextColor" />
-
-                    <EditText
-                        android:id="@+id/edt_add_review"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" /> -->
 
                     <Button
                         android:id="@+id/add_review"

@@ -30,13 +30,17 @@ import retrofit2.Response;
 
 public class ViewMyReviewsActivity extends AppCompatActivity {
 
-    private static final String TAG = "ReviewActivity";
+    private static final String TAG = "MyReviewsActivity";
 
-    ReviewsAdapter reviewsAdapter; //Allows us to look at reviews in an orderly fashion
+    //Allows us to look at reviews in an orderly fashion
+    ReviewsAdapter receivedReviewsAdapter;
+    ReviewsAdapter writtenReviewsAdapter;
 
+    // Connection to backend created.
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-    TextView receivedReviews;
-    TextView writtenReviews;
+
+    TextView receivedReviewsMessage;
+    TextView writtenReviewsMessage;
 
     public String loggedInUsername;
 
@@ -63,7 +67,7 @@ public class ViewMyReviewsActivity extends AppCompatActivity {
                 TextView user = findViewById(R.id.review_receiver);
                 user.setText("Reviews for " + loggedInUsername + "  ");
 
-                getReceivedReviews(loggedInUsername);
+//                getReceivedReviews(loggedInUsername);
                 getWrittenReviews(loggedInUsername);
             }
 
@@ -77,62 +81,61 @@ public class ViewMyReviewsActivity extends AppCompatActivity {
         });
 
 
-
         // This function sets up and displays the bottom navigation.
         setBottomNavigation();
     }
 
-    private void getReceivedReviews(String username) {
-        /**
-         * Sets up an orderly review list
-         */
-        final RecyclerView ReceivedReviecs_RecyclerView = findViewById(R.id.received_reviews);
-        ReceivedReviecs_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ReceivedReviecs_RecyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
-                getApplicationContext()));
-
-        /**
-         * This function communicates with the server to get all reviews that have been written
-         * about the user with the username username. The reviews are delivered wrapped up in a
-         * convenient response.
-         */
-        final Call<ReviewsResponse> getReviews = apiInterface.viewReviews(username);
-        getReviews.enqueue(new Callback<ReviewsResponse>() {
-            @Override
-            public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
-                Log.d(TAG, "RESPONSE BODY: " + response.body().getClass());
-
-                List<Review> reviews = response.body().viewReviews();
-
-                reviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
-                        getApplicationContext());
-
-                // If reviews exist for the user, they are shown as an orderly list.
-                if (reviewsAdapter.getItemCount() != 0) {
-                    ReceivedReviecs_RecyclerView.setAdapter(reviewsAdapter);
-                }
-                // If no reviews exist for the user, this is made clear with a message.
-                else {
-                    receivedReviews = findViewById(R.id.no_reviews);
-                    receivedReviews.setText("You have received no Reviews");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ReviewsResponse> call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-                call.cancel();
-            }
-        });
-    }
-
+//    private void getReceivedReviews(String username) {
+//        /**
+//         * Sets up an orderly review list
+//         */
+//        final RecyclerView ReceivedReviews_RecyclerView = findViewById(R.id.received_reviews_recycler_view);
+//        ReceivedReviews_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        ReceivedReviews_RecyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
+//                getApplicationContext()));
+//
+//        /**
+//         * This function communicates with the server to get all reviews that have been written
+//         * about the user with the username username. The reviews are delivered wrapped up in a
+//         * convenient response.
+//         */
+//        final Call<ReviewsResponse> getReviews = apiInterface.viewReviews(username);
+//        getReviews.enqueue(new Callback<ReviewsResponse>() {
+//            @Override
+//            public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+//                Log.d(TAG, "RESPONSE BODY: " + response.body().getClass());
+//
+//                List<Review> reviews = response.body().viewReviews();
+//
+//                receivedReviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
+//                        getApplicationContext());
+//
+//                // If reviews exist for the user, they are shown as an orderly list.
+//                if (receivedReviewsAdapter.getItemCount() != 0) {
+//                    ReceivedReviews_RecyclerView.setAdapter(receivedReviewsAdapter);
+//                }
+//                // If no reviews exist for the user, this is made clear with a message.
+//                else {
+//                    receivedReviewsMessage = findViewById(R.id.received_reviews_message);
+//                    receivedReviewsMessage.setText("You have received no Reviews");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+//                // Log error here since request failed
+//                Log.e(TAG, t.toString());
+//                call.cancel();
+//            }
+//        });
+//    }
+//
 
     private void getWrittenReviews(String username) {
         /**
          * Sets up an orderly review list
          */
-        final RecyclerView WrittenReviews_RecyclerView = findViewById(R.id.received_reviews);
+        final RecyclerView WrittenReviews_RecyclerView = findViewById(R.id.written_reviews_recycler_view);
         WrittenReviews_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         WrittenReviews_RecyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
                 getApplicationContext()));
@@ -150,17 +153,17 @@ public class ViewMyReviewsActivity extends AppCompatActivity {
 
                 List<Review> reviews = response.body().viewReviews();
 
-                reviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
+                writtenReviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
                         getApplicationContext());
 
                 // If reviews exist for the user, they are shown as an orderly list.
-                if (reviewsAdapter.getItemCount() != 0) {
-                    WrittenReviews_RecyclerView.setAdapter(reviewsAdapter);
+                if (writtenReviewsAdapter.getItemCount() != 0) {
+                    WrittenReviews_RecyclerView.setAdapter(writtenReviewsAdapter);
                 }
                 // If no reviews exist for the user, this is made clear with a message.
                 else {
-                    TextView writtenReviews = findViewById(R.id.written_reviews);
-                    writtenReviews.setText("You have written no Reviews");
+                    writtenReviewsMessage = findViewById(R.id.written_reviews_message);
+                    writtenReviewsMessage.setText("You have written no Reviews");
                 }
             }
 
