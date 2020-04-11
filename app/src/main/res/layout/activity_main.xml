@@ -50,6 +50,7 @@
                     style="@style/headerText"
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"
+                    android:textSize="25dp"
                     android:text="Book Market" />
 
 
