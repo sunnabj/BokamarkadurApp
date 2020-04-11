@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +36,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
 
     private Button uploadImage;
     private Button submit;
-    private Button backToMenu;
+    private TextView backToMenu;
     private Uri selectedImage;
     private String imgDecodableString = "";
     private ImageView viewUploadedImage;
@@ -84,7 +85,7 @@ public class AddBookForSaleActivity extends AppCompatActivity {
             }
         });
 
-        backToMenu = (Button) findViewById(R.id.backToMenu);
+        backToMenu = (TextView) findViewById(R.id.backToMenu);
         backToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
