@@ -16,8 +16,8 @@
     <string name="addbook_sale">Add Book For Sale</string>
     <string name="addbook_request">Request a Book</string>
 
-    <string name="app_name">Besti Bókamarkaður</string>
-    <string name="app_name_2">Besti \nBókamarkaður</string>
+    <string name="app_name">Book Market</string>
+    <string name="app_name_2">Book \nMarket</string>
 
     <string name="edit_book_info">Edit Book Info</string>
     <string name="my_books">My Books</string>

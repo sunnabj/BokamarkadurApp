@@ -50,7 +50,8 @@
                     style="@style/headerText"
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"
-                    android:text="Besti Bókamarkaður" />
+                    android:textSize="25dp"
+                    android:text="Book Market" />
 
 
             </LinearLayout>
@@ -71,7 +72,7 @@
 
                     <TextView
                         style="@style/headerTextPrimary"
-                        android:text="Newest books"
+                        android:text="Recently Added"
                         android:layout_marginTop="@dimen/loginViewsMargin"/>
 
                     <TableLayout
@@ -107,7 +108,7 @@
                         <TextView
                             style="@style/headerTextPrimary"
                             android:layout_marginTop="@dimen/loginViewsMargin"
-                            android:text="Available Subjects" />
+                            android:text="Books by Subject" />
 
 
                         <androidx.recyclerview.widget.RecyclerView
