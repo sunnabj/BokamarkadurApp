@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bokamarkadur.Adapters.BooksAdapter;
 import com.example.bokamarkadur.POJO.Book;
-import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -49,7 +48,6 @@ public class ViewProfileActivity extends AppCompatActivity {
     TextView profilePassword;
 
     User UserProfile;
-    List<Book> usersBooks;
 
     private static final String TAG = "ViewProfileActivity";
 
@@ -65,8 +63,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         getLoggedInUser();
 
 
-        // This fetches all of user's books and displays them in a list.
-        getMyBooks();
+//        // This fetches all of user's books and displays them in a list.
+//        getMyBooks();
 
         // This function sets up and displays the bottom navigation.
         setBottomNavigation();
@@ -86,8 +84,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                                  String phonenumber,
                                  String username,
                                  String password){
-//  Eftir að undirbúa List<Book> álíka og gert í öðrum klösum, en þá verður línan fyrir ofan svona:
-//                              String password, String retypepassword, List<Book> usersBooks){
+
 
         Log.d(TAG, "BBO -->> showUserProfile: setting the title and author to widgets.");
 
@@ -142,43 +139,6 @@ public class ViewProfileActivity extends AppCompatActivity {
         });
     }
 
-//    private void setLIU(String liu) {
-//        LIU = liu;
-//    }
-//
-//    private String getLIU() {
-//        return LIU;
-//    }
-
-    // Get currently logged in user.
-//    private void getLIU() {
-//        String LIU;
-//
-//        Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
-//        getLoggedInUser.enqueue(new Callback<User>() {
-//            @Override
-//            public void onResponse(Call<User> call, Response<User> response) {
-//
-//                // This is the username of the currently logged in user.
-//                LIU   = response.body().getUsername();
-//
-//                // This connects buttons for activity.
-//                connectButtons(pUsername);
-//
-//                // Fetch profile info for this logged in user.
-//                getUserProfile(pUsername);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<User> call, Throwable t) {
-//                // Log error here since request failed
-//                Log.e(TAG, t.toString());
-//                call.cancel();
-//            }
-//
-//        });
-//    }
-
 
     // Buttons for
     //      "Update My Info" and
@@ -221,7 +181,7 @@ public class ViewProfileActivity extends AppCompatActivity {
     private void getUserProfile(String profileusername) {
         ProfileUsername = profileusername;
 
-        Call<User> getUserProfile = apiInterface.getUserProfile(ProfileUsername);
+        final Call<User> getUserProfile = apiInterface.getUserProfile(ProfileUsername);
         getUserProfile.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -233,23 +193,24 @@ public class ViewProfileActivity extends AppCompatActivity {
                 String phonenumber  = UserProfile.getPhonenumber();
                 String username     = UserProfile.getUsername();
                 String password     = UserProfile.getPassword();
-                usersBooks          = UserProfile.getBooks();
 
-                Log.d(TAG, "\n*****************************************");
-                Log.d(TAG, "*****************************************");
-                Log.d(TAG, "\t UserProfile:\n\n");
-                Log.d(TAG, "\n \t response.body(); = *" + response.body() + "*");
-                Log.d(TAG, "\n \t User UserProfile = response.body().getUser() = *" + UserProfile + "*");
-                Log.d(TAG, "\n \t UserProfile.getName(); = *"        + UserProfile.getName()        + "*");
-                Log.d(TAG, "\n \t UserProfile.getInfo(); = *"        + UserProfile.getInfo()        + "*");
-                Log.d(TAG, "\n \t UserProfile.getEmail(); = *"       + UserProfile.getEmail()       + "*");
-                Log.d(TAG, "\n \t UserProfile.getPhonenumber(); = *" + UserProfile.getPhonenumber() + "*");
-                Log.d(TAG, "\n \t UserProfile.getUsername(); = *"    + UserProfile.getUsername()    + "*");
-                Log.d(TAG, "\n \t UserProfile.getPassword(); = *"    + UserProfile.getPassword()    + "*\n");
-                Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                Log.d("getUserProfile", "\n." +
+                        "\n********************************************** " +
+                        "\n*********************************************** " +
+                        "\n\t UserProfile:\n\n" +
+                        "\n\n \t User UserProfile = response.body().getUser() = *" + UserProfile +
+                        "\n \t UserProfile.getName(); = *"        + UserProfile.getName()        + "*" +
+                        "\n \t UserProfile.getInfo(); = *"        + UserProfile.getInfo()        + "*" +
+                        "\n \t UserProfile.getEmail(); = *"       + UserProfile.getEmail()       + "*" +
+                        "\n \t UserProfile.getPhonenumber(); = *" + UserProfile.getPhonenumber() + "*" +
+                        "\n \t UserProfile.getUsername(); = *"    + UserProfile.getUsername()    + "*" +
+                        "\n \t UserProfile.getPassword(); = *"    + UserProfile.getPassword()    + "*\n" +
+                        "\n\n***********************************************" +
+                        "\n***********************************************" +
+                        "\n***********************************************");
 
                 showUserProfile(name, info, email, phonenumber, username, password);
+                showUsersBooks(UserProfile);
             }
 
             @Override
@@ -272,14 +233,14 @@ public class ViewProfileActivity extends AppCompatActivity {
         EditText uInfo              = (EditText) findViewById(R.id.edtInfo);
         EditText uEmail             = (EditText) findViewById(R.id.edtEmail);
         EditText uPhonenumber       = (EditText) findViewById(R.id.edtPhonenumber);
-        EditText uUsername          = (EditText) findViewById(R.id.edtUsername);
+//        EditText uUsername          = (EditText) findViewById(R.id.edtUsername);
         EditText uPassword          = (EditText) findViewById(R.id.edtPassword);
 
         String updateName           = uName.getText().toString();
         String updateInfo           = uInfo.getText().toString();
         String updateEmail          = uEmail.getText().toString();
         String updatePhonenumber    = uPhonenumber.getText().toString();
-        String updateUsername       = uUsername.getText().toString();
+//        String updateUsername       = uUsername.getText().toString();
         String updatePassword       = uPassword.getText().toString();
 
         // Updated info in JSON form.
@@ -289,7 +250,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         JSONupdatedProfile.addProperty("info", updateInfo);
         JSONupdatedProfile.addProperty("email", updateEmail);
         JSONupdatedProfile.addProperty("phonenumber", updatePhonenumber);
-        JSONupdatedProfile.addProperty("username", updateUsername);
+//        JSONupdatedProfile.addProperty("username", updateUsername);
 
 
         // Password is only sent if non-empty.
@@ -310,7 +271,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         Log.d(TAG, "\n\n\n \t updateInfo *"         + updateInfo        + "*");
         Log.d(TAG, "\n\n\n \t updateEmail *"        + updateEmail       + "*");
         Log.d(TAG, "\n\n\n \t updatePhonenumber *"  + updatePhonenumber + "*");
-        Log.d(TAG, "\n\n\n \t updateUsername *"     + updateUsername    + "*");
+//        Log.d(TAG, "\n\n\n \t updateUsername *"     + updateUsername    + "*");
         Log.d(TAG, "\n\n\n \t updatePassword *"     + updatePassword    + "*");
 
         Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -320,6 +281,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         Call<User> updateUserProfile = apiInterface.updateUserProfile(JSONupdatedProfile,
                 "application/json",
                 "Bearer " + LoginActivity.token);
+
+
         updateUserProfile.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -338,80 +301,16 @@ public class ViewProfileActivity extends AppCompatActivity {
     }
 
 
-    // GET CALL to backend that fetches all books that
-    // this user has added for sale or made requests for.
-    private void getMyBooks() {
+    // User's books are now fetched from User.getBooks() from getUserProfile() call
+    // and not a new unnecessary call to backend with MyBooks(...)
+    private void showUsersBooks(User LIU) {
+        List<Book> usersBooks = LIU.getBooks();
 
-        /**
-         @GET call that returns list of Books this (logged in) user has requested or put up for sale.
-         **/
+        //
         final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
         UsersBooksrecyclerView.setLayoutManager(new LinearLayoutManager(this));
         UsersBooksrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
-
-        Call<BookList> getMyBooks = apiInterface.myBooks("Bearer " + LoginActivity.token);
-        getMyBooks.enqueue(new Callback<BookList>() {
-            @Override
-            public void onResponse(Call<BookList> call, Response<BookList> response) {
-                List<Book> myBooks = response.body().getBooks();
-                int numberOfBooks = myBooks.size();
-
-                if (numberOfBooks > 0) {
-                    UsersBooksrecyclerView.setAdapter(new BooksAdapter(myBooks, R.layout.list_item, getApplicationContext()));
-                }
-                else {
-                    // Set the header for BookListView = "All Books".
-                    TextView noBooks = findViewById(R.id.no_books);
-                    noBooks.setText("You have not added\n any books...\n\n ...YET...");
-                }
-
-                Log.d(TAG, "BBO -->> UsersBooks: " + myBooks);
-                // TODO: Debug virkni, má eyða síðar meir.
-                Log.d(TAG, "BBO -->> Number of books user has: " + myBooks.size());
-            }
-
-            @Override
-            public void onFailure(Call<BookList> call, Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-                call.cancel();
-            }
-        });
-    }
-
-    private void showMyBooks() {
-
-
-    }
-
-
-    // An unused function that is supposed to get users books
-    // by setting UsersBooks = response.body().getUser().getBooks()
-    // when fetching logged in user in getLoggedInUser() and
-    // getUserProfile() functions, but it is not working.
-    private void showUsersBooks() {
-        /**
-         Reynt að setja bækur í BooksAdapter útfrá User.getBooks() en það virkar ekki enn sem komið er.
-         **/
-        // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
-        final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
-        UsersBooksrecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        UsersBooksrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
-
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "\n\n\n\n \t\t\t usersBooks -> into adapter = *" + usersBooks + "*\n\n\n\n" );
         UsersBooksrecyclerView.setAdapter(new BooksAdapter(usersBooks, R.layout.list_item, getApplicationContext()));
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
-        Log.d(TAG, "***********************************************");
     }
 
 
