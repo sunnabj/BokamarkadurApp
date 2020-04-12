@@ -13,10 +13,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bokamarkadur.Activities.LoginActivity;
 import com.example.bokamarkadur.Adapters.BooksAdapter;
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.BookList;
@@ -64,6 +63,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         // and nested function that retrieves User's info and displays it
         // where user can make changes to his information.
         getLoggedInUser();
+
 
         // This fetches all of user's books and displays them in a list.
         getMyBooks();
@@ -141,6 +141,43 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         });
     }
+
+//    private void setLIU(String liu) {
+//        LIU = liu;
+//    }
+//
+//    private String getLIU() {
+//        return LIU;
+//    }
+
+    // Get currently logged in user.
+//    private void getLIU() {
+//        String LIU;
+//
+//        Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
+//        getLoggedInUser.enqueue(new Callback<User>() {
+//            @Override
+//            public void onResponse(Call<User> call, Response<User> response) {
+//
+//                // This is the username of the currently logged in user.
+//                LIU   = response.body().getUsername();
+//
+//                // This connects buttons for activity.
+//                connectButtons(pUsername);
+//
+//                // Fetch profile info for this logged in user.
+//                getUserProfile(pUsername);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<User> call, Throwable t) {
+//                // Log error here since request failed
+//                Log.e(TAG, t.toString());
+//                call.cancel();
+//            }
+//
+//        });
+//    }
 
 
     // Buttons for

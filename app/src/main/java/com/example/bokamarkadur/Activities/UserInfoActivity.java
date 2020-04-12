@@ -2,12 +2,6 @@ package com.example.bokamarkadur.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.example.bokamarkadur.POJO.UserResponse;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.bokamarkadur.POJO.UserResponse;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -145,7 +143,6 @@ public class UserInfoActivity extends AppCompatActivity {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
-
 
     private void hideSystemUI() {
         // Enables regular immersive mode.

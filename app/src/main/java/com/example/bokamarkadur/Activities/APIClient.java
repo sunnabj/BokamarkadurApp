@@ -1,11 +1,8 @@
 package com.example.bokamarkadur.Activities;
 
-import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -19,8 +16,14 @@ class APIClient {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().build();
+//        OkHttpClient client = new OkHttpClient.Builder().build();
 
+        // This was added because of frequent "java.net.SocketTimeoutException: timeout"
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(5, TimeUnit.MINUTES) // connect timeout
+                .writeTimeout(5, TimeUnit.MINUTES) // write timeout
+                .readTimeout(5, TimeUnit.MINUTES) // read timeout
+                .build();
 
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://fathomless-waters-17510.herokuapp.com/")

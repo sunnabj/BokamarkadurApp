@@ -21,7 +21,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
@@ -90,7 +89,12 @@ public class ViewBookActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // This function sets up and displays the bottom navigation.
+        setBottomNavigation();
     }
+
+
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(ViewBookActivity.this)
                 .setMessage(message)
@@ -278,6 +282,47 @@ public class ViewBookActivity extends AppCompatActivity {
         ImageView bookImage = findViewById(R.id.view_book_image);
         Picasso.get().load("https://fathomless-waters-17510.herokuapp.com/" + image).into(bookImage);
     }
+
+    // This function sets up connections to other activities
+    // and displays the bottom navigation.
+    private void setBottomNavigation() {
+        /**+
+         *  Bottom navigation
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.dashboard);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.about:
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(0,0);}
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    // Take user to the LoginActivity.
+    private void openLoginActivity() {
+        Intent intent= new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
