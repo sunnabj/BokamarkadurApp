@@ -42,7 +42,7 @@ public class NewestBooksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_book_list);
 
         TextView bookListView = findViewById(R.id.view_book_list);
-        bookListView.setText("Newest Books:");
+        bookListView.setText("Newest Books");
 
         // Hide System UI for best experience
         hideSystemUI();

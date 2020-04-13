@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -124,5 +125,10 @@ interface APIInterface {
 
     @GET("/loggedIn")
     Call<User> getLoggedInUser(@Header("Authorization") String authorization);
+
+
+    @DELETE("/delete/{id}")
+    Call<Book> deleteBook(@Path("id") long id, @Header("Authorization") String authorization);
+
 
 }

@@ -108,17 +108,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        //  Something           ---             Card 6
-        //              --> Location in MENU:   Row 3 / Column 2
-        //
-        Something = (CardView) findViewById(R.id.MenuCard6);
-        Something.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // openActivity(); fyrir hvað sem hér kemur.
-            }
-        });
-
         //  About Us            ---             Card 7
         //              --> Location in MENU:   Row 4 / Column 1
         //
@@ -204,12 +193,15 @@ public class MenuActivity extends AppCompatActivity {
          *  Bottom navigation
          */
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.dashboard);
+        bottomNavigationView.setSelectedItemId(R.id.about);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(),
+                                AllBooksActivity.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(),

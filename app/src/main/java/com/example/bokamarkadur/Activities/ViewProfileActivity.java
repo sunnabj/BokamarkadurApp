@@ -227,20 +227,19 @@ public class ViewProfileActivity extends AppCompatActivity {
     // to update user's profile information.
     private void updateUserProfile() {
         /**
-         * Upplýsingar eru fengnar úr formi í layout og JsonObject búinn til út frá þeim
+         * Information is retirieved from text fields and added to a JsonObject to
+         * send to REST backend.
          */
         EditText uName              = (EditText) findViewById(R.id.edtName);
         EditText uInfo              = (EditText) findViewById(R.id.edtInfo);
         EditText uEmail             = (EditText) findViewById(R.id.edtEmail);
         EditText uPhonenumber       = (EditText) findViewById(R.id.edtPhonenumber);
-//        EditText uUsername          = (EditText) findViewById(R.id.edtUsername);
         EditText uPassword          = (EditText) findViewById(R.id.edtPassword);
 
         String updateName           = uName.getText().toString();
         String updateInfo           = uInfo.getText().toString();
         String updateEmail          = uEmail.getText().toString();
         String updatePhonenumber    = uPhonenumber.getText().toString();
-//        String updateUsername       = uUsername.getText().toString();
         String updatePassword       = uPassword.getText().toString();
 
         // Updated info in JSON form.
@@ -250,7 +249,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         JSONupdatedProfile.addProperty("info", updateInfo);
         JSONupdatedProfile.addProperty("email", updateEmail);
         JSONupdatedProfile.addProperty("phonenumber", updatePhonenumber);
-//        JSONupdatedProfile.addProperty("username", updateUsername);
+
 
 
         // Password is only sent if non-empty.
@@ -271,7 +270,6 @@ public class ViewProfileActivity extends AppCompatActivity {
         Log.d(TAG, "\n\n\n \t updateInfo *"         + updateInfo        + "*");
         Log.d(TAG, "\n\n\n \t updateEmail *"        + updateEmail       + "*");
         Log.d(TAG, "\n\n\n \t updatePhonenumber *"  + updatePhonenumber + "*");
-//        Log.d(TAG, "\n\n\n \t updateUsername *"     + updateUsername    + "*");
         Log.d(TAG, "\n\n\n \t updatePassword *"     + updatePassword    + "*");
 
         Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");

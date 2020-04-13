@@ -48,7 +48,7 @@ public class AllBooksActivity extends AppCompatActivity {
 
         // Set the header for BookListView = "All Books".
         TextView bookListView = findViewById(R.id.view_book_list);
-        bookListView.setText("All Books:");
+        bookListView.setText("All Books");
 
         // Hide System UI for best experience
         hideSystemUI();
