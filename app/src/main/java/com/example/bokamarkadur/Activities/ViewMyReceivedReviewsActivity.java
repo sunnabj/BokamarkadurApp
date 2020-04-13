@@ -53,8 +53,8 @@ public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
         Log.d(TAG, "username: " + username);
 
         //The header tells us which user the review are about.
-        TextView user = findViewById(R.id.review_receiver);
-        user.setText("Reviews for " + username + "  ");
+//        TextView user = findViewById(R.id.review_receiver);
+//        user.setText("Reviews \n you have \n received from \n other users:");
 
 //        /**
 //         * Retrieves the current logged in user, and sets up a button that allows the user to

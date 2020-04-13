@@ -169,7 +169,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                 Log.d(TAG, "\n\t\t ProfileUsername;" + ProfileUsername);
                 Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                Intent intent = new Intent(ViewProfileActivity.this, ViewMyWrittenReviewsActivity.class);
+                Intent intent = new Intent(ViewProfileActivity.this, ViewMyReceivedReviewsActivity.class);
                 intent.putExtra("username", profileUsername);
                 startActivity(intent);
             }

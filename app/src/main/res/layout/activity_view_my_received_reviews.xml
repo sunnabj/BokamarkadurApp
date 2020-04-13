@@ -42,9 +42,10 @@
                 <TextView
                     android:id="@+id/review_receiver"
                     style="@style/viewParent.headerTextother"
-                    android:layout_gravity="center"
+                    android:layout_gravity="top"
+                    android:text="       "
                     android:paddingLeft="10dp"
-                    android:layout_marginTop="40dp"/>
+                    android:layout_marginTop="30dp"/>
 
                 <ImageView
                     android:paddingTop="30dp"
@@ -70,6 +71,12 @@
                     android:layout_margin="15dp"
                     android:background="@drawable/shape"
                     android:orientation="vertical">
+
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:text="@string/mr_received_reviews"
+                        android:textSize="30sp" />
 
                     <TextView
                         style="@style/headerTextPrimary"
