@@ -16,8 +16,8 @@
     <string name="addbook_sale">Add Book For Sale</string>
     <string name="addbook_request">Request a Book</string>
 
-    <string name="app_name">Book Market App</string>
-    <string name="app_name_2">Book \nMarket App</string>
+    <string name="app_name">Book Market</string>
+    <string name="app_name_2">Book \nMarket</string>
 
     <string name="edit_book_info">Edit Book Info</string>
     <string name="my_books">My Books</string>
@@ -52,7 +52,7 @@
     <string name="menu_card_4">Request \na Book</string>
     <string name="menu_card_5">My Profile</string>
     <string name="menu_card_6">* ??? *</string>
-    <string name="menu_card_7">About \nDelelopers</string>
+    <string name="menu_card_7">About \nDevelopers</string>
     <string name="menu_card_8">Logout</string>
 
 

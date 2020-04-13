@@ -148,6 +148,15 @@
             android:textColor="@color/colorBlack"
             android:textSize="14sp" />
 
+
+        <Button
+            android:id="@+id/bt_delete_book"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textAllCaps="false"/>
+
+
         <Button
             android:id="@+id/bt_view_user"
             android:drawableLeft="@drawable/ic_male_avatar"
@@ -175,19 +184,49 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="13sp"
-            android:text="Write a message to the seller (change here)" />
+            android:text="Write a message to the seller" />
 
         <Button
             android:id="@+id/bt_sms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
             style="@style/loginButton"
             android:text="Send request" />
+
+        <TextView
+            android:id="@+id/backToMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="60dp"
+            android:text="@string/mp_button_menu"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="20sp"
+            android:clickable="true" />
 
     </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
-    
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bottom_navigation_background"
+        android:elevation="8dp"
+        app:labelVisibilityMode="selected"
+        app:itemIconTint="@drawable/bottom_navigation_color_selector"
+        app:itemTextColor="@drawable/selector"
+        app:menu="@menu/menu_navigation"
+        app:itemHorizontalTranslationEnabled="true"
+        />
 
 </RelativeLayout>

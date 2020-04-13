@@ -61,39 +61,6 @@ public class ViewBookActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
-        /**+
-         * Bottom navigation
-         */
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.home);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.dashboard:
-                        startActivity(new Intent(getApplicationContext(),
-                                AllBooksActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.home:
-                        startActivity(new Intent(getApplicationContext(),
-                                MainActivity.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.about:
-                        if (LoginActivity.token == null) {
-                            openLoginActivity();
-                            Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
-                        } else {
-                            startActivity(new Intent(getApplicationContext(),
-                                    MenuActivity.class));
-                            overridePendingTransition(0,0);}
-                        return true;
-                }
-                return false;
-            }
-        });
-
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
         /**
@@ -173,7 +140,7 @@ public class ViewBookActivity extends AppCompatActivity {
         });
 
         // This function sets up and displays the bottom navigation.
-//        setBottomNavigation();
+        setBottomNavigation();
     }
 
 
@@ -419,37 +386,37 @@ public class ViewBookActivity extends AppCompatActivity {
 
     // This function sets up connections to other activities
     // and displays the bottom navigation.
-//    private void setBottomNavigation() {
-//        /**+
-//         *  Bottom navigation
-//         */
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-////        bottomNavigationView.setSelectedItemId(R.id.dashboard);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-//                switch (menuItem.getItemId()){
-//                    case R.id.dashboard:
-//                        return true;
-//                    case R.id.home:
-//                        startActivity(new Intent(getApplicationContext(),
-//                                MainActivity.class));
-//                        overridePendingTransition(0,0);
-//                        return true;
-//                    case R.id.about:
-//                        if (LoginActivity.token == null) {
-//                            openLoginActivity();
-//                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
-//                        } else {
-//                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-//                            startActivity(intent);
-//                            overridePendingTransition(0,0);}
-//                        return true;
-//                }
-//                return false;
-//            }
-//        });
-//    }
+    private void setBottomNavigation() {
+        /**+
+         *  Bottom navigation
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+//        bottomNavigationView.setSelectedItemId(R.id.dashboard);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.about:
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
+                            overridePendingTransition(0,0);}
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
 
     // Take user to the LoginActivity.
     private void openLoginActivity() {
