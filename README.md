@@ -161,12 +161,17 @@ The project should be uploaded to Android Studio, and then run either by setting
 
 ## Gif images showing some of the App's UI and flow between Activities ##
 
+
 ### Logging in and checking "My Profile" for logged in User: ### 
 ![](/LoginAndMyProfile.gif)
+
 
 ### User cannot add a review for himself: ### 
 ![](/CanNotReviewYourSelf.gif)
 
+
+### User adds a book he wants through "Request a Book": ### 
+![](/AddingBook.gif)
 
 
 ## Developers ##
