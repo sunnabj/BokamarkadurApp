@@ -168,7 +168,10 @@ The project should be uploaded to Android Studio, and then run either by setting
 ![](/CanNotReviewYourSelf.gif)
 
 ### User adds a book he wants through "Request a Book":
+<p align="center">
 ![](/AddingBook.gif)
+</p>
+
 ## Developers ##
 
 * _Baldvin Blær Oddsson_
