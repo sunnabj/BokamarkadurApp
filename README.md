@@ -156,6 +156,10 @@ The project should be uploaded to Android Studio, and then run either by setting
 
 * This activity will allow users to update their profile information and get an overlook of the books they have put up for sale or requested in the application.
 
+## Gif images showing App flow ##
+
+### Logging in and checking "My Profile" for logged in User:
+![](LoginAndMyProfile.gif)
 
 ## Developers ##
 
