@@ -42,6 +42,7 @@
     <string name="mp_my_profile">My Profile</string>
     <string name="mp_button_text">Update My Info</string>
     <string name="mp_button_menu">Back To Menu</string>
+    <string name="mp_button_profile">Back To My Profile</string>
     <string name="mr_received_reviews">Received Reviews</string>
     <string name="mr_written_reviews">Written Reviews</string>
     <string name="my_received_reviews">\n My\n Received\n Reviews</string>

@@ -28,13 +28,14 @@ import retrofit2.Response;
 
 public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
 
-    private static final String TAG = "ReviewActivity";
+    // Used for debugging;
+    private static final String TAG = "ViewMyReceivedReview";
 
     ReviewsAdapter reviewsAdapter; //Allows us to look at reviews in an orderly fashion
 
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-    public String loggedInUsername;
+    private TextView backToMyProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,38 +53,17 @@ public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
         final String username = getIncomingIntent();
         Log.d(TAG, "username: " + username);
 
-        //The header tells us which user the review are about.
-//        TextView user = findViewById(R.id.review_receiver);
-//        user.setText("Reviews \n you have \n received from \n other users:");
-
-//        /**
-//         * Retrieves the current logged in user, and sets up a button that allows the user to
-//         * write his own reviews.
-//         */
-//        Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
-//        getLoggedInUser.enqueue(new Callback<User>() {
-//            @Override
-//            public void onResponse(Call<User> call, Response<User> response) {
-//                Log.d(TAG, "Við fórum í onResponse");
-//                // This is the username of the currently logged in user.
-//                loggedInUsername = response.body().getUsername();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<User> call, Throwable t) {
-//                // Log error here since request failed
-//                Log.d(TAG, "Við fórum í onFailure");
-//                Log.e(TAG, t.toString());
-//                call.cancel();
-//            }
-//
-//        });
-
         getReceivedReviews(username);
 
-        Log.d(TAG, "ReviewActivity: loggedInUsername = " + loggedInUsername);
         Log.d(TAG, "ReviewActivity: username = " + username);
 
+        backToMyProfile = (TextView) findViewById(R.id.backToMyProfile);
+        backToMyProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openViewProfileActivity();
+            }
+        });
     }
 
     /**
@@ -130,7 +110,7 @@ public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
                 // If no reviews exist for the user, this is made clear with a message.
                 else {
                     TextView noReviews = findViewById(R.id.no_reviews);
-                    noReviews.setText("No Reviews available for " + username);
+                    noReviews.setText("\n\nYou have not\nreceived any reviews\n..yet");
                 }
             }
 
@@ -148,6 +128,10 @@ public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openViewProfileActivity() {
+        Intent intent= new Intent(this, ViewProfileActivity.class);
+        startActivity(intent);
+    }
 
     private void setBottomNavigation() {
         /**+

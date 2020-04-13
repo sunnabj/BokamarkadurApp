@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ReviewActivity">
+    tools:context=".Activities.ViewMyReceivedReviewsActivity">
     <ScrollView style="@style/parent">
 
         <RelativeLayout
@@ -93,10 +93,24 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/reviews_recycler_view"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:maxHeight="200dp">
                         </androidx.recyclerview.widget.RecyclerView>
 
                     </TableLayout>
+
+                    <TextView
+                        android:id="@+id/backToMyProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="100dp"
+                        android:layout_marginBottom="100dp"
+                        android:text="@string/mp_button_profile"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="20sp"
+                        android:clickable="true" />
 
 
                 </LinearLayout>

@@ -86,7 +86,9 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/reviews_recycler_view"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+                            android:layout_height="match_parent"
+                            android:maxHeight="200dp">
+                        </androidx.recyclerview.widget.RecyclerView>
 
                     </TableLayout>
 
@@ -95,6 +97,7 @@
                         style="@style/loginButton"
                         android:text="Add your own Review"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="60dp"
                         android:layout_marginTop="@dimen/loginViewsMargin"/>
 -->
                 </LinearLayout>
