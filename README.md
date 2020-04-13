@@ -167,8 +167,6 @@ The project should be uploaded to Android Studio, and then run either by setting
 ### User cannot add a review for himself: ### 
 ![](/CanNotReviewYourSelf.gif)
 
-### User adds a book he wants through "Request a Book": ### 
-![](/AddingBook.gif)
 
 
 ## Developers ##
