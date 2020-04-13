@@ -159,7 +159,7 @@ The project should be uploaded to Android Studio, and then run either by setting
 ## Gif images showing App flow ##
 
 ### Logging in and checking "My Profile" for logged in User:
-![](LoginAndMyProfile.gif)
+![](/LoginAndMyProfile.gif)
 
 ## Developers ##
 
