@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
+public class ViewMyWrittenReviewsActivity extends AppCompatActivity {
 
     private static final String TAG = "ReviewActivity";
 
@@ -39,14 +39,9 @@ public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_my_received_reviews);
+        setContentView(R.layout.activity_view_my_written_reviews);
 
         Log.d(TAG, "onCreate: started.");
-
-        // Hide System UI for best experience
-        hideSystemUI();
-
-        setBottomNavigation();
 
         // Fetches the username of the user from UserInfoActivity.
         final String username = getIncomingIntent();
@@ -79,11 +74,15 @@ public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
 //
 //        });
 
-        getReceivedReviews(username);
+        getWrittenReviews(username);
 
         Log.d(TAG, "ReviewActivity: loggedInUsername = " + loggedInUsername);
         Log.d(TAG, "ReviewActivity: username = " + username);
 
+        // Hide System UI for best experience
+        hideSystemUI();
+
+        setBottomNavigation();
     }
 
     /**
@@ -96,7 +95,7 @@ public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
         return username;
     }
 
-    private void getReceivedReviews(String Username) {
+    private void getWrittenReviews(String Username) {
         final String username = Username;
 
         /**
@@ -112,11 +111,11 @@ public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
          * about the user with the username username. The reviews are delivered wrapped up in a
          * convenient response.
          */
-        final Call<ReviewsResponse> getReviews = apiInterface.viewReviews(username);
-        getReviews.enqueue(new Callback<ReviewsResponse>() {
+        final Call<ReviewsResponse> getWrittenReviews = apiInterface.viewWrittenReviews(username);
+        getWrittenReviews.enqueue(new Callback<ReviewsResponse>() {
             @Override
             public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
-                Log.d(TAG, "RESPONSE BODY: " + response.body().getClass());
+//                Log.d(TAG, "RESPONSE BODY: " + response.body().getClass());
 
                 List<Review> reviews = response.body().viewReviews();
 
@@ -130,7 +129,7 @@ public class ViewMyReceivedReviewsActivity extends AppCompatActivity {
                 // If no reviews exist for the user, this is made clear with a message.
                 else {
                     TextView noReviews = findViewById(R.id.no_reviews);
-                    noReviews.setText("No Reviews available for " + username);
+                    noReviews.setText("You have written no reviews");
                 }
             }
 
