@@ -200,7 +200,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="60dp"
             android:text="@string/mp_button_menu"
             android:textColor="@color/primaryTextColor"
@@ -212,21 +212,21 @@
         </RelativeLayout>
     </ScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/bottom_navigation_background"
-        android:elevation="8dp"
-        app:labelVisibilityMode="selected"
-        app:itemIconTint="@drawable/bottom_navigation_color_selector"
-        app:itemTextColor="@drawable/selector"
-        app:menu="@menu/menu_navigation"
-        app:itemHorizontalTranslationEnabled="true"
-        />
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        android:id="@+id/bottom_navigation"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="8dp"-->
+<!--        android:layout_marginRight="8dp"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:background="@drawable/bottom_navigation_background"-->
+<!--        android:elevation="8dp"-->
+<!--        app:labelVisibilityMode="selected"-->
+<!--        app:itemIconTint="@drawable/bottom_navigation_color_selector"-->
+<!--        app:itemTextColor="@drawable/selector"-->
+<!--        app:menu="@menu/menu_navigation"-->
+<!--        app:itemHorizontalTranslationEnabled="true"-->
+<!--        />-->
 
 </RelativeLayout>

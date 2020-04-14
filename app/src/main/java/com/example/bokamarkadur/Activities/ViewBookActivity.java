@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,13 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -131,7 +128,7 @@ public class ViewBookActivity extends AppCompatActivity {
         }
 
         // This function sets up and displays the bottom navigation.
-        setBottomNavigation();
+//        setBottomNavigation();
 
         /**
          * Retrieves the username of the currently logged in user, so it can be compared to the
@@ -403,12 +400,16 @@ public class ViewBookActivity extends AppCompatActivity {
         });
     }
 
+/*
+
     // This function sets up connections to other activities
     // and displays the bottom navigation.
     private void setBottomNavigation() {
-        /**+
+        */
+/**+
          *  Bottom navigation
-         */
+         *//*
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.dashboard);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -443,6 +444,7 @@ public class ViewBookActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+*/
 
 
     private void hideSystemUI() {

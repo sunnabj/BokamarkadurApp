@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Connect to APIInterface which makes calls to REST backend.
     APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+    BooksAdapter booksAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +58,12 @@ public class MainActivity extends AppCompatActivity {
         setBottomNavigation();
     }
 
+
     private void get10NewestBooks() {
 
         // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
         final RecyclerView BookrecyclerView = findViewById(R.id.newest_books_recycler_view);
-        BookrecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        BookrecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         BookrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
 
         /**
@@ -71,8 +73,11 @@ public class MainActivity extends AppCompatActivity {
         getNewestBooks.enqueue(new Callback<BookList>() {
             @Override
             public void onResponse(Call<BookList> call, Response<BookList> response) {
-                List<Book> books = response.body().getNewestBooks();
-                BookrecyclerView.setAdapter(new BooksAdapter(books, R.layout.list_item, getApplicationContext()));
+                List<Book> books = response.body().getBooks();
+
+                booksAdapter = new BooksAdapter(books, R.layout.list_item, getApplicationContext());
+
+                BookrecyclerView.setAdapter(booksAdapter);
 
                 // TODO: Debug virkni, má eyða síðar meir.
                 Log.d(TAG, "Number of books received: " + books.size());
