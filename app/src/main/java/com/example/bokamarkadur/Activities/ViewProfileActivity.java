@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bokamarkadur.Adapters.BooksAdapter;
 import com.example.bokamarkadur.POJO.Book;
+import com.example.bokamarkadur.POJO.BookList;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -64,7 +65,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
 
 //        // This fetches all of user's books and displays them in a list.
-//        getMyBooks();
+        getMyBooks();
 
         // This function sets up and displays the bottom navigation.
         setBottomNavigation();
@@ -72,9 +73,9 @@ public class ViewProfileActivity extends AppCompatActivity {
         // Hide System UI for best experience
         hideSystemUI();
 
-//        // Unused, non-working function (see description by
-//        // function's definition.
-//        showUsersBooks();
+        // This function fetches all of user's books with
+        // "MyBooks" call in APIInterface to REST backend.
+//        getMyBooks();
     }
 
     // Show User's Profile Info
@@ -169,7 +170,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                 Log.d(TAG, "\n\t\t ProfileUsername;" + ProfileUsername);
                 Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 Log.d(TAG, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                Intent intent = new Intent(ViewProfileActivity.this, ReviewActivity.class);
+                Intent intent = new Intent(ViewProfileActivity.this, ViewMyReceivedReviewsActivity.class);
                 intent.putExtra("username", profileUsername);
                 startActivity(intent);
             }
@@ -210,7 +211,6 @@ public class ViewProfileActivity extends AppCompatActivity {
                         "\n***********************************************");
 
                 showUserProfile(name, info, email, phonenumber, username, password);
-                showUsersBooks(UserProfile);
             }
 
             @Override
@@ -299,18 +299,35 @@ public class ViewProfileActivity extends AppCompatActivity {
     }
 
 
-    // User's books are now fetched from User.getBooks() from getUserProfile() call
-    // and not a new unnecessary call to backend with MyBooks(...)
-    private void showUsersBooks(User LIU) {
-        List<Book> usersBooks = LIU.getBooks();
-
-        //
+    public void getMyBooks() {
+        /**
+         @GET call that returns list of Books this (logged in) user has requested or put up for sale.
+         **/
+        // RecyclerView - Birtir lista af bókum eins og skilgreint er í list_item.
         final RecyclerView UsersBooksrecyclerView = findViewById(R.id.users_books_recycler_view);
         UsersBooksrecyclerView.setLayoutManager(new LinearLayoutManager(this));
         UsersBooksrecyclerView.setAdapter(new BooksAdapter(new ArrayList<Book>(), R.layout.list_item, getApplicationContext()));
-        UsersBooksrecyclerView.setAdapter(new BooksAdapter(usersBooks, R.layout.list_item, getApplicationContext()));
-    }
 
+        Call<BookList> getMyBooks = apiInterface.myBooks("Bearer " + LoginActivity.token);
+        getMyBooks.enqueue(new Callback<BookList>() {
+            @Override
+            public void onResponse(Call<BookList> call, Response<BookList> response) {
+                List<Book> myBooks = response.body().getBooks();
+                Log.d(TAG, "BBO -->> UsersBooks: " + myBooks);
+                UsersBooksrecyclerView.setAdapter(new BooksAdapter(myBooks, R.layout.list_item, getApplicationContext()));
+
+                // TODO: Debug virkni, má eyða síðar meir.
+                Log.d(TAG, "BBO -->> Number of books user has: " + myBooks.size());
+            }
+
+            @Override
+            public void onFailure(Call<BookList> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                call.cancel();
+            }
+        });
+    }
 
     // Take user to the LoginActivity.
     private void openLoginActivity() {

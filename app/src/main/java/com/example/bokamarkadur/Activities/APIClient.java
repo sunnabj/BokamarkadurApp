@@ -22,6 +22,8 @@ class APIClient {
                 .readTimeout(2, TimeUnit.MINUTES) // read timeout
                 .build();
 
+
+
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://fathomless-waters-17510.herokuapp.com/")
                 .addConverterFactory(ScalarsConverterFactory.create())

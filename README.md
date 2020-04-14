@@ -152,9 +152,26 @@ The project should be uploaded to Android Studio, and then run either by setting
 
 ## Expected Activities for future releases ##
 
-### UserProfileActivity ###
+### ViewProfileActivity ###
 
 * This activity will allow users to update their profile information and get an overlook of the books they have put up for sale or requested in the application.
+
+### ViewMyReceivedReviewsActivity ###
+* This is a variation of ReviewActivity where there is no button to add review (as you can't review yourself).
+
+## Gif images showing some of the App's UI and flow between Activities ##
+
+
+### Logging in and checking "My Profile" for logged in User: ### 
+![](/LoginAndMyProfile.gif)
+
+
+### User cannot add a review for himself: ### 
+![](/CanNotReviewYourSelf.gif)
+
+
+### User adds a book he wants through "Request a Book": ### 
+![](/AddingBook.gif)
 
 
 ## Developers ##

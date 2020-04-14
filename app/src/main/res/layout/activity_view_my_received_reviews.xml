@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.ReviewActivity">
+    tools:context=".Activities.ViewMyReceivedReviewsActivity">
     <ScrollView style="@style/parent">
 
         <RelativeLayout
@@ -42,9 +42,10 @@
                 <TextView
                     android:id="@+id/review_receiver"
                     style="@style/viewParent.headerTextother"
-                    android:layout_gravity="center"
+                    android:layout_gravity="top"
+                    android:text="       "
                     android:paddingLeft="10dp"
-                    android:layout_marginTop="40dp"/>
+                    android:layout_marginTop="30dp"/>
 
                 <ImageView
                     android:paddingTop="30dp"
@@ -74,6 +75,12 @@
                     <TextView
                         style="@style/headerTextPrimary"
                         android:layout_marginTop="@dimen/loginViewsMargin"
+                        android:text="@string/mr_received_reviews"
+                        android:textSize="30sp" />
+
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:layout_marginTop="@dimen/loginViewsMargin"
                         android:id="@+id/no_reviews" />
 
                     <TableLayout
@@ -92,14 +99,20 @@
 
                     </TableLayout>
 
-                    <Button
-                        android:id="@+id/add_review"
-                        style="@style/loginButton"
-                        android:text="Add your own Review"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="60dp"
-                        android:layout_marginTop="@dimen/loginViewsMargin"/>
--->
+                    <TextView
+                        android:id="@+id/backToMyProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="100dp"
+                        android:layout_marginBottom="100dp"
+                        android:text="@string/mp_button_profile"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="20sp"
+                        android:clickable="true" />
+
+
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
