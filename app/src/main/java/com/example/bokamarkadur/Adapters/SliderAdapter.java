@@ -147,7 +147,7 @@ public class SliderAdapter extends PagerAdapter {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder((Activity) v.getContext());
 
                     alertDialog.setTitle("Job Seeking");
-                    alertDialog.setMessage("Phone : (+354) ??????" + "\n" +
+                    alertDialog.setMessage("Phone : (+354) 847-3010" + "\n" +
                             "https://www.linkedin.com/in/thordis-petursdottir/");
                     alertDialog.setIcon(R.drawable.thordis);
 

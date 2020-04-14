@@ -36,7 +36,6 @@ import retrofit2.Response;
 public class ViewBookActivity extends AppCompatActivity {
 
     Button btSMS;
-    private TextView backToMenu;
     private static final String TAG = "ViewBookActivity";
     private static final int REQUEST_SMS = 0;
     private static final int REQ_PICK_CONTACT = 2 ;
@@ -131,19 +130,39 @@ public class ViewBookActivity extends AppCompatActivity {
             getIncomingIntent(loggedInUsername);
         }
 
-        backToMenu = (TextView) findViewById(R.id.backToMenu);
-        backToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
-            }
-        });
-
         // This function sets up and displays the bottom navigation.
         setBottomNavigation();
+
+        /**
+         * Retrieves the username of the currently logged in user, so it can be compared to the
+         * username of the user that added the book that is currently being viewed, so it can be
+         * determined if the Delete Book button should be shown or not.
+         * From here, the incoming intent is also retrieved, so the information about the book
+         * that was clicked are shown. This is done whether the user is logged in or not.
+         */
+        if (LoginActivity.token != null) {
+            Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
+
+            getLoggedInUser.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    // This is the username of the currently logged in user.
+                    loggedInUsername = response.body().getUsername();
+                    getIncomingIntent(loggedInUsername);
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e(TAG, t.toString());
+                    call.cancel();
+                }
+            });
+        }
+        else {
+            getIncomingIntent(loggedInUsername);
+        }
     }
-
-
 
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(ViewBookActivity.this)
@@ -391,7 +410,7 @@ public class ViewBookActivity extends AppCompatActivity {
          *  Bottom navigation
          */
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-//        bottomNavigationView.setSelectedItemId(R.id.dashboard);
+        bottomNavigationView.setSelectedItemId(R.id.dashboard);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
