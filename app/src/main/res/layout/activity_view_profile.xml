@@ -11,6 +11,26 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:weightSum="12">
+
+            <LinearLayout
+                style="@style/parent"
+                android:layout_weight="3"
+                android:background="@drawable/login_shape_bk"
+                android:orientation="vertical">
+
+                <ImageView
+                    style="@style/parent"
+                    android:background="@drawable/ic_login_bk"
+                    android:contentDescription="login background" />
+
+            </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,7 +78,8 @@
                         android:id="@+id/edtName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:inputType="textPersonName"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -82,7 +103,8 @@
                         android:id="@+id/edtEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:inputType="textEmailAddress"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -94,7 +116,9 @@
                         android:id="@+id/edtPhonenumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:hint="@string/phone"
+                        android:inputType="phone" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -124,7 +148,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:textColor="@color/colorRED" />
+                        android:textColor="@color/colorRED"
+                        />
 
 
                     <Button
@@ -137,7 +162,8 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginBottom="40dp"
                         android:text="@string/mp_button_text"
-                        android:textSize="22sp" />
+                        android:textSize="22sp"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -167,7 +193,7 @@
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/users_books_recycler_view"
                                 android:layout_width="wrap_content"
-                                android:layout_height="312dp"></androidx.recyclerview.widget.RecyclerView>
+                                android:layout_height="150dp"></androidx.recyclerview.widget.RecyclerView>
 
                         </TableLayout>
 

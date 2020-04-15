@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +18,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -49,6 +52,7 @@ public class ViewBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
             setContentView(R.layout.activity_view_book);
+            setBottomNavigation();
         } else {
             setContentView(R.layout.activity_view_requested_book);
         }
@@ -56,6 +60,8 @@ public class ViewBookActivity extends AppCompatActivity {
 
         // Hide System UI for best experience
         hideSystemUI();
+
+
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -400,36 +406,32 @@ public class ViewBookActivity extends AppCompatActivity {
         });
     }
 
-/*
 
-    // This function sets up connections to other activities
-    // and displays the bottom navigation.
+
     private void setBottomNavigation() {
-        */
-/**+
-         *  Bottom navigation
-         *//*
-
+        /**+
+         * * Bottom navigation
+         */
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.dashboard);
+        bottomNavigationView.setSelectedItemId(R.id.home);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(),
+                                AllBooksActivity.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
-                        startActivity(new Intent(getApplicationContext(),
-                                MainActivity.class));
-                        overridePendingTransition(0,0);
                         return true;
                     case R.id.about:
                         if (LoginActivity.token == null) {
                             openLoginActivity();
-                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
                         } else {
-                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                            startActivity(intent);
+                            startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+
                             overridePendingTransition(0,0);}
                         return true;
                 }
@@ -443,8 +445,6 @@ public class ViewBookActivity extends AppCompatActivity {
         Intent intent= new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
-
-*/
 
 
     private void hideSystemUI() {
