@@ -32,12 +32,10 @@ public class Book {
 //    private Message messages;
     @SerializedName("subject")
     private String subject;
-    @SerializedName("phone")
-    private User phone;
 
     // Fjarlægt héðan í bili: List<Message> messages
     public Book(long id, String title, String author, Integer edition, String condition,
-                Integer price, String image, String status, Date date, User user, String subject, User phone) {
+                Integer price, String image, String status, Date date, User user, String subject) {
 
         this.id = id;
         this.title = title;
@@ -51,7 +49,6 @@ public class Book {
         this.user = user;
 //        this.messages = messages;
         this.subject = subject;
-        this.phone = phone;
     }
 
     public long getId() {
@@ -86,12 +83,6 @@ public class Book {
 
     public User getUser() { return user; }
 
-    public User getPhone() { return phone;}
-
-//    public List<Message> getMessages() {
-//        return messages;
-//    }
-
     public String getSubject() { return subject; }
 
     public void setId(long id) {
@@ -125,12 +116,6 @@ public class Book {
     public void setDate(Date date) { this.date = date; }
 
     public void setUser(User user) { this.user = user; }
-
-    public void setPhone(User phone) { this.phone = phone; }
-
-//    public void setMessages(List<Message> messages) {
-//        this.messages = messages;
-//    }
 
     public void setSubject(String subject) { this.subject = subject; }
 }
