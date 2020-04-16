@@ -25,7 +25,6 @@ import androidx.core.content.ContextCompat;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.R;
-//import com.example.bokamarkadur.POJO.Subjects;
 
 import java.io.File;
 
@@ -33,6 +32,8 @@ import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+//import com.example.bokamarkadur.POJO.Subjects;
 
 public class RequestBookActivity extends AppCompatActivity {
 
@@ -62,14 +63,14 @@ public class RequestBookActivity extends AppCompatActivity {
         // Dropdown list with subjects
         subjectSpinner = findViewById(R.id.edtSubject);
 
-        backToMenu = (TextView) findViewById(R.id.backToMenu);
+        /*backToMenu = (TextView) findViewById(R.id.backToMenu);
         backToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), MenuActivity.class));
             }
         });
-
+*/
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.subject_array, android.R.layout.simple_spinner_item);

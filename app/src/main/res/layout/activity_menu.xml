@@ -19,7 +19,7 @@
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingBottom="60dp">
+            android:paddingBottom="80dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -198,9 +198,11 @@
 
                             <TextView
                                 android:id="@+id/textViewSub4Title"
-                                android:text="@string/menu_card_4"
+                                style="@style/viewParent.headerText.HomeCardTitle"
                                 android:gravity="center"
-                                style="@style/viewParent.headerText.HomeCardTitle" />
+                                android:text="@string/menu_card_4"
+                                android:textAlignment="viewStart"
+                                tools:ignore="RtlCompat" />
 
 
                         </net.colindodd.gradientlayout.GradientRelativeLayout>

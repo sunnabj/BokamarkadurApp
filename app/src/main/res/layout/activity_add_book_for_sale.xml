@@ -59,7 +59,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:paddingTop="170dp">
+                android:paddingTop="170dp"
+                android:paddingBottom="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,7 +148,7 @@
                     <EditText
                         android:id="@+id/edtPrice"
                         android:layout_width="match_parent"
-                        android:layout_height="36dp"
+                        android:layout_height="wrap_content"
                         android:textColor="@color/primaryTextColor" />
 
                     <Button
@@ -176,19 +177,6 @@
                         style="@style/loginButton"
                         android:text="Submit"
                         android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/backToMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginTop="100dp"
-                        android:layout_marginBottom="20dp"
-                        android:text="@string/mp_button_menu"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="20sp"
-                        android:clickable="true" />
 
                 </LinearLayout>
             </RelativeLayout>

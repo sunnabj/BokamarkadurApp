@@ -57,7 +57,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:paddingTop="170dp">
+                android:paddingTop="170dp"
+                android:paddingBottom="20dp">
 
                 <ScrollView
                     android:layout_width="match_parent"
@@ -151,19 +152,6 @@
                             style="@style/loginButton"
                             android:text="Submit"
                             android:textSize="18sp"/>
-
-                        <TextView
-                            android:id="@+id/backToMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginTop="100dp"
-                            android:text="@string/mp_button_menu"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="20sp"
-                            android:clickable="true" />
-
 
                     </LinearLayout>
                 </ScrollView>

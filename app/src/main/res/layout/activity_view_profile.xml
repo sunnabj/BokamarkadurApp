@@ -11,6 +11,26 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:weightSum="12">
+
+                <LinearLayout
+                    style="@style/parent"
+                    android:layout_weight="3"
+                    android:background="@drawable/login_shape_bk"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        style="@style/parent"
+                        android:background="@drawable/ic_login_bk"
+                        android:contentDescription="login background" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,7 +66,7 @@
                         style="@style/headerTextPrimary"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:text="@string/mp_my_profile"
-                        android:textSize="34sp" />
+                        android:textSize="30sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -58,7 +78,8 @@
                         android:id="@+id/edtName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:inputType="textPersonName"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -82,7 +103,8 @@
                         android:id="@+id/edtEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:inputType="textEmailAddress"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -94,25 +116,30 @@
                         android:id="@+id/edtPhonenumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/primaryTextColor" />
+                        android:textColor="@color/primaryTextColor"
+                        android:hint="@string/phone"
+                        android:inputType="phone" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:text="@string/mp_username"
                         android:textColor="@color/cardColorOrange"
                         android:backgroundTint="@color/cardColorOrange" />
 
 
-                    <EditText
+                    <TextView
                         android:id="@+id/edtUsername"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
                         android:textColor="@color/colorRED" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:text="@string/mp_password"
                         android:textColor="@color/cardColorOrange" />
 
@@ -121,7 +148,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:textColor="@color/colorRED" />
+                        android:textColor="@color/colorRED"
+                        />
 
 
                     <Button
@@ -134,7 +162,8 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginBottom="40dp"
                         android:text="@string/mp_button_text"
-                        android:textSize="22sp" />
+                        android:textSize="22sp"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -164,7 +193,7 @@
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/users_books_recycler_view"
                                 android:layout_width="wrap_content"
-                                android:layout_height="312dp"></androidx.recyclerview.widget.RecyclerView>
+                                android:layout_height="150dp"></androidx.recyclerview.widget.RecyclerView>
 
                         </TableLayout>
 
@@ -172,25 +201,25 @@
                     </LinearLayout>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/shape"
-                    android:orientation="vertical"
-                    android:paddingBottom="30dp">
-
-                    <Button
-                        android:id="@+id/myReviews"
-                        style="@style/loginButton"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginBottom="60dp"
-                        android:text="@string/my_reviews"
-                        android:textSize="22sp" />
-                </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape"
+                        android:orientation="vertical"
+                        android:paddingBottom="30dp">
+
+                        <Button
+                            android:id="@+id/myReviews"
+                            style="@style/loginButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginBottom="60dp"
+                            android:text="@string/my_reviews"
+                            android:textSize="22sp" />
+                    </LinearLayout>
 
                 </LinearLayout>
             </RelativeLayout>
