@@ -55,6 +55,7 @@ public class ViewBookActivity extends AppCompatActivity {
             setBottomNavigation();
         } else {
             setContentView(R.layout.activity_view_requested_book);
+            setBottomNavigation();
         }
         Log.d(TAG, "onCreate: started.");
 
