@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +18,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bokamarkadur.POJO.Book;
 import com.example.bokamarkadur.POJO.User;
 import com.example.bokamarkadur.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -49,6 +52,7 @@ public class ViewBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if ((getIntent().getStringExtra("bookStatus").equals("For sale"))) {
             setContentView(R.layout.activity_view_book);
+            setBottomNavigation();
         } else {
             setContentView(R.layout.activity_view_requested_book);
         }
@@ -56,6 +60,8 @@ public class ViewBookActivity extends AppCompatActivity {
 
         // Hide System UI for best experience
         hideSystemUI();
+
+
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -96,6 +102,39 @@ public class ViewBookActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /**
+         * Retrieves the username of the currently logged in user, so it can be compared to the
+         * username of the user that added the book that is currently being viewed, so it can be
+         * determined if the Delete Book button should be shown or not.
+         * From here, the incoming intent is also retrieved, so the information about the book
+         * that was clicked are shown. This is done whether the user is logged in or not.
+         */
+        if (LoginActivity.token != null) {
+            Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
+
+            getLoggedInUser.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    // This is the username of the currently logged in user.
+                    loggedInUsername = response.body().getUsername();
+                    getIncomingIntent(loggedInUsername);
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e(TAG, t.toString());
+                    call.cancel();
+                }
+            });
+        }
+        else {
+            getIncomingIntent(loggedInUsername);
+        }
+
+        // This function sets up and displays the bottom navigation.
+//        setBottomNavigation();
 
         /**
          * Retrieves the username of the currently logged in user, so it can be compared to the
@@ -368,6 +407,46 @@ public class ViewBookActivity extends AppCompatActivity {
     }
 
 
+
+    private void setBottomNavigation() {
+        /**+
+         * * Bottom navigation
+         */
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.dashboard:
+                        startActivity(new Intent(getApplicationContext(),
+                                AllBooksActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.home:
+                        return true;
+                    case R.id.about:
+                        if (LoginActivity.token == null) {
+                            openLoginActivity();
+                            Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
+                        } else {
+                            startActivity(new Intent(getApplicationContext(), MenuActivity.class));
+
+                            overridePendingTransition(0,0);}
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    // Take user to the LoginActivity.
+    private void openLoginActivity() {
+        Intent intent= new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
@@ -378,10 +457,10 @@ public class ViewBookActivity extends AppCompatActivity {
                         // Set the content to appear under the system bars so that the
                         // content doesn't resize when the system bars hide and show.
                         | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         // Hide the nav bar and status bar
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+//                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 }

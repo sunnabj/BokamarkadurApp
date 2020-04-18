@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,71 +27,71 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReviewActivity extends AppCompatActivity {
+public class ViewMyReviewsActivity extends AppCompatActivity {
 
-    private static final String TAG = "ReviewActivity";
+    private static final String TAG = "MyReviewsActivity";
 
-    ReviewsAdapter reviewsAdapter; //Allows us to look at reviews in an orderly fashion
+    //Allows us to look at reviews in an orderly fashion
+    ReviewsAdapter receivedReviewsAdapter;
+    ReviewsAdapter writtenReviewsAdapter;
 
-    APIInterface apiInterface;
+    // Connection to backend created.
+    APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
-    private Button addReviewBtn; //Opens a view where the user can add a new review to the review list.
+    TextView receivedReviewsMessage;
+    TextView writtenReviewsMessage;
+
     public String loggedInUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review);
+        setContentView(R.layout.activity_view_my_reviews);
 
         Log.d(TAG, "onCreate: started.");
 
         // Hide System UI for best experience
         hideSystemUI();
 
-        setBottomNavigation();
 
-        /**
-         * Sets up an orderly review list
-         */
-        final RecyclerView recyclerView = findViewById(R.id.reviews_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
-                getApplicationContext()));
-
-        // Fetches the username of the user from UserInfoActivity.
-        final String username = getIncomingIntent();
-        Log.d(TAG, "username: " + username);
-
-        //The header tells us which user the review are about.
-        TextView user = findViewById(R.id.review_receiver);
-        user.setText("Reviews for " + username + "  ");
-
-        apiInterface = APIClient.getClient().create(APIInterface.class);
-
-        /**
-         * Retrieves the current logged in user, and sets up a button that allows the user to
-         * write his own reviews.
-         */
         Call<User> getLoggedInUser = apiInterface.getLoggedInUser("Bearer " + LoginActivity.token);
         getLoggedInUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Log.d(TAG, "Við fórum í onResponse");
+
                 // This is the username of the currently logged in user.
                 loggedInUsername = response.body().getUsername();
-                setWriteReviewButton(username, loggedInUsername);
+
+                //The header tells us which user the review are about.
+                TextView user = findViewById(R.id.review_receiver);
+                user.setText("Reviews for " + loggedInUsername + "  ");
+
+                getReceivedReviews(loggedInUsername);
+                getWrittenReviews(loggedInUsername);
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 // Log error here since request failed
-                Log.d(TAG, "Við fórum í onFailure");
                 Log.e(TAG, t.toString());
                 call.cancel();
             }
 
         });
 
+
+        // This function sets up and displays the bottom navigation.
+        setBottomNavigation();
+    }
+
+    private void getReceivedReviews(String username) {
+        /**
+         * Sets up an orderly review list
+         */
+        final RecyclerView ReceivedReviews_RecyclerView = findViewById(R.id.received_reviews_recycler_view);
+        ReceivedReviews_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ReceivedReviews_RecyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_reviews,
+                getApplicationContext()));
 
         /**
          * This function communicates with the server to get all reviews that have been written
@@ -107,17 +106,17 @@ public class ReviewActivity extends AppCompatActivity {
 
                 List<Review> reviews = response.body().viewReviews();
 
-                reviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
+                receivedReviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
                         getApplicationContext());
 
                 // If reviews exist for the user, they are shown as an orderly list.
-                if (reviewsAdapter.getItemCount() != 0) {
-                    recyclerView.setAdapter(reviewsAdapter);
+                if (receivedReviewsAdapter.getItemCount() != 0) {
+                    ReceivedReviews_RecyclerView.setAdapter(receivedReviewsAdapter);
                 }
                 // If no reviews exist for the user, this is made clear with a message.
                 else {
-                    TextView noReviews = findViewById(R.id.no_reviews);
-                    noReviews.setText("No Reviews available for " + username);
+                    receivedReviewsMessage = findViewById(R.id.received_reviews_message);
+                    receivedReviewsMessage.setText("You have received no Reviews");
                 }
             }
 
@@ -127,71 +126,71 @@ public class ReviewActivity extends AppCompatActivity {
                 Log.e(TAG, t.toString());
                 call.cancel();
             }
-
         });
-
-        Log.d(TAG, "ReviewActivity: loggedInUsername = " + loggedInUsername);
-        Log.d(TAG, "ReviewActivity: username = " + username);
-
     }
 
-    /**
-     *
-     * @return the username of the user that came from the userinfo activity.
-     */
-    private String getIncomingIntent(){
 
-        String username = getIntent().getStringExtra("username");
-        return username;
-    }
+    private void getWrittenReviews(String LoggedInUsername) {
 
-    public void openLoginActivity() {
-        Intent intent= new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
+        final String loggedInUsername = LoggedInUsername;
+        /**
+         * Sets up an orderly review list
+         */
+        final RecyclerView WrittenReviews_RecyclerView = findViewById(R.id.written_reviews_recycler_view);
+        WrittenReviews_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        WrittenReviews_RecyclerView.setAdapter(new ReviewsAdapter(new ArrayList<Review>(), R.layout.list_written_reviews,
+                getApplicationContext()));
 
-    /**
-     * Sets up a button that directs the logged in user to an activity where he can write a new
-     * review about the user that has received the reviews that are being viewed.
-     * @param username: The username of the user that has received the reviews that are being viewed.
-     * @param loggedInUsername: The username of the currently logged in user.
-     */
-    private void setWriteReviewButton(final String username, final String loggedInUsername) {
-
-        addReviewBtn = findViewById(R.id.add_review);
-
-        addReviewBtn.setOnClickListener(new View.OnClickListener() {
+        /**
+         * This function communicates with the server to get all reviews that have been written
+         * about the user with the username username. The reviews are delivered wrapped up in a
+         * convenient response.
+         */
+        final Call<ReviewsResponse> getReviews = apiInterface.viewReviews(loggedInUsername);
+        getReviews.enqueue(new Callback<ReviewsResponse>() {
             @Override
-            public void onClick(View v) {
-                if (username.equals(loggedInUsername)) {
-                    //if (loggedInUsername.equals(username))
-                    Toast.makeText(getApplicationContext(),
-                            "You cannot review yourself.",
-                            Toast.LENGTH_LONG).show();
+            public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+                Log.d(TAG, "RESPONSE BODY: " + response.body().getClass());
+
+                List<Review> reviews = response.body().viewReviews();
+
+                writtenReviewsAdapter = new ReviewsAdapter(reviews, R.layout.list_reviews,
+                        getApplicationContext());
+
+                // If reviews exist for the user, they are shown as an orderly list.
+                if (writtenReviewsAdapter.getItemCount() != 0) {
+                    WrittenReviews_RecyclerView.setAdapter(writtenReviewsAdapter);
                 }
+                // If no reviews exist for the user, this is made clear with a message.
                 else {
-                    Intent intent = new Intent(ReviewActivity.this, WriteReviewActivity.class);
-                    intent.putExtra("username", username); //þurfti að vera declared final til að vera accessible
-                    startActivity(intent);
+                    writtenReviewsMessage = findViewById(R.id.written_reviews_message);
+                    writtenReviewsMessage.setText("You have written no Reviews");
                 }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                call.cancel();
             }
         });
     }
 
+
+    // This function sets up connections to other activities
+    // and displays the bottom navigation.
     private void setBottomNavigation() {
         /**+
-         * Bottom navigation
+         *  Bottom navigation
          */
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setSelectedItemId(R.id.dashboard);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.dashboard:
-                        startActivity(new Intent(getApplicationContext(),
-                                AllBooksActivity.class));
-                        overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
                         startActivity(new Intent(getApplicationContext(),
@@ -201,16 +200,21 @@ public class ReviewActivity extends AppCompatActivity {
                     case R.id.about:
                         if (LoginActivity.token == null) {
                             openLoginActivity();
-                            Toast.makeText(getApplicationContext(), "Please log in", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "You must login to request a book", Toast.LENGTH_LONG).show();
                         } else {
-                            startActivity(new Intent(getApplicationContext(),
-                                    MenuActivity.class));
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
                             overridePendingTransition(0,0);}
                         return true;
                 }
                 return false;
             }
         });
+    }
+
+    public void openLoginActivity() {
+        Intent intent= new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
 

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    tools:context=".Activities.ViewMyReviewsActivity">
     <ScrollView style="@style/parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="80dp">
+            android:layout_height="match_parent">
 
 
             <LinearLayout
@@ -37,14 +37,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-<!--                android:id="@+id/view_book_list"-->
+                <TextView
+                    android:id="@+id/review_receiver"
+                    style="@style/viewParent.headerTextother"
+                    android:layout_gravity="center"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="40dp"/>
 
                 <ImageView
+                    android:paddingTop="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bookshelves"
-                    android:adjustViewBounds="true"
-                    android:paddingLeft="150dp"/>
+                    android:src="@drawable/ic_publish_article"
+                    android:adjustViewBounds="true" />
+
+
 
             </LinearLayout>
 
@@ -52,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:paddingTop="150dp"
+                android:paddingTop="190dp"
                 >
 
                 <LinearLayout
@@ -63,27 +70,62 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/view_book_list"
                         style="@style/headerTextPrimary"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:textSize="34sp" />
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:text="@string/mr_received_reviews" />
+
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:id="@+id/received_reviews_message"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp" />
 
                     <TableLayout
-                        android:id="@+id/activity_all_books"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="8dp"
                         android:stretchColumns="1">
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/books_recycler_view"
+                            android:id="@+id/received_reviews_recycler_view"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+                            android:layout_height="match_parent">
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                    </TableLayout>
+
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp"
+                        android:text="@string/mr_written_reviews" />
+
+                    <TextView
+                        style="@style/headerTextPrimary"
+                        android:id="@+id/written_reviews_message"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="40dp" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="8dp"
+                        android:stretchColumns="1">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/written_reviews_recycler_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent">
+                        </androidx.recyclerview.widget.RecyclerView>
 
                     </TableLayout>
 
                 </LinearLayout>
+
             </RelativeLayout>
+
+
         </RelativeLayout>
     </ScrollView>
 
@@ -103,4 +145,6 @@
         app:menu="@menu/menu_navigation"
         app:itemHorizontalTranslationEnabled="true"
         />
+
+
 </RelativeLayout>
