@@ -424,6 +424,9 @@ public class ViewBookActivity extends AppCompatActivity {
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),
+                                MainActivity.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.about:
                         if (LoginActivity.token == null) {
