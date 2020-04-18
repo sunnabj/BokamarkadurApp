@@ -84,14 +84,6 @@ public class AddBookForSaleActivity extends AppCompatActivity {
                 submitData();
             }
         });
-
-        backToMenu = (TextView) findViewById(R.id.backToMenu);
-        backToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
-            }
-        });
     }
 
     private void pickFromGallery() {
