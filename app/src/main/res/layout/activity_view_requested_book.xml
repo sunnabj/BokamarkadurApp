@@ -68,7 +68,9 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="186dp"
-        android:layout_margin="15dp">
+        android:layout_margin="15dp"
+        android:layout_alignParentBottom="true"
+        android:fitsSystemWindows="true">
 
         <TextView
             android:id="@+id/view_book_title"
