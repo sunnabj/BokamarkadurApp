@@ -90,6 +90,13 @@ The project should be uploaded to Android Studio, and then run either by setting
 * It is reachable from ReviewActivity.
 * When the review is submitted, the user is redirected to the ReviewActivity.
 
+### ViewProfileActivity ###
+
+* This activity allows users to update their profile information and get an overlook of the books they have put up for sale or requested in the application, together with providing a link to their received reviews.
+
+### ViewMyReceivedReviewsActivity ###
+* This is a variation of ReviewActivity where there is no button to add review (as you can't review yourself).
+
 
 ## Helper classes ##
 
@@ -149,15 +156,6 @@ The project should be uploaded to Android Studio, and then run either by setting
 
 * Connects the client to the server.
 
-
-## Expected Activities for future releases ##
-
-### ViewProfileActivity ###
-
-* This activity will allow users to update their profile information and get an overlook of the books they have put up for sale or requested in the application.
-
-### ViewMyReceivedReviewsActivity ###
-* This is a variation of ReviewActivity where there is no button to add review (as you can't review yourself).
 
 ## Gif images showing some of the App's UI and flow between Activities ##
 
